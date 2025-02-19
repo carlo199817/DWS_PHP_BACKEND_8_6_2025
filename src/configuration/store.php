@@ -20,7 +20,6 @@ class store
         return $this->id;
     }
 
-
     #[ORM\Column(type: 'string',nullable:true)]
     private string $outlet_ifs;
 
@@ -34,8 +33,6 @@ class store
         $this->outlet_ifs = $data;
     }
 
-
-    
     #[ORM\Column(type: 'string',nullable:true)]
     private string $outlet_code;
 
@@ -49,7 +46,6 @@ class store
         $this->outlet_code = $data;
     }
 
-    
     #[ORM\Column(type: 'string',nullable:true)]
     private string $town;
 
@@ -63,7 +59,6 @@ class store
         $this->town = $data;
     }
 
-
     #[ORM\Column(type: 'string',nullable:true)]
     private string $zip_code;
 
@@ -76,7 +71,6 @@ class store
     {      
         $this->zip_code = $data;
     }
-
 
     #[ORM\Column(type: 'string',nullable:true)]
     private string $outlet_name;
@@ -131,8 +125,6 @@ class store
         $this->longitude=$data;
     }
 
-    
-
     #[ORM\Column(type: 'decimal', nullable:true)]
     private ?string $distance;
 
@@ -146,7 +138,6 @@ class store
         $this->distance=$data;
     }
     
-
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $start_time;
 
@@ -171,7 +162,6 @@ class store
         return $this->end_time;
     }
 
-
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
@@ -184,13 +174,10 @@ class store
         return $this->date_created;
     }
 
-
-
     #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
     #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
     private user|null $created_by = null;
 
-    
     public function getCreatedby()
     {
         return $this->created_by;
@@ -198,10 +185,6 @@ class store
 
     public function setCreatedby(user $data): void
     {
-      $this->created_by=$data;
+       $this->created_by=$data;
     }
-
-
-
-
 }

@@ -63,8 +63,7 @@ class group
     {
         $this->group_user->add($data);
     }
-
-    
+ 
     #[ORM\JoinTable(name: 'group_store')]
     #[ORM\JoinColumn(name: 'group_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'store_id', referencedColumnName: 'id')]
@@ -79,8 +78,7 @@ class group
     {
         $this->group_store->add($data);
     }
-
-        
+    
     #[ORM\JoinTable(name: 'group_group')]
     #[ORM\JoinColumn(name: 'group_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'group_related_id', referencedColumnName: 'id')]
@@ -96,14 +94,11 @@ class group
         $this->group_link->add($data);
     }
 
-
-
     public function __construct()
     {
         $this->group_user = new ArrayCollection();
         $this->group_store = new ArrayCollection();
         $this->group_link = new ArrayCollection();
-      
     }
 
 

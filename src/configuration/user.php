@@ -5,18 +5,13 @@ namespace MainDb\Configuration;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use ReallySimpleJWT\Token;
 use ReallySimpleJWT\Jwt;
 use ReallySimpleJWT\Validate;
 use ReallySimpleJwt\Decode;
 use ReallySimpleJwt\Helper\Validator;
-
 use ReallySimpleJWT\Exception\ValidateException;
 use ReallySimpleJWT\Exception\TokenException;
-
-
-
 use clientDB\Process\user_type;
 
 
@@ -109,8 +104,6 @@ class user
         $this->username = $data;
     }
 
- 
-
     #[ORM\Column(type: 'string',nullable:true)]
     private string $password;
 
@@ -141,8 +134,6 @@ class user
     {      
         $this->first_name = $data;
     }
-
-
 
     #[ORM\Column(type: 'string',nullable:true)]
     private $middle_name;

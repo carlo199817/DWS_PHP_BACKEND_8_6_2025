@@ -21,9 +21,7 @@ class automation_form
     {
         return $this->id;
     }
-    
-
-    
+  
     #[ORM\ManyToOne(targetEntity: form::class, inversedBy:"form")]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     private form|null $form_id = null;
@@ -38,11 +36,6 @@ class automation_form
       $this->form_id = $data;
     }
 
-
-
-    
-
-    
     #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
     #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
     private user|null $created_by = null;
@@ -57,7 +50,6 @@ class automation_form
       $this->created_by=$data;
     }
 
-    
     #[ORM\ManyToOne(targetEntity: itinerary::class, inversedBy:"itinerary")]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
     private itinerary|null $itinerary_id = null;
@@ -71,13 +63,4 @@ class automation_form
     {
       $this->itinerary_id = $data;
     }
-
-
-         
-
-
-
-
-
-
 }

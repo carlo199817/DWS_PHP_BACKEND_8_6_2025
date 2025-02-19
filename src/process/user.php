@@ -142,10 +142,6 @@ class user
     {
         $this->user_notification->add($data);
     }
-    
-    
-
-
 
     public function __construct()
     {
