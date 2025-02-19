@@ -1,4 +1,5 @@
 <?php
+namespace ClientDb\Process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,7 +12,7 @@ require_once 'src/process/notification.php';
 
 #[ORM\Entity]
 #[ORM\Table(name: 'user')]
-class second_user
+class user
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

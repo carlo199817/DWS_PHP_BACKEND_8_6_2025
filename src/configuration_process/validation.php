@@ -1,10 +1,13 @@
 <?php
+namespace MainDb\Configuration;
+namespace ClientDb\Process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 
+use MainDb\Configuration\user;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'validation')]

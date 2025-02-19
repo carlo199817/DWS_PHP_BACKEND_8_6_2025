@@ -1,17 +1,21 @@
 <?php
+namespace ClientDb\Process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 
+
 require_once 'src/configuration_process/form_type.php';
 require_once 'src/configuration_process/task.php';
-// require_once 'src/process/connection_form.php';
-// require_once 'src/process/justification_form.php';
 require_once 'src/configuration/store.php';
 require_once 'src/configuration/user.php';
-// require_once 'src/configuration/status.php';
+
+
+use MainDB\Configuration\store;
+use MainDB\Configuration\user;
+
 
 
 #[ORM\Entity]

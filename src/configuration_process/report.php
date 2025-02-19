@@ -1,7 +1,15 @@
 <?php
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+
+
+
+use MainDB\Configuration\user;
+use clientDB\Process\form;
+use clientDB\Process\report_type;
+use clientDB\Process\plot;
 
 
 

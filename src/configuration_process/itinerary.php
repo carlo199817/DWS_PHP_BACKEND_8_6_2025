@@ -1,15 +1,13 @@
 <?php
+namespace ClientDb\Process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 
-
-
-// require_once 'src/configuration_process/connection_itinerary.php';
-// require_once 'src/process/justification_itinerary.php';
-
+use MainDB\Configuration\store;
+use MainDB\Configuration\user;
 
 
 #[ORM\Entity]

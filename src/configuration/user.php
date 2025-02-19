@@ -1,4 +1,7 @@
 <?php
+
+namespace MainDb\Configuration;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,6 +15,9 @@ use ReallySimpleJwt\Helper\Validator;
 use ReallySimpleJWT\Exception\ValidateException;
 use ReallySimpleJWT\Exception\TokenException;
 
+
+
+use clientDB\Process\user_type;
 
 
 class tokens {
