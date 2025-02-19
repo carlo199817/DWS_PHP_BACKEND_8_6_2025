@@ -5,9 +5,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
-
-// require_once 'src/configuration/status.php';
 use MainDB\Configuration\user;
 
 
