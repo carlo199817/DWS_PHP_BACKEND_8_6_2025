@@ -6,8 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 
-require_once 'src/configuration_process/platform.php';
-require_once 'src/configuration_process/form.php';
+//require_once 'src/configuration_process/platform.php';
+//require_once 'src/configuration_process/form.php';
 
 
 use clientDB\Process\platform;

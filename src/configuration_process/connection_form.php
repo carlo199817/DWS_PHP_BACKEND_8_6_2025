@@ -1,5 +1,4 @@
 <?php
-namespace MainDb\Configuration;
 namespace ClientDb\Process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;

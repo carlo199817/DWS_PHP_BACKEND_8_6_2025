@@ -10,13 +10,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 #[ORM\Table(name: 'store')]
 class store
 {
+
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int|null $id = null;
+    private ?int $id = null;
 
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

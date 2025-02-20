@@ -5,6 +5,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
+
+require_once 'store.php';
+
 #[ORM\Entity]
 #[ORM\Table(name: 'group')]
 class group

@@ -14,6 +14,7 @@ $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
+
 if($_SERVER['REQUEST_METHOD']==="POST"){
     
     $user_repository = $entityManager->getRepository(MainDb\Configuration\user::class);

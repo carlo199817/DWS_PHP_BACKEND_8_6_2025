@@ -6,8 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 
-require_once 'src/configuration_process/itinerary.php';
-require_once 'src/process/notification.php';
+$full_path = realpath(__DIR__ . '/../../');
+require_once $full_path . '/src/configuration_process/itinerary.php';
+require_once 'notification.php';
 
 
 #[ORM\Entity]
@@ -15,12 +16,10 @@ require_once 'src/process/notification.php';
 class user
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int|null $id = null;
+    private ?int $id = null;
 
-
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -12,7 +12,10 @@ use ReallySimpleJwt\Decode;
 use ReallySimpleJwt\Helper\Validator;
 use ReallySimpleJWT\Exception\ValidateException;
 use ReallySimpleJWT\Exception\TokenException;
+
 use clientDB\Process\user_type;
+
+
 
 
 class tokens {
@@ -293,7 +296,7 @@ class user
     }
 
 
-    #[ORM\Column(type: 'string',options:["default" => "profile.png"])]
+    #[ORM\Column(type: 'string',options:["default" => "profile.png"],nullable:true)]
     private string $picture;
 
     public function getPicture(): string

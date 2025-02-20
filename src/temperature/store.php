@@ -15,7 +15,6 @@ class store
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-
     public function getId(): int
     {
         return $this->id;

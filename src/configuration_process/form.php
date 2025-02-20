@@ -7,10 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 
-require_once 'src/configuration_process/form_type.php';
-require_once 'src/configuration_process/task.php';
-require_once 'src/configuration/store.php';
-require_once 'src/configuration/user.php';
+require_once 'form_type.php';
+require_once 'task.php';
+$full_path = realpath(__DIR__ . '/../../');
+require_once $full_path . '/src/configuration/store.php';
+require_once $full_path . '/src/configuration/user.php';
 
 
 use MainDB\Configuration\store;
