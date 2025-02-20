@@ -18,14 +18,12 @@ $entityManager2 = $dbConnection2->getEntityManager();
 
 
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-$allow = true;
+$allow = false;
 
 
 if($_SERVER['REQUEST_METHOD']==="POST"){
     if($allow===true){
-
         $user_repository = $entityManager->getRepository(MainDb\Configuration\user::class);
-        $user_repository2 = $entityManager2->getRepository(ClientDb\Process\user::class);
         $existing_user = $user_repository->findOneBy(['email' => $input['email']]);
         if (!$existing_user) {
             $new_super_admin = new MainDb\Configuration\user;  
@@ -33,28 +31,20 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
             $new_super_admin->setUsername($input["username"]);
             $new_super_admin->setPassword($input["password"]); 
             $user = new ClientDb\Process\user;
-       
-           
-           $entityManager->persist($new_super_admin); 
-           $entityManager->flush();  
-    
-    
-           echo json_encode($new_super_admin->getId());
-    
-           $user->setId($new_super_admin->getId()); 
-           $entityManager2->persist($user); 
-           $entityManager2->flush();   
-           header('HTTP/1.1 201 Created'); 
-           echo json_encode(["Message"=>"New superadmin ".$input['email']." created!"]);
-    
-            
+           // $mirror_position = $entityManager->find(MainDb\Configuration\mirror_position::class,1);
+           // $new_super_admin->setPosition($mirror_position);
+            $entityManager->persist($new_super_admin); 
+            $entityManager->flush();
+            header('HTTP/1.1 201 Created'); 
+            echo json_encode(["Message"=>"New superadmin ".$input['email']." created!"]);
         } else {
-
-            
             header('HTTP/1.1 409 Conflict'); 
             echo json_encode(["Message"=>"Username already exists"]);
            
         }
+    }else{
+        header('HTTP/1.1 409 Conflict'); 
+        echo json_encode(["Message"=>"Registration deactivated"]);
     }
 
     

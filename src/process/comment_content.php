@@ -5,9 +5,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
-
-require_once 'src/configuration_process/react_type.php';
-
 #[ORM\Entity]
 #[ORM\Table(name: 'comment_content')]
 class comment_content

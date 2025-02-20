@@ -3,17 +3,6 @@ namespace ClientDb\Process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
-
-
-
-require_once 'form_type.php';
-require_once 'task.php';
-$full_path = realpath(__DIR__ . '/../../');
-require_once $full_path . '/src/configuration/store.php';
-require_once $full_path . '/src/configuration/user.php';
-
-
 use MainDB\Configuration\store;
 use MainDB\Configuration\user;
 

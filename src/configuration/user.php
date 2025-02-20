@@ -1,7 +1,6 @@
 <?php
 
 namespace MainDb\Configuration;
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +11,6 @@ use ReallySimpleJwt\Decode;
 use ReallySimpleJwt\Helper\Validator;
 use ReallySimpleJWT\Exception\ValidateException;
 use ReallySimpleJWT\Exception\TokenException;
-
 use clientDB\Process\user_type;
 
 
@@ -22,9 +20,9 @@ class tokens {
     private int $id;
     private const SECRET_KEY = 'secyew44wfdfd23wsdsdsdzsad!ReT423*&';
 
-    public function getToken(int $id)
+    public function getToken(int $id, string $database_name)
     {
-        return Token::create($id, self::SECRET_KEY, time() + 2000000, "*", ['alg' => 'HS256']);
+        return Token::create($id, self::SECRET_KEY, time() + 2000000, "*", ['alg' => 'HS256'],$database_name);
     }
 
     public function getValidation(string $myToken)
@@ -114,12 +112,27 @@ class user
     {
       $this->password = password_hash($data,PASSWORD_DEFAULT);
     }    
-    public function authenticateUser($data): bool
+    public function authenticate_user($data): bool
     {
         if (password_verify($data, $this->password)) {
             return true;
         }
         return false;
+    }
+
+    #[ORM\Column(type: 'string',nullable:true)]
+    private $database_name;
+
+    public function getDatabasename(): string
+    {   
+        if(json_encode($this->database_name)!="null"){
+        return $this->database_name;}  else{
+            }
+    }
+
+    public function setDatabasename(string $data): void
+    {      
+        $this->database_name = $data;
     }
 
 

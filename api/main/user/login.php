@@ -18,10 +18,12 @@ $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if($_SERVER['REQUEST_METHOD']==="POST"){
     
     $user_repository = $entityManager->getRepository(MainDb\Configuration\user::class);
-    $user = $user_repository->findOneBy(['email' => $input['email']]);
+    $user = $user_repository->findOneBy(['username' => $input['username']]);
    if ($user && $user->authenticate_user($input['password'])) {
         $tokens = new MainDb\Configuration\tokens;  
-        $tokens = $tokens->getToken($user->getId()); 
+        $tokens = $tokens->getToken($user->getId(),$user->getDatabasename()); 
+
+        echo json_encode($user->getDatabasename());
         header('HTTP/1.1 200 OK'); 
         echo json_encode([
             'token' => $tokens

@@ -6,9 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 
-$full_path = realpath(__DIR__ . '/../../');
-require_once $full_path . '/src/configuration_process/itinerary.php';
-require_once 'notification.php';
 
 
 #[ORM\Entity]

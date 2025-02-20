@@ -8,6 +8,8 @@ require_once "vendor/autoload.php";
 /*CONFIGURATION*/
 require __DIR__ . '/src/configuration/user.php';
 require __DIR__ . '/src/configuration/store.php';
+require __DIR__ . '/src/configuration/group.php';
+require __DIR__ . '/src/configuration/group_type.php';
 /*CONFIGURATION_PROCESS*/
 require __DIR__ . '/src/configuration_process/user_type.php';
 require __DIR__ . '/src/configuration_process/platform.php';
@@ -18,8 +20,44 @@ require __DIR__ . '/src/configuration_process/table_form.php';
 require __DIR__ . '/src/configuration_process/itinerary_type.php';
 require __DIR__ . '/src/configuration_process/connection_itinerary.php';
 require __DIR__ . '/src/configuration_process/justification_itinerary.php';
+require __DIR__ . '/src/configuration_process/automation_form_publishing.php';
+require __DIR__ . '/src/configuration_process/automation_form.php';
+require __DIR__ . '/src/configuration_process/automation_itinerary.php';
+require __DIR__ . '/src/configuration_process/field_type.php';
+require __DIR__ . '/src/configuration_process/field.php';
+require __DIR__ . '/src/configuration_process/form_type.php';
+require __DIR__ . '/src/configuration_process/plot.php';
+require __DIR__ . '/src/configuration_process/react_type.php';
+require __DIR__ . '/src/configuration_process/report_type.php';
+require __DIR__ . '/src/configuration_process/report.php';
+require __DIR__ . '/src/configuration_process/status.php';
+require __DIR__ . '/src/configuration_process/task.php';
+require __DIR__ . '/src/configuration_process/validation.php';
 /*PROCESS*/
 require __DIR__ . '/src/process/user.php';
+require __DIR__ . '/src/process/store.php';
+require __DIR__ . '/src/process/track_itinerary.php';
+require __DIR__ . '/src/process/schedule_store.php';
+require __DIR__ . '/src/process/react_post.php';
+require __DIR__ . '/src/process/react_content.php';
+require __DIR__ . '/src/process/react_comment_post.php';
+require __DIR__ . '/src/process/react_comment_content.php';
+require __DIR__ . '/src/process/post.php';
+require __DIR__ . '/src/process/notification.php';
+require __DIR__ . '/src/process/message.php';
+require __DIR__ . '/src/process/justification_concern.php';
+require __DIR__ . '/src/process/content.php';
+require __DIR__ . '/src/process/concern.php';
+require __DIR__ . '/src/process/comment_post.php';
+require __DIR__ . '/src/process/comment_content.php';
+require __DIR__ . '/src/process/chat.php';
+/*TEMPERATURE*/
+require __DIR__ . '/src/temperature/oven.php';
+require __DIR__ . '/src/temperature/type.php';
+require __DIR__ . '/src/temperature/detail.php';
+
+/*TOKEN*/
+require_once __DIR__ . '/api/security/token.php';
 
 
 class DatabaseConnection {
@@ -44,6 +82,7 @@ class DatabaseConnection {
                 __DIR__ . "/src/configuration",
                 __DIR__ . "/src/configuration_process",
                 __DIR__ . "/src/process",
+                __DIR__ . "/src/temperature",
         ), 
             isDevMode: true
         );

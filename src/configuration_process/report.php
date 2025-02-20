@@ -3,9 +3,6 @@
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
-
-
 use MainDB\Configuration\user;
 use ClientDb\Process\form;
 use ClientDb\Process\report_type;

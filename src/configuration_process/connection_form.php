@@ -3,7 +3,6 @@ namespace ClientDb\Process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use MainDB\Configuration\user;
 
 
