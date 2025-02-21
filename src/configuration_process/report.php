@@ -21,7 +21,7 @@ class report
 
     
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -30,12 +30,12 @@ class report
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -51,7 +51,7 @@ class report
         return $this->form_id;
     }
 
-    public function setForm(form $data): void
+    public function setForm( $data): void
     {
       $this->form_id=$data;
     }
@@ -61,11 +61,11 @@ class report
     private $date_created;
 
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -81,7 +81,7 @@ class report
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -97,7 +97,7 @@ class report
         return $this->type_id;
     }
 
-    public function setReporttype(report_type $data): void
+    public function setReporttype( $data): void
     {
       $this->type_id=$data;
     }
@@ -110,11 +110,11 @@ class report
     #[ORM\ManyToMany(targetEntity: plot::class)]
     private Collection $report_plot;
 
-    public function getReportplot(): Collection
+    public function getReportplot()
     {
         return $this->report_plot;
     }
-    public function setReportplot(plot $data): void
+    public function setReportplot( $data): void
     {
         $this->report_plot->add($data);
     }    

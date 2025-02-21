@@ -14,7 +14,7 @@ class table_form
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -28,7 +28,7 @@ class table_form
         return $this->form_id;
     }
 
-    public function setForm(form $data): void
+    public function setForm( $data): void
     {
       $this->form_id=$data;
     }

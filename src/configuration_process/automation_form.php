@@ -16,7 +16,7 @@ class automation_form
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -30,7 +30,7 @@ class automation_form
         return $this->form_id;
     }
 
-    public function setForm(form $data): void
+    public function setForm($data): void
     {
       $this->form_id = $data;
     }
@@ -44,7 +44,7 @@ class automation_form
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby($data): void
     {
       $this->created_by=$data;
     }
@@ -58,7 +58,7 @@ class automation_form
         return $this->itinerary_id;
     }
 
-    public function setItinerary(itinerary $data): void
+    public function setItinerary($data): void
     {
       $this->itinerary_id = $data;
     }

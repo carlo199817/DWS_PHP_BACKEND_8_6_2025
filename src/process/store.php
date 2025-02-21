@@ -16,12 +16,12 @@ class store
     private ?int $id = null;
 
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function setId(int $data): void
+    public function setId( $data): void
     {      
         $this->id= $data;
     }
@@ -32,11 +32,11 @@ class store
     #[ORM\ManyToMany(targetEntity: form::class)]
     private Collection $store_form;
 
-    public function getStorename(): Collection
+    public function getStorename()
     {
         return $this->store_form;
     }
-    public function setStorename(form $data): void
+    public function setStorename( $data): void
     {
         $this->store_form->add($data);
     }

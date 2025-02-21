@@ -33,7 +33,7 @@ class react_post
         return $this->type_id;
     }
 
-    public function setType(react_type  $data): void
+    public function setType(  $data): void
     {
       $this->type_id=$data;
     }
@@ -42,11 +42,11 @@ class react_post
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -62,7 +62,7 @@ class react_post
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }

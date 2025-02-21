@@ -18,7 +18,7 @@ class automation_form_publishing
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -32,7 +32,7 @@ class automation_form_publishing
         return $this->form_id;
     }
 
-    public function setForm(form $data): void
+    public function setForm($data): void
     {
       $this->form_id = $data;
     }
@@ -40,12 +40,12 @@ class automation_form_publishing
     #[ORM\Column(type: 'string',nullable:true)]
     private $remark;
 
-    public function getRemark(): string
+    public function getRemark()
     {
         return $this->remark;
     }
 
-    public function setRemark(string $data): void
+    public function setRemark($data): void
     {      
         $this->remark= $data;
     }
@@ -53,11 +53,11 @@ class automation_form_publishing
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_publish;
 
-    public function setDatepublish(DateTime $data): void
+    public function setDatepublish($data): void
     {
         $this->date_publish=$data;
     }
-    public function getDatepublish():DateTime
+    public function getDatepublish()    
     {
         return $this->date_publish;
     }
@@ -71,7 +71,7 @@ class automation_form_publishing
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby($data): void
     {
       $this->created_by=$data;
     }
@@ -85,7 +85,7 @@ class automation_form_publishing
         return $this->form_type_id;
     }
 
-    public function setFormtype(form_type $data): void
+    public function setFormtype($data): void
     {
         $this->form_type_id = $data;
     }
@@ -93,12 +93,12 @@ class automation_form_publishing
     #[ORM\Column(type: 'integer',nullable:true)]
     private int $priority;
 
-    public function getPriority(): int
+    public function getPriority()
     {
         return $this->priority;
     }
 
-    public function setPriority(int $data): void
+    public function setPriority($data): void
     {      
         $this->priority= $data;
     }

@@ -16,7 +16,7 @@ class itinerary
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -31,7 +31,7 @@ class itinerary
         return $this->type_id;
     }
 
-    public function setType(itinerary_type $data): void
+    public function setType( $data): void
     {
       $this->type_id = $data;
     }
@@ -48,7 +48,7 @@ class itinerary
         return $this->store_id;
     }
 
-    public function setStore(store $data): void
+    public function setStore( $data): void
     {
       $this->store_id=$data;
     }
@@ -57,11 +57,11 @@ class itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $schedule;
 
-    public function setSchedule(DateTime $data): void
+    public function setSchedule( $data): void
     {
         $this->schedule = $data;
     }
-    public function getSchedule():DateTime
+    public function getSchedule()
     {
         return $this->schedule;
     }
@@ -69,12 +69,12 @@ class itinerary
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $check_in;
 
-    public function getCheckin(): bool
+    public function getCheckin()
     {
         return $this->check_in;
     }
 
-    public function setCheckin(bool $data): void
+    public function setCheckin( $data): void
     {      
         $this->check_in=$data;
     }
@@ -84,11 +84,11 @@ class itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $check_in_time;
 
-    public function setCheckintime(DateTime $data): void
+    public function setCheckintime( $data): void
     {
         $this->check_in_time = $data;
     }
-    public function getCheckintime():DateTime
+    public function getCheckintime()
     {
         return $this->check_in_time;
     }
@@ -96,12 +96,12 @@ class itinerary
     #[ORM\Column(type: 'string',nullable:true)]
     private $check_in_image;
 
-    public function getCheckinimage(): string
+    public function getCheckinimage()
     {
         return $this->check_in_image;
     }
 
-    public function setCheckinimage(string $data): void
+    public function setCheckinimage( $data): void
     {      
         $this->check_in_image= $data;
     }
@@ -110,12 +110,12 @@ class itinerary
     #[ORM\Column(type: 'float',nullable:true)]
     private string $check_in_latitude;
 
-    public function getCheckinlatitude(): string
+    public function getCheckinlatitude()
     {
         return $this->check_in_latitude;
     }
 
-    public function setCheckinlatitude(string $data): void
+    public function setCheckinlatitude( $data): void
     {      
         $this->check_in_latitude= $data;
     }
@@ -123,12 +123,12 @@ class itinerary
     #[ORM\Column(type: 'float',nullable:true)]
     private string $check_in_longitude;
 
-    public function getCheckinlongitude(): string
+    public function getCheckinlongitude()
     {
         return $this->check_in_longitude;
     }
 
-    public function setCheckinlongitude(string $data): void
+    public function setCheckinlongitude( $data): void
     {      
         $this->check_in_longitude= $data;
     }
@@ -136,10 +136,10 @@ class itinerary
     #[ORM\Column(type: 'text',nullable:true)]
     private string $check_in_remark;
 
-    public function getCheckinremark(): string
+    public function getCheckinremark()
     {return $this->check_in_remark;}
 
-    public function setCheckinremark(string $data): void
+    public function setCheckinremark( $data): void
     {$this->check_in_remark = $data;}
 
 
@@ -152,12 +152,12 @@ class itinerary
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $check_out;
 
-    public function getCheckout(): bool
+    public function getCheckout()
     {
         return $this->check_out;
     }
 
-    public function setCheckout(bool $data): void
+    public function setCheckout( $data): void
     {      
         $this->check_out=$data;
     }
@@ -167,11 +167,11 @@ class itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $check_out_time;
 
-    public function setCheckouttime(DateTime $data): void
+    public function setCheckouttime( $data): void
     {
         $this->check_out_time = $data;
     }
-    public function getCheckouttime():DateTime
+    public function getCheckouttime()
     {
         return $this->check_out_time;
     }
@@ -179,12 +179,12 @@ class itinerary
     #[ORM\Column(type: 'string',nullable:true)]
     private $check_out_image;
 
-    public function getCheckoutimage(): string
+    public function getCheckoutimage()
     {
         return $this->check_out_image;
     }
 
-    public function setCheckoutimage(string $data): void
+    public function setCheckoutimage( $data): void
     {      
         $this->check_out_image= $data;
     }
@@ -193,12 +193,12 @@ class itinerary
     #[ORM\Column(type: 'float',nullable:true)]
     private string $check_out_latitude;
 
-    public function getCheckoutlatitude(): string
+    public function getCheckoutlatitude()
     {
         return $this->check_out_latitude;
     }
 
-    public function setCheckoutlatitude(string $data): void
+    public function setCheckoutlatitude( $data): void
     {      
         $this->check_out_latitude= $data;
     }
@@ -206,12 +206,12 @@ class itinerary
     #[ORM\Column(type: 'float',nullable:true)]
     private string $check_out_longitude;
 
-    public function getCheckoutlongitude(): string
+    public function getCheckoutlongitude()
     {
         return $this->check_out_longitude;
     }
 
-    public function setCheckoutlongitude(string $data): void
+    public function setCheckoutlongitude( $data): void
     {      
         $this->check_out_longitude= $data;
     }
@@ -219,10 +219,10 @@ class itinerary
     #[ORM\Column(type: 'text',nullable:true)]
     private string $check_out_remark;
 
-    public function getCheckoutremark(): string
+    public function getCheckoutremark()
     {return $this->check_out_remark;}
 
-    public function setCheckoutremark(string $data): void
+    public function setCheckoutremark( $data): void
     {$this->check_out_remark = $data;}
 
 
@@ -230,11 +230,11 @@ class itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDateCreated(DateTime $data): void
+    public function setDateCreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDateCreated():DateTime
+    public function getDateCreated()
     {
         return $this->date_created;
     }
@@ -249,7 +249,7 @@ class itinerary
         return $this->created_by;
     }
 
-    public function setCreatedBy(user $data): void
+    public function setCreatedBy( $data): void
     {
       $this->created_by=$data;
     }
@@ -262,11 +262,11 @@ class itinerary
     #[ORM\ManyToMany(targetEntity: connection_itinerary::class)]
     private Collection $connection_itinerary;
 
-    public function getConnectionitinerary(): Collection
+    public function getConnectionitinerary()
     {
         return $this->connection_itinerary;
     }
-    public function setConnectionitinerary(connection_itinerary $data): void
+    public function setConnectionitinerary( $data): void
     {
         $this->connection_itinerary->add($data);
     }   
@@ -277,11 +277,11 @@ class itinerary
     #[ORM\ManyToMany(targetEntity: justification_itinerary::class)]
     private Collection $itinerary_justification;
 
-    public function getItineraryjustification(): Collection
+    public function getItineraryjustification()
     {
         return $this->itinerary_justification;
     }
-    public function setItineraryjustification(justification_itinerary $data): void
+    public function setItineraryjustification( $data): void
     {
         $this->itinerary_justification->add($data);
     }   

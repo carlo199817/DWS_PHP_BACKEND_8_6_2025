@@ -15,7 +15,7 @@ class report_type
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -23,12 +23,12 @@ class report_type
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }

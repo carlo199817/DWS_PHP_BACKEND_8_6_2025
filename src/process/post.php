@@ -15,7 +15,7 @@ class post
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -25,11 +25,11 @@ class post
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -45,7 +45,7 @@ class post
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -59,11 +59,11 @@ class post
     #[ORM\ManyToMany(targetEntity: react_post::class)]
     private Collection $react_post;
 
-    public function getReactpost(): Collection
+    public function getReactpost()
     {
         return $this->react_post;
     }
-    public function setReactpost(react_post $data): void
+    public function setReactpost( $data): void
     {
         $this->react_post->add($data);
     }  
@@ -76,11 +76,11 @@ class post
     #[ORM\ManyToMany(targetEntity: content::class)]
     private Collection $post_content;
 
-    public function getPostcontent(): Collection
+    public function getPostcontent()
     {
         return $this->post_content;
     }
-    public function setPostcontent(content $data): void
+    public function setPostcontent( $data): void
     {
         $this->post_content->add($data);
     }   
@@ -92,11 +92,11 @@ class post
     #[ORM\ManyToMany(targetEntity: comment_post::class)]
     private Collection $comment_post;
 
-    public function getCommentpost(): Collection
+    public function getCommentpost()
     {
         return $this->comment_post;
     }
-    public function setCommentpost(comment_post $data): void
+    public function setCommentpost( $data): void
     {
         $this->comment_post->add($data);
     }   

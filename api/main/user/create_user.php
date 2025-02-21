@@ -9,14 +9,23 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../../../database.php'; 
 
-$databaseName = "main_db";
-$databaseName2 = "dws_db_2025";
+
+$databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
-$dbConnection2 = new DatabaseConnection($databaseName2);
 $entityManager = $dbConnection->getEntityManager();
-$entityManager2 = $dbConnection2->getEntityManager();
-
-
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    
+        if(getBearerToken()){
+        
+        echo json_decode(getBearerToken(),true)["database"];
+            
+            
 
+    }
+
+
+
+}
+?>

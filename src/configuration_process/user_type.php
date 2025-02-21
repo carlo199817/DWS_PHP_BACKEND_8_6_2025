@@ -17,7 +17,7 @@ class user_type
 
 
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -26,12 +26,12 @@ class user_type
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -44,11 +44,11 @@ class user_type
     #[ORM\ManyToMany(targetEntity: platform::class)]
     private Collection $user_type_platform;
 
-    public function getUsertypeplatform(): Collection
+    public function getUsertypeplatform()
     {
         return $this->user_type_platform;
     }
-    public function setUsertypeplatform(platform $data): void
+    public function setUsertypeplatform( $data): void
     {
         $this->user_type_platform->add($data);
     }
@@ -60,11 +60,11 @@ class user_type
     #[ORM\ManyToMany(targetEntity: form::class)]
     private Collection $user_type_form;
 
-    public function getUsertypeform(): Collection
+    public function getUsertypeform()
     {
         return $this->user_type_form;
     }
-    public function setUsertypeform(form $data): void
+    public function setUsertypeform( $data): void
     {
         $this->user_type_form->add($data);
     }

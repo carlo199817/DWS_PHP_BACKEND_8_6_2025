@@ -19,7 +19,6 @@ use clientDB\Process\user_type;
 class tokens {
     private int $id;
     private const SECRET_KEY = 'secyew44wfdfd23wsdsdsdzsad!ReT423*&';
-
     public function getToken(int $id, string $database_name)
     {
         return Token::create($id, self::SECRET_KEY, time() + 2000000, "*", ['alg' => 'HS256'],$database_name);
@@ -36,21 +35,12 @@ class tokens {
 
     public function decodeToken(string $token): ?array
     {
-
         $parts = explode('.', $token);
-
-
         if (count($parts) !== 3) {
             return null;
         }
-
-
         $payload = $this->base64UrlDecode($parts[1]);
-
-
         $decodedPayload = json_decode($payload, true);
-
-
         if ($decodedPayload && isset($decodedPayload['user_id'])) {
             return $decodedPayload;
         }
@@ -59,12 +49,9 @@ class tokens {
     }
 
 
-    private function base64UrlDecode(string $data): string
+    private function base64UrlDecode(string $data)
     {
-
         $data = str_replace(['-', '_'], ['+', '/'], $data);
-
-
         $mod4 = strlen($data) % 4;
         if ($mod4) {
             $data .= str_repeat('=', 4 - $mod4);
@@ -91,16 +78,15 @@ class user
         return $this->id;
     }
     
-
     #[ORM\Column(type: 'string',nullable:true)]
     private string $username;
 
-    public function getUsername(): string
+    public function getUsername()
     {   
         return $this->username; 
     }
 
-    public function setUsername(string $data): void
+    public function setUsername($data): void
     {      
         $this->username = $data;
     }
@@ -112,7 +98,7 @@ class user
     {
       $this->password = password_hash($data,PASSWORD_DEFAULT);
     }    
-    public function authenticate_user($data): bool
+    public function authenticate_user($data)
     {
         if (password_verify($data, $this->password)) {
             return true;
@@ -123,30 +109,25 @@ class user
     #[ORM\Column(type: 'string',nullable:true)]
     private $database_name;
 
-    public function getDatabasename(): string
+    public function getDatabasename()
     {   
-        if(json_encode($this->database_name)!="null"){
-        return $this->database_name;}  else{
-            }
+        return $this->database_name;
     }
 
-    public function setDatabasename(string $data): void
+    public function setDatabasename($data): void
     {      
         $this->database_name = $data;
     }
 
-
     #[ORM\Column(type: 'string',nullable:true)]
     private $first_name;
 
-    public function getFirstname(): string
+    public function getFirstname()
     {   
-        if(json_encode($this->first_name)!="null"){
-        return $this->first_name;}  else{
-            }
+        return $this->first_name;
     }
 
-    public function setFirstname(string $data): void
+    public function setFirstname($data): void
     {      
         $this->first_name = $data;
     }
@@ -154,29 +135,24 @@ class user
     #[ORM\Column(type: 'string',nullable:true)]
     private $middle_name;
 
-    public function getMiddlename(): string
+    public function getMiddlename()
     {   
         return $this->middle_name; 
     }
 
-    public function setMiddlename(string $data): void
+    public function setMiddlename($data): void
     {      
         $this->middle_name = $data;
     }
-
     
     #[ORM\Column(type: 'string',nullable:true)]
     private $last_name;
-
-    public function getLastname(): string
+    public function getLastname()
     {   
-        if(json_encode($this->last_name)!="null"){
-                return $this->last_name;}
-        else{
-            }
+        return $this->last_name;
     }
 
-    public function setLastname(string $data): void
+    public function setLastname($data): void
     {      
         $this->last_name = $data;
     }
@@ -184,30 +160,28 @@ class user
     #[ORM\Column(type: 'string',nullable:true)]
     private $suffix;
 
-    public function getSuffix(): string
+    public function getSuffix()
     {
         return $this->suffix;
     }
 
-    public function setSuffix(string $data): void
+    public function setSuffix($data): void
     {      
         $this->suffix = $data;
     }
 
-
     #[ORM\Column(type: 'string',nullable:true)]
     private $email;
 
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function setEmail(string $data): void
+    public function setEmail($data): void
     {      
         $this->email= $data;
     }
-
 
     #[ORM\Column(type: 'string',nullable:true, options:["default" => "0"])]
     private $employee_number;
@@ -217,7 +191,7 @@ class user
         return $this->employee_number; 
     }
 
-    public function setEmployeenumber(string $data): void
+    public function setEmployeenumber($data): void
     {      
         $this->employee_number = $data;
     }
@@ -226,12 +200,12 @@ class user
     private $location;
 
 
-    public function getLocation(): string
+    public function getLocation()
     {   
         return $this->location; 
     }
 
-    public function setLocation(string $data):void
+    public function setLocation($data):void
     {
         $this->location = $data;
     }
@@ -239,29 +213,26 @@ class user
     #[ORM\Column(type:"datetime",nullable:true)]
     private $time_location;
 
-    public function getTimelocation():DateTime
+    public function getTimelocation()
     {
         return $this->time_location;
-
     }
 
-    public function setTimelocation(DateTime $data):void
+    public function setTimelocation($data):void
     {
         $this->time_location = $data;
     }
 
-
     #[ORM\ManyToOne(targetEntity: store::class, inversedBy:"store")]
     #[ORM\JoinColumn(name: 'store_id', referencedColumnName: 'id')]
     private store|null $store_id = null;
-
 
     public function getStore()
     {
         return $this->store_id;
     }
 
-    public function setStore(store $data): void
+    public function setStore($data): void
     {
       $this->store_id=$data;
     }
@@ -270,13 +241,12 @@ class user
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
     private user_type|null $type_id = null;
 
-    
     public function getUsertype()
     {
         return $this->type_id;
     }
 
-    public function setUsertype(user_type $data): void
+    public function setUsertype($data): void
     {
       $this->type_id=$data;
     }
@@ -284,12 +254,12 @@ class user
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $disable;
 
-    public function getDisable(): bool
+    public function getDisable()
     {
         return $this->disable;
     }
 
-    public function setDisable(bool $data): void
+    public function setDisable($data): void
     {      
         $this->disable=$data;
     }
@@ -298,26 +268,25 @@ class user
     #[ORM\Column(type: 'decimal', nullable:true)]
     private ?string $distance;
 
-    public function getDistance(): ?string
+    public function getDistance()
     {
         return $this->distance;
     }
 
-    public function setDistance(?string $data): void
+    public function setDistance($data): void
     {      
         $this->distance=$data;
     }
 
-
     #[ORM\Column(type: 'string',options:["default" => "profile.png"],nullable:true)]
     private string $picture;
 
-    public function getPicture(): string
+    public function getPicture()
     {   
         return $this->picture; 
     }
 
-    public function setPicture(string $picture): void
+    public function setPicture($picture): void
     {      
         $this->picture = $picture;
     }
@@ -329,11 +298,11 @@ class user
     #[ORM\ManyToMany(targetEntity: store::class)]
     private Collection $user_store;
 
-    public function getUserstore(): Collection
+    public function getUserstore()
     {
         return $this->user_store;
     }
-    public function setUserstore(store $data): void
+    public function setUserstore($data): void
     {
         $this->user_store->add($data);
     }

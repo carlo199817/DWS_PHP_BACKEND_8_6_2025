@@ -14,7 +14,7 @@ class react_type
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -23,12 +23,12 @@ class react_type
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -37,12 +37,12 @@ class react_type
     #[ORM\Column(type: 'string',nullable:true)]
     private $icon;
 
-    public function getIcon(): string
+    public function getIcon()
     {
         return $this->icon;
     }
 
-    public function setIcon(string $data): void
+    public function setIcon( $data): void
     {      
         $this->icon= $data;
     }

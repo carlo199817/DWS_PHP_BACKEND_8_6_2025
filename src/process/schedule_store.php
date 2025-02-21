@@ -14,7 +14,7 @@ class schedule_store
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -23,11 +23,11 @@ class schedule_store
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_assigned;
 
-    public function setDateAssigned(DateTime $data): void
+    public function setDateAssigned( $data): void
     {
         $this->date_assigned=$data;
     }
-    public function getDateAssigned():DateTime
+    public function getDateAssigned()
     {
         return $this->date_assigned;
     }
@@ -39,11 +39,11 @@ class schedule_store
     #[ORM\ManyToMany(targetEntity: store::class)]
     private Collection $schedule_store_store;
 
-    public function getSchedulestore(): Collection
+    public function getSchedulestore()
     {
         return $this->schedule_store_store;
     }
-    public function setSchedulestore(store $data): void
+    public function setSchedulestore( $data): void
     {
         $this->schedule_store_store->add($data);
     }

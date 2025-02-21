@@ -18,13 +18,13 @@ $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $bearerToken = getBearerToken(); 
 
-    if ($bearerToken) {
-        $tokens = new MainDb\Configuration\tokens();
+    if(getBearerToken()){
 
 
-        if(getBearerToken()){
-            $token = json_decode(getBearerToken(),true);
-            echo json_encode(["user_id" => $token['user_id']]);
+
+        $token = json_decode(getBearerToken(),true);
+        header('HTTP/1.1 200 OK'); 
+        echo json_encode(["user_id" => $token['user_id']]);
 
 
     } else {
@@ -34,5 +34,5 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 }
 
 
-}
+
 ?>

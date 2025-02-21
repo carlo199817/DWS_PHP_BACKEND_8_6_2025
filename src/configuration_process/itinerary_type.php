@@ -16,7 +16,7 @@ class itinerary_type
 
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -25,12 +25,12 @@ class itinerary_type
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -42,12 +42,12 @@ class itinerary_type
     #[ORM\ManyToMany(targetEntity: form::class)]
     private Collection $itinerary_type_form;
 
-    public function getItinerarytypeform(): Collection
+    public function getItinerarytypeform()
     {
         return $this->itinerary_type_form;
     }
 
-    public function setItinerarytypeform(form $data): void
+    public function setItinerarytypeform( $data): void
     {
         $this->itinerary_type_form->add($data);
     }

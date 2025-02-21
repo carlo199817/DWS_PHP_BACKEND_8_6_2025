@@ -22,8 +22,6 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
    if ($user && $user->authenticate_user($input['password'])) {
         $tokens = new MainDb\Configuration\tokens;  
         $tokens = $tokens->getToken($user->getId(),$user->getDatabasename()); 
-
-        echo json_encode($user->getDatabasename());
         header('HTTP/1.1 200 OK'); 
         echo json_encode([
             'token' => $tokens

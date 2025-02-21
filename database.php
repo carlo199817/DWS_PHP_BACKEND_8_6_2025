@@ -55,10 +55,8 @@ require __DIR__ . '/src/process/chat.php';
 require __DIR__ . '/src/temperature/oven.php';
 require __DIR__ . '/src/temperature/type.php';
 require __DIR__ . '/src/temperature/detail.php';
-
 /*TOKEN*/
 require_once __DIR__ . '/api/security/token.php';
-
 
 class DatabaseConnection {
     private $connectionParams = [
@@ -70,7 +68,6 @@ class DatabaseConnection {
     ]; 
 
     private $entityManager;
-
     public function __construct(string $dbname) {
         $this->connectionParams['dbname'] = $dbname; 
         $proxyDir = __DIR__ . '/proxies';  

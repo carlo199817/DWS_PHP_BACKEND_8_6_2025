@@ -15,7 +15,7 @@ class content
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -26,12 +26,12 @@ class content
     #[ORM\Column(type: 'text',nullable:true)]
     private string $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -41,11 +41,11 @@ class content
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -61,7 +61,7 @@ class content
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -79,7 +79,7 @@ class content
     {
         return $this->react_content;
     }
-    public function setReactcontent(react_content $data): void
+    public function setReactcontent( $data): void
     {
         $this->react_content->add($data);
     }   
@@ -91,11 +91,11 @@ class content
     #[ORM\ManyToMany(targetEntity: comment_content::class)]
     private Collection $comment_content;
 
-    public function getContentcomment(): Collection
+    public function getContentcomment()
     {
         return $this->comment_content;
     }
-    public function setContentcomment(comment_content $data): void
+    public function setContentcomment( $data): void
     {
         $this->comment_content->add($data);
     }   

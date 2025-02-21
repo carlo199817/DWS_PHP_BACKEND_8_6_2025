@@ -15,7 +15,7 @@ class comment_content
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -30,7 +30,7 @@ class comment_content
         return $this->type_id;
     }
 
-    public function setType(react_type  $data): void
+    public function setType(  $data): void
     {
       $this->type_id=$data;
     }
@@ -39,11 +39,11 @@ class comment_content
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -59,7 +59,7 @@ class comment_content
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -71,11 +71,11 @@ class comment_content
     #[ORM\ManyToMany(targetEntity: react_comment_content::class)]
     private Collection $react_comment_content;
 
-    public function getReactcommentcontent(): Collection
+    public function getReactcommentcontent()
     {
         return $this->react_comment_content;
     }
-    public function setReactcommentcontent(react_comment_content $data): void
+    public function setReactcommentcontent( $data): void
     {
         $this->react_comment_content->add($data);
     }   
@@ -87,11 +87,11 @@ class comment_content
     #[ORM\ManyToMany(targetEntity: comment_content::class)]
     private Collection $comment_content;
 
-    public function getCommentcontentlink(): Collection
+    public function getCommentcontentlink()
     {
         return $this->comment_content;
     }
-    public function setCommentcontentlink(comment_content $data): void
+    public function setCommentcontentlink( $data): void
     {
         $this->comment_content->add($data);
     }   

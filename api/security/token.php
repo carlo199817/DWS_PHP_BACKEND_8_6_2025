@@ -53,15 +53,18 @@ function getBearerToken() {
     $check = $entityManager->find(MainDb\Configuration\user::class,$tokens->decodeToken($bearer_token)['user_id']);
 
     if($check){
+        $timezone = new DateTimeZone('Asia/Manila');
+        $currentDateTime = new DateTime('now', $timezone);
     return json_encode([
         "token"=>$bearer_token,
-        "user_id"=>$tokens->decodeToken($bearer_token)['user_id']
+        "user_id"=>$tokens->decodeToken($bearer_token)['user_id'],
+        "database"=>$check->getDatabasename() ? $check->getDatabasename() : $currentDateTime->format('Y')
     ]);;
     }else{
         echo json_encode(["Message" => "Unauthorized, Invalid or Expired Token."]);
         exit;
     }
-}
+    }
 
     $tokens = new MainDb\Configuration\tokens;  
     $bearer_token = json_decode(getBearerToken(), true)['token'];  
@@ -79,5 +82,7 @@ function getBearerToken() {
         exit;
     }
 }
+
+
 
 ?>

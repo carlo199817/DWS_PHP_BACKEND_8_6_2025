@@ -24,12 +24,12 @@ class group
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription($data): void
     {      
         $this->description= $data;
     }
@@ -43,7 +43,7 @@ class group
         return $this->type_id;
     }
 
-    public function setGrouptype(group_type $data): void
+    public function setGrouptype($data): void
     {
       $this->type_id=$data;
     }
@@ -54,11 +54,11 @@ class group
     #[ORM\ManyToMany(targetEntity: user::class)]
     private Collection $group_user;
 
-    public function getGroupuser(): Collection
+    public function getGroupuser()
     {
         return $this->group_user;
     }
-    public function setGroupuser(user $data): void
+    public function setGroupuser($data): void
     {
         $this->group_user->add($data);
     }
@@ -69,11 +69,11 @@ class group
     #[ORM\ManyToMany(targetEntity: store::class)]
     private Collection $group_store;
 
-    public function getGroupstore(): Collection
+    public function getGroupstore()
     {
         return $this->group_store;
     }
-    public function setGroupstore(store $data): void
+    public function setGroupstore($data): void
     {
         $this->group_store->add($data);
     }
@@ -84,11 +84,11 @@ class group
     #[ORM\ManyToMany(targetEntity: group::class)]
     private Collection $group_link;
 
-    public function getGrouplink(): Collection
+    public function getGrouplink()
     {
         return $this->group_link;
     }
-    public function setGrouplink(group $data): void
+    public function setGrouplink($data): void
     {
         $this->group_link->add($data);
     }

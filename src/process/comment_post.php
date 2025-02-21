@@ -15,7 +15,7 @@ class comment_post
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -26,12 +26,12 @@ class comment_post
     #[ORM\Column(type: 'text',nullable:true)]
     private string $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -41,11 +41,11 @@ class comment_post
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -61,7 +61,7 @@ class comment_post
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -73,11 +73,11 @@ class comment_post
     #[ORM\ManyToMany(targetEntity: react_comment_post::class)]
     private Collection $react_comment_post;
 
-    public function getReactcommentpost(): Collection
+    public function getReactcommentpost()
     {
         return $this->react_comment_post;
     }
-    public function setReactcommentpost(react_comment_post $data): void
+    public function setReactcommentpost( $data): void
     {
         $this->react_comment_post->add($data);
     }   
@@ -90,11 +90,11 @@ class comment_post
     #[ORM\ManyToMany(targetEntity: comment_post::class)]
     private Collection $link;
 
-    public function getCommentpostlink(): Collection
+    public function getCommentpostlink()
     {
         return $this->link;
     }
-    public function setCommentpostlink(comment_post $data): void
+    public function setCommentpostlink( $data): void
     {
         $this->link->add($data);
     }   

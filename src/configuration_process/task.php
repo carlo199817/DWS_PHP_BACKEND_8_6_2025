@@ -16,7 +16,7 @@ class task
 
     
  
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -25,12 +25,12 @@ class task
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -38,12 +38,12 @@ class task
     #[ORM\Column(type: 'string',nullable:true)]
     private $title;
 
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
 
-    public function setTitle(string $data): void
+    public function setTitle( $data): void
     {      
         $this->title= $data;
     }
@@ -60,7 +60,7 @@ class task
     }
 
 
-    public function setSeries (int $data):void
+    public function setSeries ( $data):void
     {
         $this->series = $data;
     }
@@ -76,7 +76,7 @@ class task
         return $this->status_id;
     }
 
-    public function setStatus(status $data): void
+    public function setStatus( $data): void
     {
       $this->status_id=$data;
     }
@@ -89,11 +89,11 @@ class task
     #[ORM\ManyToMany(targetEntity: validation::class)]
     private Collection $task_validation;
 
-    public function getTaskvalidation(): Collection
+    public function getTaskvalidation()
     {
         return $this->task_validation;
     }
-    public function setTaskvalidation(validation $data): void
+    public function setTaskvalidation( $data): void
     {
         $this->task_validation->add($data);
     }
@@ -104,11 +104,11 @@ class task
     #[ORM\ManyToMany(targetEntity: field::class)]
     private Collection $task_field;
 
-    public function getTaskfield(): Collection
+    public function getTaskfield()
     {
         return $this->task_field;
     }
-    public function setTaskfield(field $data): void
+    public function setTaskfield( $data): void
     {
         $this->task_field->add($data);
     }

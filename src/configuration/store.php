@@ -22,12 +22,12 @@ class store
     #[ORM\Column(type: 'string',nullable:true)]
     private string $outlet_ifs;
 
-    public function getOutletifs(): string
+    public function getOutletifs()
     {   
         return $this->outlet_ifs; 
     }
 
-    public function setOutletifs(string $data): void
+    public function setOutletifs($data): void
     {      
         $this->outlet_ifs = $data;
     }
@@ -35,12 +35,12 @@ class store
     #[ORM\Column(type: 'string',nullable:true)]
     private string $outlet_code;
 
-    public function getOutletcode(): string
+    public function getOutletcode()
     {   
         return $this->outlet_code; 
     }
 
-    public function setOutletcode(string $data): void
+    public function setOutletcode($data): void
     {      
         $this->outlet_code = $data;
     }
@@ -48,12 +48,12 @@ class store
     #[ORM\Column(type: 'string',nullable:true)]
     private string $town;
 
-    public function getTown(): string
+    public function getTown()
     {   
         return $this->town; 
     }
 
-    public function setTown(string $data): void
+    public function setTown($data): void
     {      
         $this->town = $data;
     }
@@ -61,12 +61,12 @@ class store
     #[ORM\Column(type: 'string',nullable:true)]
     private string $zip_code;
 
-    public function getZipcode(): string
+    public function getZipcode()
     {   
         return $this->zip_code; 
     }
 
-    public function setZipcode(string $data): void
+    public function setZipcode($data): void
     {      
         $this->zip_code = $data;
     }
@@ -74,12 +74,12 @@ class store
     #[ORM\Column(type: 'string',nullable:true)]
     private string $outlet_name;
 
-    public function getOutletname(): string
+    public function getOutletname()
     {   
         return $this->outlet_name; 
     }
 
-    public function setOutletname(string $data): void
+    public function setOutletname($data): void
     {      
         $this->outlet_name = $data;
     }
@@ -87,12 +87,12 @@ class store
     #[ORM\Column(type: 'string',nullable:true)]
     private string $address;
 
-    public function getAddress(): string
+    public function getAddress()
     {   
         return $this->address; 
     }
 
-    public function setAddress(string $data): void
+    public function setAddress($data): void
     {      
         $this->address = $data;
     }
@@ -100,12 +100,12 @@ class store
     #[ORM\Column(type: 'decimal', nullable:true)]
     private ?string $latitude;
 
-    public function getLatitude(): ?string
+    public function getLatitude()
     {
         return $this->latitude;
     }
 
-    public function setLatitude(?string $data): void
+    public function setLatitude($data): void
     {      
         $this->latitude=$data;
     }
@@ -114,12 +114,12 @@ class store
     #[ORM\Column(type: 'decimal', nullable:true)]
     private ?string $longitude;
 
-    public function getLongitude(): ?string
+    public function getLongitude()
     {
         return $this->longitude;
     }
 
-    public function setLongitude(?string $data): void
+    public function setLongitude($data): void
     {      
         $this->longitude=$data;
     }
@@ -127,12 +127,12 @@ class store
     #[ORM\Column(type: 'decimal', nullable:true)]
     private ?string $distance;
 
-    public function getDistance(): ?string
+    public function getDistance()
     {
         return $this->distance;
     }
 
-    public function setDistance(?string $data): void
+    public function setDistance($data): void
     {      
         $this->distance=$data;
     }
@@ -140,11 +140,11 @@ class store
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $start_time;
 
-    public function setStarttime(DateTime $data): void
+    public function setStarttime($data): void
     {
         $this->start_time=$data;
     }
-    public function getStarttime():DateTime
+    public function getStarttime()
     {
         return $this->start_time;
     }
@@ -152,11 +152,11 @@ class store
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $end_time;
 
-    public function setEndtime(DateTime $data): void
+    public function setEndtime($data): void
     {
         $this->end_time=$data;
     }
-    public function getEndtime():DateTime
+    public function getEndtime()
     {
         return $this->end_time;
     }
@@ -164,11 +164,11 @@ class store
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated($data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }

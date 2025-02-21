@@ -15,7 +15,7 @@ class notification
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -33,7 +33,7 @@ class notification
         return $this->form_id;
     }
 
-    public function setForm(form  $data): void
+    public function setForm(  $data): void
     {
       $this->form_id=$data;
     }
@@ -42,11 +42,11 @@ class notification
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -60,7 +60,7 @@ class notification
         return $this->itinerary_id;
     }
 
-    public function setItinerary(itinerary $data): void
+    public function setItinerary( $data): void
     {
       $this->itinerary_id=$data;
     }

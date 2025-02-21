@@ -15,7 +15,7 @@ class concern
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -24,11 +24,11 @@ class concern
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -44,7 +44,7 @@ class concern
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -62,7 +62,7 @@ class concern
         return $this->solved_by;
     }
 
-    public function setSolvedby(user $data): void
+    public function setSolvedby( $data): void
     {
       $this->solved_by=$data;
     }
@@ -72,12 +72,12 @@ class concern
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $solve;
 
-    public function getSolve(): bool
+    public function getSolve()
     {
         return $this->solve;
     }
 
-    public function setSolve(bool $data): void
+    public function setSolve( $data): void
     {      
         $this->solve=$data;
     }
@@ -90,11 +90,11 @@ class concern
     #[ORM\ManyToMany(targetEntity: justification_concern::class)]
     private Collection $justification_concern;
 
-    public function getJustificationconcern(): Collection
+    public function getJustificationconcern()
     {
         return $this->justification_concern;
     }
-    public function setJustificationconcern(justification_concern $data): void
+    public function setJustificationconcern( $data): void
     {
         $this->justification_concern->add($data);
     }   

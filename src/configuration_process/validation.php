@@ -17,7 +17,7 @@ class validation
     private int|null $id = null;
 
   
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -26,12 +26,12 @@ class validation
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $valid;
 
-    public function getValid(): bool
+    public function getValid()
     {
         return $this->valid;
     }
 
-    public function setValid(bool $data): void
+    public function setValid( $data): void
     {      
         $this->valid=$data;
     }
@@ -46,7 +46,7 @@ class validation
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -60,7 +60,7 @@ class validation
         return $this->user_type_id;
     }
     
-    public function setUsetype(user_type $data): void
+    public function setUsetype( $data): void
     {
       $this->user_type_id=$data;
     }

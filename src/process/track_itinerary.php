@@ -14,7 +14,7 @@ class track_itinerary
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -23,12 +23,12 @@ class track_itinerary
     #[ORM\Column(type: 'string',nullable:true)]
     private $location;
 
-    public function getLocation(): string
+    public function getLocation()
     {
         return $this->location;
     }
 
-    public function setLocation(string $data): void
+    public function setLocation( $data): void
     {      
         $this->location= $data;
     }
@@ -36,11 +36,11 @@ class track_itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDateCreated(DateTime $data): void
+    public function setDateCreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDateCreated():DateTime
+    public function getDateCreated()
     {
         return $this->date_created;
     }

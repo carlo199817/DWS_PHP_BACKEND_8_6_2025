@@ -15,7 +15,7 @@ class automation_itinerary
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -30,7 +30,7 @@ class automation_itinerary
         return $this->itinerary_type_id;
     }
 
-    public function setItinerarytype(itinerary_type $data): void
+    public function setItinerarytype($data): void
     {
       $this->itinerary_type_id = $data;
     }
@@ -44,7 +44,7 @@ class automation_itinerary
         return $this->store_id;
     }
 
-    public function setStore(store $data): void
+    public function setStore( $data): void
     {
       $this->store_id = $data;
     }
@@ -56,12 +56,12 @@ class automation_itinerary
     #[ORM\Column(type: 'text',nullable:true)]
     private string $justification;
 
-    public function getJustification(): string
+    public function getJustification()
     {
         return $this->justification;
     }
 
-    public function setJustification(string $data): void
+    public function setJustification( $data): void
     {      
         $this->justification= $data;
     }
@@ -70,11 +70,11 @@ class automation_itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $schedule;
 
-    public function setSchedule(DateTime $data): void
+    public function setSchedule( $data): void
     {
         $this->schedule=$data;
     }
-    public function getSchedule():DateTime
+    public function getSchedule()
     {
         return $this->schedule;
     }
@@ -83,11 +83,11 @@ class automation_itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -101,7 +101,7 @@ class automation_itinerary
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }

@@ -16,7 +16,7 @@ class chat
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -26,12 +26,12 @@ class chat
     #[ORM\Column(type: 'string',nullable:true)]
     private $title;
 
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
 
-    public function setTitle(string $data): void
+    public function setTitle( $data): void
     {      
         $this->title= $data;
     }
@@ -40,11 +40,11 @@ class chat
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -60,7 +60,7 @@ class chat
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -73,11 +73,11 @@ class chat
     #[ORM\ManyToMany(targetEntity: user::class)]
     private Collection $chat_user_monogamy;
 
-    public function getUsermonogamy(): Collection
+    public function getUsermonogamy()
     {
         return $this->chat_user_monogamy;
     }
-    public function setUsermonogamy(user $data): void
+    public function setUsermonogamy( $data): void
     {
         $this->chat_user_monogamy->add($data);
     }   
@@ -89,11 +89,11 @@ class chat
     #[ORM\ManyToMany(targetEntity: user::class)]
     private Collection $chat_user_polygamy;
 
-    public function getUserpolygamy(): Collection
+    public function getUserpolygamy()
     {
         return $this->chat_user_polygamy;
     }
-    public function setUserpolygamy(user $data): void
+    public function setUserpolygamy( $data): void
     {
         $this->chat_user_polygamy->add($data);
     }   
@@ -105,11 +105,11 @@ class chat
     #[ORM\ManyToMany(targetEntity: message::class)]
     private Collection $chat_message;
 
-    public function getChatmessage(): Collection
+    public function getChatmessage()
     {
         return $this->chat_message;
     }
-    public function setChatmessage(message $data): void
+    public function setChatmessage( $data): void
     {
         $this->chat_message->add($data);
     }   

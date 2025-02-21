@@ -16,12 +16,12 @@ class user
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function setId(int $data): void
+    public function setId( $data): void
     {      
         $this->id= $data;
     }
@@ -32,11 +32,11 @@ class user
     #[ORM\ManyToMany(targetEntity: form::class)]
     private Collection $user_form_editor;
 
-    public function getUserformeditor(): Collection
+    public function getUserformeditor()
     {
         return $this->user_form_editor;
     }
-    public function setUserformeditor(form $data): void
+    public function setUserformeditor( $data): void
     {
         $this->user_form_editor->add($data);
     }
@@ -49,11 +49,11 @@ class user
     #[ORM\ManyToMany(targetEntity: form::class)]
     private Collection $user_form_generator;
 
-    public function getUserformgenerator(): Collection
+    public function getUserformgenerator()
     {
         return $this->user_form_generator;
     }
-    public function setUserformgenerator(form $data): void
+    public function setUserformgenerator( $data): void
     {
         $this->user_form_generator->add($data);
     }
@@ -64,11 +64,11 @@ class user
     #[ORM\ManyToMany(targetEntity: form::class)]
     private Collection $user_form_validation;
 
-    public function getUserformvalidation(): Collection
+    public function getUserformvalidation()
     {
         return $this->user_form_validation;
     }
-    public function setUserformvalidation(form $data): void
+    public function setUserformvalidation( $data): void
     {
         $this->user_form_validation->add($data);
     }
@@ -80,11 +80,11 @@ class user
     #[ORM\ManyToMany(targetEntity: itinerary::class)]
     private Collection $user_itinerary_generator;
 
-    public function getUseritinerarygenerator(): Collection
+    public function getUseritinerarygenerator()
     {
         return $this->user_itinerary_generator;
     }
-    public function setUseritinerarygenerator(itinerary $data): void
+    public function setUseritinerarygenerator( $data): void
     {
         $this->user_itinerary_generator->add($data);
     }
@@ -97,11 +97,11 @@ class user
     #[ORM\ManyToMany(targetEntity: itinerary::class)]
     private Collection $user_itinerary_connection;
 
-    public function getUseritineraryconnection(): Collection
+    public function getUseritineraryconnection()
     {
         return $this->user_itinerary_connection;
     }
-    public function setUseritineraryconnection(itinerary $data): void
+    public function setUseritineraryconnection( $data): void
     {
         $this->user_itinerary_connection->add($data);
     }
@@ -114,11 +114,11 @@ class user
     #[ORM\ManyToMany(targetEntity: itinerary::class)]
     private Collection $user_itinerary_validation;
 
-    public function getUseritineraryvalidation(): Collection
+    public function getUseritineraryvalidation()
     {
         return $this->user_itinerary_validation;
     }
-    public function setUseritineraryvalidation(itinerary $data): void
+    public function setUseritineraryvalidation( $data): void
     {
         $this->user_itinerary_validation->add($data);
     }
@@ -130,11 +130,11 @@ class user
     #[ORM\ManyToMany(targetEntity: notification::class)]
     private Collection $user_notification;
 
-    public function getUsernotification(): Collection
+    public function getUsernotification()
     {
         return $this->user_notification;
     }
-    public function setUsernotification(notification $data): void
+    public function setUsernotification( $data): void
     {
         $this->user_notification->add($data);
     }

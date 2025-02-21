@@ -20,7 +20,7 @@ class form
 
  
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -29,12 +29,12 @@ class form
     #[ORM\Column(type: 'string',nullable:true)]
     private $title;
 
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
 
-    public function setTitle(string $data): void
+    public function setTitle( $data): void
     {      
         $this->title= $data;
     }
@@ -51,7 +51,7 @@ class form
     }
 
 
-    public function setSeries (int $data):void
+    public function setSeries ( $data):void
     {
         $this->series = $data;
     }
@@ -61,20 +61,20 @@ class form
     #[ORM\Column(type: 'text',options:["default" => "0.0.0"], nullable:true)]
     private string $version;
 
-    public function getVersion(): string
+    public function getVersion()
     {return $this->version;}
 
-    public function setVersion(string $data): void
+    public function setVersion( $data): void
     {$this->version = $data;}
 
 
     #[ORM\Column(type: 'text',options:["default" => "1.1.1"], nullable:true)]
     private string $chance;
 
-    public function getChance(): string
+    public function getChance()
     {return $this->chance;}
 
-    public function setChance(string $data): void
+    public function setChance( $data): void
     {$this->chance = $data;}
 
 
@@ -89,7 +89,7 @@ class form
         return $this->store_id;
     }
 
-    public function setStore(store $data): void
+    public function setStore( $data): void
     {
       $this->store_id=$data;
     }
@@ -106,7 +106,7 @@ class form
         return $this->type_id;
     }
 
-    public function setFormType(form_type $data): void
+    public function setFormType( $data): void
     {
       $this->type_id=$data;
     }
@@ -119,7 +119,7 @@ class form
 
     }
     
-    public function setPriority (int $data):void
+    public function setPriority ( $data):void
     {
         $this->priority = $data;
     }
@@ -127,20 +127,20 @@ class form
     #[ORM\Column(type: 'text',nullable:true)]
     private string $remark;
 
-    public function getRemark(): string
+    public function getRemark()
     {return $this->remark;}
 
-    public function setRemark(string $data): void
+    public function setRemark( $data): void
     {$this->remark = $data;}
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $open;
 
-    public function setOpendate(DateTime $data): void
+    public function setOpendate( $data): void
     {
         $this->open=$data;
     }
-    public function getOpendate():DateTime
+    public function getOpendate()
     {
         return $this->open;
     }
@@ -148,7 +148,7 @@ class form
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $close;
 
-    public function setClosedate(DateTime $data): void
+    public function setClosedate( $data): void
     {
         $this->close=$data;
     }
@@ -167,7 +167,7 @@ class form
      return $this->parentform_id;
      }
 
-    public function setParentform(form $data): void
+    public function setParentform( $data): void
     {
       $this->parentform_id=$data;
     }
@@ -175,11 +175,11 @@ class form
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDatecreated(DateTime $data): void
+    public function setDatecreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDatecreated():DateTime
+    public function getDatecreated()
     {
         return $this->date_created;
     }
@@ -187,11 +187,11 @@ class form
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_effective;
 
-    public function setDateeffective(DateTime $data): void
+    public function setDateeffective( $data): void
     {
         $this->date_effective=$data;
     }
-    public function getDateeffective():DateTime
+    public function getDateeffective()
     {
         return $this->date_effective;
     }
@@ -205,7 +205,7 @@ class form
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }
@@ -216,11 +216,11 @@ class form
     #[ORM\ManyToMany(targetEntity: task::class)]
     private Collection $form_task;
 
-    public function getTaskfield(): Collection
+    public function getTaskfield()
     {
         return $this->form_task;
     }
-    public function setTaskfield(task $data): void
+    public function setTaskfield( $data): void
     {
         $this->form_task->add($data);
     }  
@@ -231,11 +231,11 @@ class form
     #[ORM\ManyToMany(targetEntity: form::class)]
     private Collection $form_link;
 
-    public function getFormlink(): Collection
+    public function getFormlink()
     {
         return $this->form_link;
     }
-    public function setFormlink(form $data): void
+    public function setFormlink( $data): void
     {
         $this->form_link->add($data);
     }    
@@ -247,11 +247,11 @@ class form
     #[ORM\ManyToMany(targetEntity: connection_form::class)]
     private Collection $connection_form;
 
-    public function getConnectionform(): Collection
+    public function getConnectionform()
     {
         return $this->connection_form;
     }
-    public function setConnectionform(connection_form $data): void
+    public function setConnectionform( $data): void
     {
         $this->connection_form->add($data);
     }   
@@ -263,11 +263,11 @@ class form
     #[ORM\ManyToMany(targetEntity: justification_form::class)]
     private Collection $justification_form;
 
-    public function getJustificationform(): Collection
+    public function getJustificationform()
     {
         return $this->justification_form;
     }
-    public function setJustificationform(justification_form $data): void
+    public function setJustificationform( $data): void
     {
         $this->justification_form->add($data);
     }   

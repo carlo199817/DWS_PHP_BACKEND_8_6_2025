@@ -16,7 +16,7 @@ class plot
     private int|null $id = null;
 
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -30,7 +30,7 @@ class plot
         return $this->field_id;
     }
 
-    public function setField(field $data): void
+    public function setField( $data): void
     {
       $this->field_id=$data;
     }

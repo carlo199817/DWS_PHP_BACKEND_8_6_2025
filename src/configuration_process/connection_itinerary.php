@@ -16,7 +16,7 @@ class connection_itinerary
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -25,11 +25,11 @@ class connection_itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_connected;
 
-    public function setDateConnected(DateTime $data): void
+    public function setDateConnected( $data): void
     {
         $this->date_connected=$data;
     }
-    public function getDateConnected():DateTime
+    public function getDateConnected()
     {
         return $this->date_connected;
     }
@@ -43,7 +43,7 @@ class connection_itinerary
         return $this->user_id;
     }
 
-    public function setUser(user $data): void
+    public function setUser( $data): void
     {
       $this->user_id = $data;
     }

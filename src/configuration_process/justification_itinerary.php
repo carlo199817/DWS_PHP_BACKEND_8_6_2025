@@ -16,7 +16,7 @@ class justification_itinerary
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -26,12 +26,12 @@ class justification_itinerary
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description= $data;
     }
@@ -41,11 +41,11 @@ class justification_itinerary
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
-    public function setDateCreated(DateTime $data): void
+    public function setDateCreated( $data): void
     {
         $this->date_created=$data;
     }
-    public function getDateCreated():DateTime
+    public function getDateCreated()
     {
         return $this->date_created;
     }
@@ -61,7 +61,7 @@ class justification_itinerary
         return $this->created_by;
     }
 
-    public function setCreatedby(user $data): void
+    public function setCreatedby( $data): void
     {
       $this->created_by=$data;
     }

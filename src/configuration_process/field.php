@@ -16,7 +16,7 @@ class field
     private int|null $id = null;
 
    
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -25,12 +25,12 @@ class field
     #[ORM\Column(type: 'string',nullable:true)]
     private $answer;
 
-    public function getAnswer(): string
+    public function getAnswer()
     {
         return $this->answer;
     }
 
-    public function setAnswer(string $data): void
+    public function setAnswer( $data): void
     {      
         $this->answer= $data;
     }
@@ -38,12 +38,12 @@ class field
     #[ORM\Column(type: 'text',nullable:true)]
     private string $formula;
 
-    public function getFormula(): string
+    public function getFormula()
     {
         return $this->formula;
     }
 
-    public function setFormula(string $data): void
+    public function setFormula( $data): void
     {      
         $this->formula= $data;
     }
@@ -60,7 +60,7 @@ class field
     }
 
 
-    public function setSeries (int $data):void
+    public function setSeries ( $data):void
     {
         $this->series = $data;
     }
@@ -76,7 +76,7 @@ class field
         return $this->type_id;
     }
 
-    public function setFieldtype(field_type $data): void
+    public function setFieldtype( $data): void
     {
       $this->type_id=$data;
     }
