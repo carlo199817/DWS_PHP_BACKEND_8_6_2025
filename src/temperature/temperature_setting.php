@@ -13,12 +13,12 @@ class temperature_setting
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function setId(int $data): void
+    public function setId( $data): void
     {      
         $this->id= $data;
     }

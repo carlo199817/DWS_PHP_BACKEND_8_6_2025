@@ -15,7 +15,7 @@ class board
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -23,11 +23,11 @@ class board
     #[ORM\Column(type: 'string')]
     private string $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {
         $this->description = $data;
     }
@@ -42,12 +42,12 @@ class board
     #[ORM\ManyToMany(targetEntity: oven::class)]
     private Collection $board_oven;
 
-    public function getBoardoven(): Collection
+    public function getBoardoven()
     {
         return $this->board_oven;
     }
 
-    public function setBoardoven(oven $data): void
+    public function setBoardoven( $data): void
     {
         $this->board_oven->add($data);
     }
@@ -61,12 +61,12 @@ class board
 
 
 
-    public function getBoardstore(): Collection
+    public function getBoardstore()
     {
         return $this->board_store;
     }
 
-    public function setBoardstore(store $data): void
+    public function setBoardstore( $data): void
     {
         $this->board_store->add($data);
     }

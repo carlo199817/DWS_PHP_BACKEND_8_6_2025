@@ -15,7 +15,7 @@ class store
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -31,11 +31,11 @@ class store
     #[ORM\ManyToMany(targetEntity: board::class)]
     private Collection $store_board;
 
-    public function getStoreBoard(): Collection
+    public function getStoreBoard()
     {
         return $this->store_board; 
     }
-    public function setStoreBoard(board $data): void
+    public function setStoreBoard( $data): void
     {
         $this->store_board->add($data);
     } 

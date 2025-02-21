@@ -15,7 +15,7 @@ class detail
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    public function getId():int
+    public function getId()
     {
 
     return $this->id;
@@ -25,13 +25,13 @@ class detail
     #[ORM\Column(type: 'text',nullable:true)]
     private string $value;
 
-    public function setValue(string $data): void
+    public function setValue( $data): void
     {      
         $this->value = $data;
     }
 	
     
-    public function getValue():string
+    public function getValue()
     {
         return $this->value;
     }
@@ -39,11 +39,11 @@ class detail
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $datetime;
 
-    public function setDatetime(DateTime $datetime): void
+    public function setDatetime( $datetime): void
     {      
         $this->datetime=$datetime;
     }
-    public function getDateTime(): DateTime
+    public function getDateTime()
     {
 
     return $this->datetime;
@@ -54,12 +54,12 @@ class detail
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
     private type|null $type = null;
 
-    public function setType(type $data): void
+    public function setType( $data): void
     {      
         $this->type = $data;
     }
 
-    public function getType():type
+    public function getType()
     {
     return $this->type;
     }

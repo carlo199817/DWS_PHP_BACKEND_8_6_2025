@@ -13,25 +13,27 @@ class type
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     #[ORM\Column(type: 'string')]
     private string $description;
 
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description = $data;
     }
 
-	public function description():string
+	public function description()
     {
 
     return $this->description;
     }
 
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+ 
 
   
 }

@@ -16,8 +16,7 @@ class oven
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -25,11 +24,11 @@ class oven
     #[ORM\Column(type: 'string')]
     private string $description;
 
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description; 
     }
-    public function setDescription(string $data): void
+    public function setDescription( $data): void
     {      
         $this->description = $data;
     }
@@ -41,12 +40,12 @@ class oven
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
     private Type|null $type = null;
 
-    public function setType(type $data): void
+    public function setType( $data): void
     {
         $this->type = $data;
     }
 
-    public function getType():type
+    public function getType()
     {
         return $this->type;
     }
@@ -58,12 +57,12 @@ class oven
     #[ORM\ManyToMany(targetEntity: oven::class)]
     private Collection $link;
 
-    public function getLink(): Collection
+    public function getLink()
     {
         return $this->link;
     }
 
-    public function setLink(oven $data): void
+    public function setLink( $data): void
     {
         $this->link->add($data);
     }
@@ -74,12 +73,12 @@ class oven
     #[ORM\ManyToMany(targetEntity: detail::class)]
     private Collection $oven_detail;
 
-    public function getOvenDetail(): Collection
+    public function getOvenDetail()
     {
         return $this->oven_detail;
     }
 
-    public function setOvenDetail(detail $data): void
+    public function setOvenDetail( $data): void
     {
         $this->oven_detail->add($data);
     }
