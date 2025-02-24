@@ -1,6 +1,7 @@
 <?php
-
-namespace MainDb\Configuration;
+namespace configuration;
+use configuration_process\user_type;
+use configuration_process\form;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,25 +12,22 @@ use ReallySimpleJwt\Decode;
 use ReallySimpleJwt\Helper\Validator;
 use ReallySimpleJWT\Exception\ValidateException;
 use ReallySimpleJWT\Exception\TokenException;
-use clientDB\Process\user_type;
-
-
 
 
 class tokens {
     private int $id;
     private const SECRET_KEY = 'secyew44wfdfd23wsdsdsdzsad!ReT423*&';
-    public function getToken(int $id, string $database_name)
+    public function getToken(int $id)
     {
-        return Token::create($id, self::SECRET_KEY, time() + 2000000, "*", ['alg' => 'HS256'],$database_name);
+        return Token::create($id, self::SECRET_KEY, time() + 2000000, "*", ['alg' => 'HS256']);
     }
 
     public function getValidation(string $myToken)
-    { 
+    {
         try {
             return Token::validate($myToken, self::SECRET_KEY);
         } catch (ParsedException $e) {
-            return false;  
+            return false;
         }
     }
 
@@ -252,16 +250,16 @@ class user
     }
 
     #[ORM\Column(type: 'boolean', nullable:true)]
-    private $disable;
+    private $activate;
 
-    public function getDisable()
+    public function getActivate()
     {
-        return $this->disable;
+        return $this->activate;
     }
 
-    public function setDisable($data): void
-    {      
-        $this->disable=$data;
+    public function setActivate($data): void
+    {
+        $this->activate=$data;
     }
 
 
@@ -274,7 +272,7 @@ class user
     }
 
     public function setDistance($data): void
-    {      
+    {
         $this->distance=$data;
     }
 
@@ -282,12 +280,12 @@ class user
     private string $picture;
 
     public function getPicture()
-    {   
-        return $this->picture; 
+    {
+        return $this->picture;
     }
 
     public function setPicture($picture): void
-    {      
+    {
         $this->picture = $picture;
     }
 

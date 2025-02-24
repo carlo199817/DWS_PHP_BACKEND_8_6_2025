@@ -7,57 +7,46 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '/../../../database.php'; 
+require_once __DIR__ . '/../../../database.php';
 
 $databaseName = "main_db";
-$databaseName2 = "dws_db_2025";
 $dbConnection = new DatabaseConnection($databaseName);
-$dbConnection2 = new DatabaseConnection($databaseName2);
 $entityManager = $dbConnection->getEntityManager();
-$entityManager2 = $dbConnection2->getEntityManager();
-
 
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-$allow = false;
-
+$allow = true;
 
 if($_SERVER['REQUEST_METHOD']==="POST"){
     if($allow===true){
-        $user_repository = $entityManager->getRepository(MainDb\Configuration\user::class);
-        $existing_user = $user_repository->findOneBy(['email' => $input['email']]);
+        $user_repository = $entityManager->getRepository(configuration\user::class);
+        $existing_user = $user_repository->findOneBy(['username' => $input['username']]);
         if (!$existing_user) {
-            $new_super_admin = new MainDb\Configuration\user;  
+            $new_super_admin = new configuration\user;
             $new_super_admin->setEmail($input["email"]);
             $new_super_admin->setUsername($input["username"]);
-            $new_super_admin->setPassword($input["password"]); 
-            $user = new ClientDb\Process\user;
-           // $mirror_position = $entityManager->find(MainDb\Configuration\mirror_position::class,1);
-           // $new_super_admin->setPosition($mirror_position);
-            $entityManager->persist($new_super_admin); 
+            $new_super_admin->setPassword($input["password"]);
+            $user_type = $entityManager->find(configuration_process\user_type::class,1);
+            $new_super_admin->setUsertype($user_type);
+            $new_super_admin->setActivate(true);
+            $entityManager->persist($new_super_admin);
             $entityManager->flush();
-            header('HTTP/1.1 201 Created'); 
+            header('HTTP/1.1 201 Created');
             echo json_encode(["Message"=>"New superadmin ".$input['email']." created!"]);
         } else {
-            header('HTTP/1.1 409 Conflict'); 
+            header('HTTP/1.1 409 Conflict');
             echo json_encode(["Message"=>"Username already exists"]);
-           
+
         }
     }else{
-        header('HTTP/1.1 409 Conflict'); 
+        header('HTTP/1.1 409 Conflict');
         echo json_encode(["Message"=>"Registration deactivated"]);
     }
 
-    
 
-}
-else{ 
+
+}else{
     header('HTTP/1.1 405 Method Not Allowed');
     echo json_encode(["Message" => "Method Not Allowed"]);
 }
 
 
-
-
-
-
- 

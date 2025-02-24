@@ -1,10 +1,10 @@
 <?php
-namespace ClientDb\Process;
+namespace configuration_process;
+use configuration\store;
+use configuration\user;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use MainDB\Configuration\store;
-use MainDB\Configuration\user;
 
 
 
@@ -24,8 +24,7 @@ class form
     {
         return $this->id;
     }
-    
-    
+ 
     #[ORM\Column(type: 'string',nullable:true)]
     private $title;
 

@@ -8,9 +8,8 @@ $current_script = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
 
 if ($current_script !== 'login'&&
     $current_script !== 'create_super_admin'&&
-    $current_script !== 'get_client_icon'&&
-    $current_script !== 'get_asset_icon'&&
-    $current_script !== 'get_client_meta'
+    $current_script !== 'get_icon'&&
+    $current_script !== 'get_meta'
    ){
 function getBearerToken() {
     $bearer_token = '';
@@ -46,11 +45,17 @@ function getBearerToken() {
         exit;
     }
 
-    $tokens = new MainDb\Configuration\tokens;  
+    $tokens = new configuration\tokens;  
     $databaseName = "main_db";
     $dbConnection = new DatabaseConnection($databaseName);
     $entityManager = $dbConnection->getEntityManager();
-    $check = $entityManager->find(MainDb\Configuration\user::class,$tokens->decodeToken($bearer_token)['user_id']);
+    $check = $entityManager->find(configuration\user::class,$tokens->decodeToken($bearer_token)['user_id']);
+
+    if(!$check->getActivate()){
+        echo json_encode(["Message" => "Unauthorized, Invalid or Expired Token."]);
+        exit;
+    }
+
 
     if($check){
         $timezone = new DateTimeZone('Asia/Manila');
@@ -58,20 +63,21 @@ function getBearerToken() {
     return json_encode([
         "token"=>$bearer_token,
         "user_id"=>$tokens->decodeToken($bearer_token)['user_id'],
-        "database"=>$check->getDatabasename() ? $check->getDatabasename() : $currentDateTime->format('Y')
-    ]);;
+        "database"=>$check->getDatabasename() ? $check->getDatabasename() : $currentDateTime->format('Y'),
+        
+    ]);
     }else{
         echo json_encode(["Message" => "Unauthorized, Invalid or Expired Token."]);
         exit;
     }
     }
 
-    $tokens = new MainDb\Configuration\tokens;  
+    $tokens = new configuration\tokens;  
     $bearer_token = json_decode(getBearerToken(), true)['token'];  
 
     try {
         $result = $tokens->getValidation($bearer_token);
-      if ($result) { 
+      if ($result) {
             return true;
         } else {
             echo json_encode(["Message" => "Unauthorized, Invalid or Expired Token."]);

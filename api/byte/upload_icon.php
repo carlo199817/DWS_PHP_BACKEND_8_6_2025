@@ -1,5 +1,5 @@
 <?php
-// Enable error reporting for debugging
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -13,28 +13,29 @@ require_once __DIR__ . '/../../database.php';
 $databaseName = "main_db";
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
-$parent_directory = dirname(__DIR__);
-$main_pickle_directory = dirname($parent_directory);
+$parent_directory = dirname(__DIR__); 
+$grandparent_directory = dirname($parent_directory);
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 
-if ($_SERVER['REQUEST_METHOD'] === "POST") {  
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     if (getBearerToken()) {
 
         $response = array();
-        $targetDirectory = $main_pickle_directory . "/file/asset/";
+        $targetDirectory = $grandparent_directory . "/../digital_workspace_file/icon/" . $_POST['path'] ;
 
+
+        $targetDirectory = realpath($targetDirectory);
         if (isset($_FILES["file"])) {
 
-            $target_file = $targetDirectory . basename($_FILES["file"]['name']);
-            
+            $target_file = $targetDirectory . '/'.basename($_FILES["file"]['name']);
 
             $check = getimagesize($_FILES["file"]["tmp_name"]);
-            if ($check !== false) {  
+            if ($check !== false) {
 
                 if (file_exists($target_file)) {
-                    if (unlink($target_file)) { 
+                    if (unlink($target_file)) {
 
                         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
                             header('HTTP/1.1 200 OK');
@@ -60,8 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             } else {
 
                 header('HTTP/1.1 415 Unsupported Media Type');
-                echo json_encode(["Message" => "File is not an image."]);
-            }
+  }
         } else {
 
             header('HTTP/1.1 400 Bad Request');

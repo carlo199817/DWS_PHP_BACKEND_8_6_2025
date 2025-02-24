@@ -1,5 +1,5 @@
 <?php
-namespace MainDb\Configuration;
+namespace configuration;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,14 +13,11 @@ class group_type
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
 
-    
-
     public function getId()
     {
         return $this->id;
     }
-    
-    
+
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
@@ -30,10 +27,8 @@ class group_type
     }
 
     public function setDescription($data): void
-    {      
+    {
         $this->description= $data;
     }
-
-
 
 }

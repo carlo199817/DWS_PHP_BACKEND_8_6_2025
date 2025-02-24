@@ -1,9 +1,9 @@
 <?php
-namespace ClientDb\Process;
+namespace configuration_process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use MainDb\Configuration\user;
+use configuration\user;
 
 
 

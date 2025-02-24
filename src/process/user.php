@@ -1,5 +1,7 @@
 <?php
-namespace ClientDb\Process;
+namespace process;
+use configuration_process\form;
+use configuration_process\itinerary;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;

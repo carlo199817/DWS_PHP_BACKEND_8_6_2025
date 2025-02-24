@@ -1,10 +1,8 @@
 <?php
-namespace clientDB\Process;
+namespace configuration_process;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use clientDB\Process\platform;
-use clientDB\Process\form;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'user_type')]
@@ -21,8 +19,7 @@ class user_type
     {
         return $this->id;
     }
-    
-    
+
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
@@ -32,7 +29,7 @@ class user_type
     }
 
     public function setDescription( $data): void
-    {      
+    {
         $this->description= $data;
     }
 

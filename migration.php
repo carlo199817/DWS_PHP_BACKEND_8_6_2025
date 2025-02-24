@@ -9,8 +9,8 @@ require_once "vendor/autoload.php";
 
 
 $sharedConnectionParams = [
-    'user' => 'test',
-    'password' => 'Secret_1234',
+    'user' => 'main',
+    'password' => 'nnsnqh9jha5lmyKBu8V3sITrDF3rt2PUGYq3qjDgXpDu8RHXPo',
     'host' => '127.0.0.1',
     'port' => '3306',
     'driver' => 'pdo_mysql',

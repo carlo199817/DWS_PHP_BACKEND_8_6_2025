@@ -1,5 +1,5 @@
 <?php
-namespace MainDb\Configuration;
+namespace configuration;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;

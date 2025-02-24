@@ -1,10 +1,10 @@
 <?php
-namespace MainDb\Configuration;
-namespace ClientDb\Process;
+namespace configuration_process;
+use configuration\user;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use MainDB\Configuration\user;
+
 
 
 #[ORM\Entity]
