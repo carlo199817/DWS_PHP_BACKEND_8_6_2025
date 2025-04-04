@@ -36,11 +36,10 @@ class validation
         $this->valid=$data;
     }
 
-    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
-    #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
-    private user|null $created_by = null;
+  
+    #[ORM\Column(type: 'integer')]
+    private int|null $created_by = null;
 
-    
     public function getCreatedby()
     {
         return $this->created_by;
@@ -51,16 +50,16 @@ class validation
       $this->created_by=$data;
     }
 
-    #[ORM\ManyToOne(targetEntity: user_type::class, inversedBy:"user_type")]
-    #[ORM\JoinColumn(name: 'user_type_id', referencedColumnName: 'id')]
-    private user_type|null $user_type_id = null;
+ 
+    #[ORM\Column(type: 'integer')]
+    private int|null $user_type_id = null;
     
     public function getUsertype()
     {
         return $this->user_type_id;
     }
     
-    public function setUsetype( $data): void
+    public function setUsertype( $data): void
     {
       $this->user_type_id=$data;
     }

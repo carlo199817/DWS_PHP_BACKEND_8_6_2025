@@ -2,7 +2,7 @@
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+header("Access-Control-Allow-Headers:Content-Type, Authorization");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
@@ -16,27 +16,25 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    
         if(getBearerToken()){
-            $userRepository = $entityManager->getRepository(MainDb\Configuration\user::class);
-            $existingUser = $userRepository->findOneBy(['username' => $input['username']]);
-             if(!$existingUser){ 
-                $new_user = new MainDb\Configuration\user;
-                $new_user->setUsername($input['username']);
+            $userRepository = $entityManager->getRepository(configuration\user::class);
+            $existingUser = $userRepository->findOneBy(['username' => $input['user_name']]);
+             if(!$existingUser){
+                $new_user = new configuration\user;
+                $new_user->setUsername($input['user_name']);
                 $new_user->setPassword($input['password']);
-                $new_user->setFirstname($input['firstname']);
-                $new_user->setMiddlename($input['middlename']);
-                $new_user->setLastname($input['lastname']);
-                $new_user->setSuffix($input['suffix']);
+                $new_user->setFirstname($input['first_name']);
+                $new_user->setMiddlename($input['middle_name']);
+                $new_user->setLastname($input['last_name']);
                 $new_user->setEmail($input['email']);
+                $path = $entityManager->find(configuration\path::class,5);
+                $new_user->setPath($path);
                 $new_user->setEmployeenumber($input['employee_number']);
-                $user_type = $entityManager->find(clientDB\Process\user_type::class,$input['user_type']);
+                $user_type = $entityManager->find(configuration_process\user_type::class,$input['user_type']);
                 $new_user->setUsertype($user_type);
-                $new_user->setActivate(true);
-                $new_user->setPicture($input['picture'] ? $input['picture'] : "profile.png");
+                $new_user->setActivate($input['activate']);
                 $entityManager->persist($new_user);
                 $entityManager->flush();
-
                 header('HTTP/1.1 201 OK');
                 echo json_encode(["Message"=>"Successfully Created!"]);
                 
@@ -45,10 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 echo json_encode(["Message"=>"Username already exist"]);
             }
             
-        }
-
-
-
+        }       
+}
+else{ 
+    header('HTTP/1.1 405 Method Not Allowed');
+    echo json_encode(["Message" => "Method Not Allowed"]);
 }
 ?>
 

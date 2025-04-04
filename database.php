@@ -4,12 +4,22 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 
-require_once "vendor/autoload.php"; 
+require_once "vendor/autoload.php";
+
 /*CONFIGURATION*/
 require __DIR__ . '/src/configuration/user.php';
 require __DIR__ . '/src/configuration/store.php';
-require __DIR__ . '/src/configuration/group.php';
-require __DIR__ . '/src/configuration/group_type.php';
+require __DIR__ . '/src/configuration/category.php';
+require __DIR__ . '/src/configuration/category_type.php';
+require __DIR__ . '/api/byte/origin.php';
+require __DIR__ . '/src/configuration/automation_store.php';
+require __DIR__ . '/api/configuration/change/formula_change.php';
+require __DIR__ . '/api/configuration/replicate/field_loop.php';
+require __DIR__ . '/api/configuration/replicate/form_loop.php';
+require __DIR__ . '/api/remove/remove_field.php';
+require __DIR__ . '/api/remove/remove_platform.php';
+require __DIR__ . '/api/configuration/collect/formula_collect.php';
+require __DIR__ . '/src/configuration/table_category.php';
 /*CONFIGURATION_PROCESS*/
 require __DIR__ . '/src/configuration_process/user_type.php';
 require __DIR__ . '/src/configuration_process/platform.php';
@@ -33,6 +43,8 @@ require __DIR__ . '/src/configuration_process/report.php';
 require __DIR__ . '/src/configuration_process/status.php';
 require __DIR__ . '/src/configuration_process/task.php';
 require __DIR__ . '/src/configuration_process/validation.php';
+require __DIR__ . '/src/configuration_process/table_platform.php';
+require __DIR__ . '/src/configuration_process/reform.php';
 /*PROCESS*/
 require __DIR__ . '/src/process/user.php';
 require __DIR__ . '/src/process/store.php';
@@ -55,9 +67,8 @@ require __DIR__ . '/src/process/chat.php';
 require __DIR__ . '/src/temperature/oven.php';
 require __DIR__ . '/src/temperature/type.php';
 require __DIR__ . '/src/temperature/detail.php';
-/*TOKEN*/
-require_once __DIR__ . '/api/security/token.php';
-
+/*SECURITY*/
+require __DIR__ . '/api/security/token.php';
 class DatabaseConnection {
     private $connectionParams = [
         'user' => 'main',

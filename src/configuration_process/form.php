@@ -58,7 +58,7 @@ class form
 
 
     #[ORM\Column(type: 'text',options:["default" => "0.0.0"], nullable:true)]
-    private string $version;
+    private  $version;
 
     public function getVersion()
     {return $this->version;}
@@ -68,7 +68,7 @@ class form
 
 
     #[ORM\Column(type: 'text',options:["default" => "1.1.1"], nullable:true)]
-    private string $chance;
+    private  $chance;
 
     public function getChance()
     {return $this->chance;}
@@ -78,10 +78,8 @@ class form
 
 
  
-    #[ORM\ManyToOne(targetEntity: store::class, inversedBy:"store")]
-    #[ORM\JoinColumn(name: 'store_id', referencedColumnName: 'id')]
-    private store|null $store_id = null;
-
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $store_id = null;
 
     public function getStore()
     {
@@ -89,42 +87,27 @@ class form
     }
 
     public function setStore( $data): void
-    {
-      $this->store_id=$data;
+    {      
+        $this->store_id= $data;
     }
+ 
 
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $type_id = null;
 
-
-    #[ORM\ManyToOne(targetEntity: form_type::class, inversedBy:"form_type")]
-    #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
-    private formtype|null $type_id = null;
-
-
-    public function getFormType()
+    public function getFormtype()
     {
         return $this->type_id;
     }
 
-    public function setFormType( $data): void
-    {
-      $this->type_id=$data;
+    public function setFormtype( $data): void
+    {      
+        $this->type_id= $data;
     }
 
-    #[ORM\Column(type: 'integer',nullable:true)]
-    private int|null $priority = null;
-
-    public function getPriority(){
-        return $this->priority;
-
-    }
-    
-    public function setPriority ( $data):void
-    {
-        $this->priority = $data;
-    }
     
     #[ORM\Column(type: 'text',nullable:true)]
-    private string $remark;
+    private $remark;
 
     public function getRemark()
     {return $this->remark;}
@@ -155,21 +138,22 @@ class form
     {
         return $this->close;
     }
-    
 
-    #[ORM\ManyToOne(targetEntity: form::class, inversedBy:"form")]
-    #[ORM\JoinColumn(name: 'parentform_id', referencedColumnName: 'id')]
-    private form|null $parentform_id = null;
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $parentform_id = null;
 
     public function getParentform()
-     {
-     return $this->parentform_id;
-     }
-
-    public function setParentform( $data): void
     {
-      $this->parentform_id=$data;
+        return $this->parentform_id;
     }
+
+    public function setParentform($data): void
+    {      
+        $this->parentform_id= $data;
+    }
+
+
+
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
@@ -195,9 +179,9 @@ class form
         return $this->date_effective;
     }
 
-    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
-    #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
-    private user|null $created_by = null;
+    
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $created_by = null;
 
     public function getCreatedby()
     {
@@ -205,9 +189,12 @@ class form
     }
 
     public function setCreatedby( $data): void
-    {
-      $this->created_by=$data;
+    {      
+        $this->created_by= $data;
     }
+
+
+
         
     #[ORM\JoinTable(name: 'form_task')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
@@ -215,14 +202,27 @@ class form
     #[ORM\ManyToMany(targetEntity: task::class)]
     private Collection $form_task;
 
-    public function getTaskfield()
+    public function getFormtask()
     {
         return $this->form_task;
     }
-    public function setTaskfield( $data): void
+    public function setFormtask( $data): void
     {
         $this->form_task->add($data);
     }  
+
+        
+    public function removeFormtask($tasks,$data)
+    {
+        foreach ($tasks as $task) {
+             if ($this->form_task->contains($data)) {
+                 $this->form_task->removeElement($data);
+             }
+        }
+       return $tasks;
+    }  
+
+
     
     #[ORM\JoinTable(name: 'form_form')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
@@ -234,10 +234,11 @@ class form
     {
         return $this->form_link;
     }
-    public function setFormlink( $data): void
+    public function setFormlink($data): void
     {
         $this->form_link->add($data);
     }    
+
 
 
     #[ORM\JoinTable(name: 'form_connection_form')]
@@ -255,7 +256,6 @@ class form
         $this->connection_form->add($data);
     }   
 
-
     #[ORM\JoinTable(name: 'form_justification_form')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'justification_form_id', referencedColumnName: 'id')]
@@ -271,11 +271,48 @@ class form
         $this->justification_form->add($data);
     }   
 
+
+     
+    #[ORM\JoinTable(name: 'form_attach_form')]
+    #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'attach_form_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: form::class)]
+    private Collection $form_attach_form;
+
+    public function getFormattach()
+    {
+        return $this->form_attach_form;
+    }
+    public function setFormattach( $data): void
+    {
+        $this->form_attach_form->add($data);
+    }    
+    
+
+        
+    #[ORM\JoinTable(name: 'form_reform')]
+    #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'reform_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: reform::class)]
+    private Collection $form_reform;
+
+    public function getFormreform()
+    {
+        return $this->form_reform;
+    }
+    public function setFormreform( $data): void
+    {
+        $this->form_reform->add($data);
+    }    
+
+
     public function __construct()
     {
         $this->form_task = new ArrayCollection();
+        $this->form_attach_form = new ArrayCollection();
         $this->form_link = new ArrayCollection();
         $this->connection_form = new ArrayCollection();
+        $this->form_reform = new ArrayCollection();
         $this->justification_form = new ArrayCollection();
     }
 

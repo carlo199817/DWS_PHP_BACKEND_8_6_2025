@@ -12,6 +12,10 @@ class store
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
+ 
+
+    #[ORM\OneToMany(mappedBy: 'store_id', targetEntity: user::class)]
+    private Collection $users; 
 
 
     public function getId(): int
@@ -20,7 +24,7 @@ class store
     }
 
     #[ORM\Column(type: 'string',nullable:true)]
-    private string $outlet_ifs;
+    private $outlet_ifs;
 
     public function getOutletifs()
     {   
@@ -33,7 +37,7 @@ class store
     }
 
     #[ORM\Column(type: 'string',nullable:true)]
-    private string $outlet_code;
+    private $outlet_code;
 
     public function getOutletcode()
     {   
@@ -46,7 +50,7 @@ class store
     }
 
     #[ORM\Column(type: 'string',nullable:true)]
-    private string $town;
+    private $town;
 
     public function getTown()
     {   
@@ -59,7 +63,7 @@ class store
     }
 
     #[ORM\Column(type: 'string',nullable:true)]
-    private string $zip_code;
+    private $zip_code;
 
     public function getZipcode()
     {   
@@ -72,7 +76,7 @@ class store
     }
 
     #[ORM\Column(type: 'string',nullable:true)]
-    private string $outlet_name;
+    private $outlet_name;
 
     public function getOutletname()
     {   
@@ -85,7 +89,7 @@ class store
     }
 
     #[ORM\Column(type: 'string',nullable:true)]
-    private string $address;
+    private $address;
 
     public function getAddress()
     {   
@@ -97,8 +101,8 @@ class store
         $this->address = $data;
     }
 
-    #[ORM\Column(type: 'decimal', nullable:true)]
-    private ?string $latitude;
+    #[ORM\Column(type: 'float', nullable:true)]
+    private $latitude;
 
     public function getLatitude()
     {
@@ -111,8 +115,8 @@ class store
     }
 
     
-    #[ORM\Column(type: 'decimal', nullable:true)]
-    private ?string $longitude;
+    #[ORM\Column(type: 'float', nullable:true)]
+    private $longitude;
 
     public function getLongitude()
     {
@@ -124,8 +128,9 @@ class store
         $this->longitude=$data;
     }
 
-    #[ORM\Column(type: 'decimal', nullable:true)]
-    private ?string $distance;
+//   #[ORM\Column(type: 'decimal', nullable:true)]
+#[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]    
+private $distance;
 
     public function getDistance()
     {
@@ -136,7 +141,8 @@ class store
     {      
         $this->distance=$data;
     }
-    
+
+
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $start_time;
 
@@ -173,7 +179,7 @@ class store
         return $this->date_created;
     }
 
-    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
+    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"users")]
     #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
     private user|null $created_by = null;
 

@@ -2,7 +2,6 @@
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
@@ -14,7 +13,7 @@ $databaseName = "main_db";
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $parent_directory = dirname(__DIR__); 
-$grandparent_directory = dirname($parent_directory);
+$icon_directory = dirname($parent_directory);
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 
@@ -23,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (getBearerToken()) {
 
         $response = array();
-        $targetDirectory = $grandparent_directory . "/../digital_workspace_file/icon/" . $_POST['path'] ;
+        $targetDirectory = $icon_directory . "/../digital_workspace_file/icon/" . $_POST['path'] ;
 
 
         $targetDirectory = realpath($targetDirectory);

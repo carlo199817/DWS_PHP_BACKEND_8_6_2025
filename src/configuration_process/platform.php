@@ -19,8 +19,7 @@ class platform
     {
         return $this->id;
     }
-    
-    
+
     #[ORM\Column(type: 'string',nullable:true)]
     private $description;
 
@@ -30,7 +29,7 @@ class platform
     }
 
     public function setDescription( $data): void
-    {      
+    {
         $this->description= $data;
     }
 
@@ -43,22 +42,23 @@ class platform
     }
 
     public function setIcon( $data): void
-    {      
+    {
         $this->icon= $data;
     }
 
-    #[ORM\Column(type: 'string',nullable:true)]
-    private $label;
 
-    public function getLabel()
+    #[ORM\Column(type: 'integer')]
+    private int|null $path_id = null;
+
+    public function getPath()
     {
-        return $this->label;
+        return $this->path_id;
+    }
+    public function setPath($data): void
+    {
+        $this->path_id = $data;
     }
 
-    public function setLabel( $data): void
-    {      
-        $this->label= $data;
-    }
 
     #[ORM\JoinTable(name: 'platform_platform')]
     #[ORM\JoinColumn(name: 'platform_id', referencedColumnName: 'id')]
@@ -70,15 +70,46 @@ class platform
     {
         return $this->platform_link;
     }
-    public function setPlatformlink( $data): void
+    public function setPlatformlink($data): void
     {
         $this->platform_link->add($data);
-    }    
+    }
+
+
+ public function removePlatformlink($links,$data)
+    {
+        foreach ($links as $link) {
+             if ($this->platform_link->contains($data)) {
+                 $this->platform_link->removeElement($data);
+             }
+        }
+       return $links;
+    }
+
+    #[ORM\ManyToMany(targetEntity: user_type::class, mappedBy: 'user_type_platform')]
+    private Collection $user_type_platform;
+
+
+    public function getUsertypeplatform(): Collection
+    {
+        return $this->user_type_platform;
+    }
+
+
+
 
     public function __construct()
     {
         $this->platform_link = new ArrayCollection();
+        $this->user_type_platform = new ArrayCollection();
+      
     }
 
 
+
 }
+
+
+
+
+

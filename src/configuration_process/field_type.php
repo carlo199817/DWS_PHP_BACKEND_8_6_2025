@@ -63,4 +63,21 @@ class field_type
 
 
 
+
+    #[ORM\Column(type: 'integer')]
+    private int|null $path_id = null;
+
+
+    public function getPath()
+    {
+        return $this->path_id;
+    }
+
+    public function setPath( $data): void
+    {      
+        $this->path_id= $data;
+    }
+
+
+
 }

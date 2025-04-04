@@ -9,6 +9,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 #[ORM\Table(name: 'status')]
 class status
 {
+
+
+    #[ORM\OneToMany(mappedBy: 'status_id', targetEntity: status::class)]
+    private Collection $status; 
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]

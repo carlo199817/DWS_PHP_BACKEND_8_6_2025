@@ -69,7 +69,9 @@ class user
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
-
+    
+    #[ORM\OneToMany(mappedBy: 'created_by', targetEntity: user::class)]
+    private Collection $users; 
 
     public function getId(): int
     {
@@ -154,19 +156,7 @@ class user
     {      
         $this->last_name = $data;
     }
-
-    #[ORM\Column(type: 'string',nullable:true)]
-    private $suffix;
-
-    public function getSuffix()
-    {
-        return $this->suffix;
-    }
-
-    public function setSuffix($data): void
-    {      
-        $this->suffix = $data;
-    }
+    
 
     #[ORM\Column(type: 'string',nullable:true)]
     private $email;
@@ -221,9 +211,9 @@ class user
         $this->time_location = $data;
     }
 
-    #[ORM\ManyToOne(targetEntity: store::class, inversedBy:"store")]
+    #[ORM\ManyToOne(targetEntity: store::class, inversedBy:"users")]
     #[ORM\JoinColumn(name: 'store_id', referencedColumnName: 'id')]
-    private store|null $store_id = null;
+    private store|null $store_id=  null;
 
     public function getStore()
     {
@@ -235,7 +225,7 @@ class user
       $this->store_id=$data;
     }
 
-    #[ORM\ManyToOne(targetEntity: user_type::class, inversedBy:"user_type")]
+    #[ORM\ManyToOne(targetEntity: user_type::class, inversedBy:"users")]
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
     private user_type|null $type_id = null;
 
@@ -248,6 +238,7 @@ class user
     {
       $this->type_id=$data;
     }
+
 
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $activate;
@@ -262,9 +253,24 @@ class user
         $this->activate=$data;
     }
 
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $change_password;
 
-    #[ORM\Column(type: 'decimal', nullable:true)]
-    private ?string $distance;
+    public function getChangepassword()
+    {
+        return $this->change_password;
+    }
+
+    public function setChangepassword($data): void
+    {
+        $this->change_password=$data;
+    }
+
+
+
+//    #[ORM\Column(type: 'decimal', nullable:true)]
+#[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]  
+  private $distance;
 
     public function getDistance()
     {
@@ -277,7 +283,7 @@ class user
     }
 
     #[ORM\Column(type: 'string',options:["default" => "profile.png"],nullable:true)]
-    private string $picture;
+    private  $picture;
 
     public function getPicture()
     {
@@ -289,6 +295,21 @@ class user
         $this->picture = $picture;
     }
 
+
+    #[ORM\ManyToOne(targetEntity: path::class, inversedBy:"path")]
+    #[ORM\JoinColumn(name: 'path_id', referencedColumnName: 'id')]
+    private path|null $path_id = null;
+
+    public function getPath()
+    {
+        return $this->path_id;
+    }
+    public function setPath($data): void
+    {
+        $this->path_id = $data;
+    }
+    
+    
 
     #[ORM\JoinTable(name: 'user_store')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
@@ -305,6 +326,9 @@ class user
         $this->user_store->add($data);
     }
 
+
+    
+  
 
     public function __construct()
     {

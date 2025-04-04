@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Doctrine\DBAL\Tools;
 
 use Doctrine\DBAL\Driver;
@@ -19,26 +21,23 @@ use function str_replace;
 use function strpos;
 use function substr;
 
-/** @psalm-import-type Params from DriverManager */
+/** @phpstan-import-type Params from DriverManager */
 final class DsnParser
 {
-    /** @var array<string, string|class-string<Driver>> */
-    private array $schemeMapping;
-
     /** @param array<string, string|class-string<Driver>> $schemeMapping An array used to map DSN schemes to DBAL drivers */
-    public function __construct(array $schemeMapping = [])
-    {
-        $this->schemeMapping = $schemeMapping;
+    public function __construct(
+        private readonly array $schemeMapping = [],
+    ) {
     }
 
     /**
-     * @psalm-return Params
+     * @phpstan-return Params
      *
      * @throws MalformedDsnException
      */
     public function parse(
         #[SensitiveParameter]
-        string $dsn
+        string $dsn,
     ): array {
         // (pdo-)?sqlite3?:///... => (pdo-)?sqlite3?://localhost/... or else the URL will be invalid
         $url = preg_replace('#^((?:pdo-)?sqlite3?):///#', '$1://localhost/', $dsn);

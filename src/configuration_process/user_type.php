@@ -1,5 +1,6 @@
 <?php
 namespace configuration_process;
+use configuration\user;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,6 +34,9 @@ class user_type
         $this->description= $data;
     }
 
+    
+    #[ORM\OneToMany(mappedBy: 'type_id', targetEntity: user::class)]
+    private Collection $users; 
 
 
     #[ORM\JoinTable(name: 'user_type_platform')]
@@ -50,7 +54,16 @@ class user_type
         $this->user_type_platform->add($data);
     }
 
-       
+    public function removeUsertypeplatform($links,$data)
+    {
+        foreach ($links as $link) {
+             if ($this->user_type_platform->contains($data)) {
+                 $this->user_type_platform->removeElement($data);
+             }
+        }
+       return $links;
+    }  
+
     #[ORM\JoinTable(name: 'user_type_form')]
     #[ORM\JoinColumn(name: 'user_type_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'form_id', referencedColumnName: 'id')]
