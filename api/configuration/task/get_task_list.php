@@ -42,6 +42,12 @@ try {
     $task_list = [];
     foreach ($tasks as $task) {
         $validation_list = [];
+	  $assign_list = [];
+  foreach($task->getTaskassign() as $assign){
+            $user_profile = $entityManager->find(configuration_process\user_type::class, $assign->getUsertype());
+            array_push($assign_list,['id'=>$assign->getId(),"assignee"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>$assign->getValid()]);
+        }
+
         foreach($task->getTaskvalidation() as $validation){
             $user_profile = $entityManager->find(configuration_process\user_type::class, $validation->getUsertype());
             array_push($validation_list,['id'=>$validation->getId(),"validator"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>$validation->getValid()]);
@@ -51,6 +57,7 @@ try {
             'id' => $task->getId(),
             'title' => $task->getTitle(),
             'description' => $task->getDescription(),
+	        'assigned' => $assign_list,
             'series' => $task->getSeries(),
             'validation' => $validation_list,
         ]);

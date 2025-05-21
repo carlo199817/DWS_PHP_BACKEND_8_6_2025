@@ -327,12 +327,26 @@ class user
     }
 
 
-    
-  
+    #[ORM\JoinTable(name: 'user_user')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'user_related_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: user::class)]
+    private Collection $user_user;
+
+    public function getUserlink()
+    {
+        return $this->user_user;
+    }
+    public function setUserlink($data): void
+    {
+        $this->user_user->add($data);
+    }
+
 
     public function __construct()
     {
         $this->user_store = new ArrayCollection();
+	$this->user_user = new ArrayCollection();
     }
 
 

@@ -20,6 +20,35 @@ class field
     {
         return $this->id;
     }
+
+
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $active_style;
+
+    public function getActivatestyle()
+    {
+        return $this->active_style;
+    }
+
+    public function setActivatestyle($data): void
+    {
+        $this->active_style=$data;
+    }
+
+
+    #[ORM\Column(type: 'string',nullable:true)]
+    private $radio;
+
+    public function getRadio()
+    {
+        return $this->radio;
+    }
+
+    public function setRadio( $data): void
+    {      
+        $this->radio= $data;
+    }
+
     
 
     #[ORM\Column(type: 'string',nullable:true)]
@@ -37,7 +66,7 @@ class field
 
 
     
-    #[ORM\Column(type: 'string',nullable:true)]
+    #[ORM\Column(type: 'text',nullable:true)]
     private $answer;
 
     public function getAnswer()
@@ -66,25 +95,20 @@ class field
         $this->formula= $data;
     }
 
-    #[ORM\Column(type: 'integer',nullable:true)]
-    private int|null $series = null;
 
-    public function getSeries()
-    {   if($this->series!=null){
-        return $this->series;
-        }else{
-        return 0;           
-        }
-    }
+    #[ORM\Column(type: 'text',nullable:true)]
+    private  $style;
 
-
-    public function setSeries ( $data):void
+    public function getStyle()
     {
-        $this->series = $data;
+        return $this->style;
     }
 
-    
-   
+    public function setStyle( $data): void
+    {      
+        $this->style= $data;
+    }
+
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $type_id = null;
 
@@ -99,71 +123,108 @@ class field
     }
 
 
+    #[ORM\Column(type: 'bigint',nullable:true)]
+    private int|null $row_occupied = null;
 
+    public function getRowoccupied()
+    {
+        return $this->row_occupied;
+    }
+    public function setRowoccupied( $data): void
+    {      
+        $this->row_occupied= $data;
+    }
 
+    #[ORM\Column(type: 'bigint',nullable:true)]
+    private int|null $col_occupied = null;
     
-    #[ORM\JoinTable(name: 'field_field')]
-    #[ORM\JoinColumn(name: 'field_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'field_related_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: field::class)]
-    private Collection $field_link;
+    public function getColoccupied()
+    {
+        return $this->col_occupied;
+    }
+    public function setColoccupied( $data): void
+    {      
+        $this->col_occupied= $data;
+    }
+    
+    #[ORM\Column(type: 'bigint',nullable:true)]
+    private int|null $row_no = null;
+    
+    public function getRowno()
+    {
+        return $this->row_no;
+    }
+    public function setRowno( $data): void
+    {      
+        $this->row_no= $data;
+    }
 
-    public function getFieldlink()
+    #[ORM\Column(type: 'bigint',nullable:true)]
+    private int|null $col_no = null;
+    
+    public function getColno()
     {
-        return $this->field_link;
+        return $this->col_no;
     }
-    public function setFieldlink($data): void
-    {
-        $this->field_link->add($data);
+    public function setColno( $data): void
+    {      
+        $this->col_no= $data;
     }
+    
+    
+    
+    // #[ORM\JoinTable(name: 'field_field')]
+    // #[ORM\JoinColumn(name: 'field_id', referencedColumnName: 'id')]
+    // #[ORM\InverseJoinColumn(name: 'field_related_id', referencedColumnName: 'id')]
+    // #[ORM\ManyToMany(targetEntity: field::class)]
+    // private Collection $field_link;
+
+    // public function getFieldlink()
+    // {
+    //     return $this->field_link;
+    // }
+    // public function setFieldlink($data): void
+    // {
+    //     $this->field_link->add($data);
+    // }
 
    
-    public function removeFieldlink($links,$data)
-    {
-        foreach ($links as $link) {
-             if ($this->field_link->contains($data)) {
-                 $this->field_link->removeElement($data);
-             }
-        }
-       return $links;
-    }  
+    // public function removeFieldlink($links,$data)
+    // {
+    //     foreach ($links as $link) {
+    //          if ($this->field_link->contains($data)) {
+    //              $this->field_link->removeElement($data);
+    //          }
+    //     }
+    //    return $links;
+    // }  
 
-    public function setAllfieldlink(Collection $data): void
-    {
-        $this->field_link = $data;
-    } 
-
-
+    // public function setAllfieldlink(Collection $data): void
+    // {
+    //     $this->field_link = $data;
+    // } 
         
     #[ORM\ManyToMany(targetEntity: task::class, mappedBy: 'task_field')]
     private Collection $task_field;
-
-
-
+    
     public function getTaskfield(): Collection
     {
         return $this->task_field;
     }
-
-
+        
     #[ORM\ManyToMany(targetEntity: field::class, mappedBy: 'field_link')]
     private Collection $bidirectional;
 
+        
     public function getBidirectional(): Collection
     {
         return $this->bidirectional;
     }
 
-
-
-
     public function __construct()
     {
-        $this->field_link = new ArrayCollection();
+        // $this->field_link = new ArrayCollection();
         $this->task_field = new ArrayCollection();
-    	$this->bidirectional = new ArrayCollection();
+        $this->bidirectional = new ArrayCollection();
     }
-  
-  
-
 }

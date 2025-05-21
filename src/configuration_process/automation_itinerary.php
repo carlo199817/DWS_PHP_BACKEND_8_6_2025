@@ -22,23 +22,24 @@ class automation_itinerary
     }
     
     
-    #[ORM\ManyToOne(targetEntity: itinerary_type::class, inversedBy:"itinerary_type")]
-    #[ORM\JoinColumn(name: 'itinerary_type_id', referencedColumnName: 'id')]
-    private itinerary_type|null $itinerary_type_id = null;
+
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $itinerary_type_id = null;
 
     public function getItinerarytype()
     {
         return $this->itinerary_type_id;
     }
 
-    public function setItinerarytype($data): void
-    {
-      $this->itinerary_type_id = $data;
+    public function setItinerarytype( $data): void
+    {      
+        $this->itinerary_type_id= $data;
     }
 
-    #[ORM\ManyToOne(targetEntity: store::class, inversedBy:"store")]
-    #[ORM\JoinColumn(name: 'store_id', referencedColumnName: 'id')]
-    private store|null $store_id = null;
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $store_id = null;
 
     public function getStore()
     {
@@ -46,10 +47,23 @@ class automation_itinerary
     }
 
     public function setStore( $data): void
-    {
-      $this->store_id = $data;
+    {      
+        $this->store_id= $data;
     }
 
+
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $process;
+
+    public function getProcess()
+    {
+        return $this->process;
+    }
+
+    public function setProcess($data): void
+    {
+        $this->process=$data;
+    }
 
 
 
@@ -68,7 +82,7 @@ class automation_itinerary
     }
 
 
-    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
+    #[ORM\Column(type:"date",nullable:true)]
     private $schedule;
 
     public function setSchedule( $data): void
@@ -92,10 +106,11 @@ class automation_itinerary
     {
         return $this->date_created;
     }
-    
-    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
-    #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
-    private user|null $created_by = null;
+
+
+   
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $created_by = null;
 
     public function getCreatedby()
     {
@@ -106,6 +121,8 @@ class automation_itinerary
     {
       $this->created_by=$data;
     }
+
+
 
     
   

@@ -20,10 +20,16 @@ try {
 
     $task = $entityManager->find(configuration_process\task::class, $input['task_id']);
         $validation_list = [];
+$assign_list = [];
         foreach($task->getTaskvalidation() as $validation){
             $user_profile = $entityManager->find(configuration_process\user_type::class, $validation->getUsertype());
             array_push($validation_list,['id'=>$user_profile->getId(),"validator"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>$validation->getValid()]);
         }
+   foreach($task->getTaskassign() as $assign){
+            $user_profile = $entityManager->find(configuration_process\user_type::class, $assign->getUsertype());
+            array_push($assign_list,['id'=>$user_profile->getId(),"assignee"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>$assign->getValid()]);
+        }
+
         $status = $entityManager->find(configuration_process\status::class,$task->getStatus());
     header('HTTP/1.1 200 OK');
     echo json_encode(
@@ -32,7 +38,12 @@ try {
     'description' => $task->getDescription(),
     'series' => $task->getSeries(),
     "field"=>count($task->getTaskfield()),
-    'validation' => $validation_list,]
+    'validation' => $validation_list,
+ 'assigned' => $assign_list,
+      'style'=>$task->getStyle(),
+        'row_set'=>$task->getRowset(),
+        'col_set'=>$task->getColset(),
+    ]
     );
 } catch (Exception $e) {
     header('HTTP/1.1 500 Internal Server Error');

@@ -17,7 +17,8 @@ $check = false;
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         if(getBearerToken()){
             $task = $entityManager->find(configuration_process\task::class,$input['task_id']);
-            $task->setSeries($input['series']-1);
+            $old_task = $entityManager->find(configuration_process\task::class,$input['old_task_id']);
+            $task->setSeries($old_task->getSeries()-1);
             $entityManager->flush();
             $task_list = [];
             $form = $entityManager->find(configuration_process\form::class,$input['form_id']);

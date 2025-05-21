@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
         $type = $entityManager->find(configuration_process\field_type::class,$input['field_type_id']);
         $field->setFieldtype($type->getId());
+	$field->setFormula($input['formula']);
+        $field->setAnswer("");
         $entityManager->flush();
         echo header("HTTP/1.1 200 OK");
         echo json_encode(['Message' => "Field type updated"]);

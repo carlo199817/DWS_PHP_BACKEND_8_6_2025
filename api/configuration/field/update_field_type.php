@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                 $field_type->setLabel($input['label']);
                 $entityManager->flush();
                 echo header("HTTP/1.1 200 OK");
-                echo json_encode(['Message' => $input['label']. " updated"]);
+                echo json_encode(['Message' => $input['description']. " updated"]);
             }else{
                 header('HTTP/1.1 409 Conflict'); 
                 echo json_encode(["Message"=> $input['description']." already exist"]);

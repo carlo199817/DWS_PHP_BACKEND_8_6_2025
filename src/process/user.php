@@ -43,6 +43,20 @@ class user
         $this->user_form_editor->add($data);
     }
 
+    #[ORM\JoinTable(name: 'user_form_connection')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'form_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: form::class)]
+    private Collection $user_form_connection;
+
+    public function getUserformconnection()
+    {
+        return $this->user_form_connection;
+    }
+    public function setUserformconnection( $data): void
+    {
+        $this->user_form_connection->add($data);
+    }
     
 
     #[ORM\JoinTable(name: 'user_form_generator')]
@@ -150,6 +164,7 @@ class user
         $this->user_itinerary_connection = new ArrayCollection();
         $this->user_itinerary_validation = new ArrayCollection();
         $this->user_notification = new ArrayCollection();
+  $this->user_form_connection = new ArrayCollection();
     }
 
 

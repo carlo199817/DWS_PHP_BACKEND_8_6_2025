@@ -40,6 +40,7 @@ class user extends \configuration\user implements \Doctrine\ORM\Proxy\InternalPr
         "\0".parent::class."\0".'time_location' => [parent::class, 'time_location', null],
         "\0".parent::class."\0".'type_id' => [parent::class, 'type_id', null],
         "\0".parent::class."\0".'user_store' => [parent::class, 'user_store', null],
+        "\0".parent::class."\0".'user_user' => [parent::class, 'user_user', null],
         "\0".parent::class."\0".'username' => [parent::class, 'username', null],
         "\0".parent::class."\0".'users' => [parent::class, 'users', null],
         'activate' => [parent::class, 'activate', null],
@@ -60,6 +61,7 @@ class user extends \configuration\user implements \Doctrine\ORM\Proxy\InternalPr
         'time_location' => [parent::class, 'time_location', null],
         'type_id' => [parent::class, 'type_id', null],
         'user_store' => [parent::class, 'user_store', null],
+        'user_user' => [parent::class, 'user_user', null],
         'username' => [parent::class, 'username', null],
         'users' => [parent::class, 'users', null],
     ];

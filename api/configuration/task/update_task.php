@@ -17,16 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         $task = $entityManager->find(configuration_process\task::class,$input['task_id']);
         $task->setTitle($input['title']);
         $task->setDescription($input['description']);
-        $user_types =  $input['user_type'];
+        $task->setStyle($input['style']);
+        $task->setRowset($input['row_set']);
+        $task->setColset($input['col_set']);
+        $user_type_validations =  $input['user_type_validation'];
+        $user_type_assigns =  $input['user_type_assign'];
 
         foreach($task->getTaskvalidation() as $validation){
             $task->removeTaskvalidation($task->getTaskvalidation(),$validation);
+            $entityManager->remove($validation);
             $entityManager->flush();
         }
-            foreach($user_types as $user_type){
+            foreach($user_type_validations as $user_type_validation){
             $validation = new configuration_process\validation;            
-            $validation->setCreatedby($token['user_id']);
-            $validation->setUsertype( $user_type);
+            $validation->setUsertype( $user_type_validation);
             $validation->setValid(true);
             $entityManager->persist($validation);
             $entityManager->flush();
@@ -34,6 +38,22 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
            
         }    
         
+           foreach($task->getTaskassign() as $assign){
+            $task->removeTaskassign($task->getTaskassign(),$assign);
+            $entityManager->remove($assign);
+            $entityManager->flush();
+        }
+            foreach($user_type_assigns as $user_type_assign){
+            $assign = new configuration_process\assign;            
+            $assign->setUsertype( $user_type_assign);
+            $assign->setValid(true);
+            $entityManager->persist($assign);
+            $entityManager->flush();
+            $task->setTaskassign($assign);
+           
+        }    
+
+
          $entityManager->flush();
         echo header("HTTP/1.1 200 OK");
         echo json_encode(['Message' => "Task updated"]);

@@ -9,6 +9,9 @@ require_once __DIR__ . '/../../../database.php';
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
+$databaseName2 = "dws_db_2025";
+$dbConnection = new DatabaseConnection($databaseName2);
+$processDb = $dbConnection->getEntityManager(); 
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){ 
@@ -16,10 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
       
         $task = $entityManager->find(configuration_process\task::class,$input['task_id']);
         $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
-        $setFieldLoop = $field_loop->setLoopfield($entityManager,$field,$task);
+    $setFieldLoop = $field_loop->setLoopfield($entityManager,$processDb,$field,$task,true);    
+    
     }
         echo header("HTTP/1.1 200 OK");
-        echo json_encode(["Field Duplicate Complete!"]);
+        echo json_encode(["Message"=>"Field Duplicate Complete!"]);
         }
     
     else{ 

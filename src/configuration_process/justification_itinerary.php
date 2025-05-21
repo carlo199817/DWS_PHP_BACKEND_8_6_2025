@@ -1,6 +1,6 @@
 <?php
 namespace configuration_process;
-use configuration\user;
+use process\user;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -52,20 +52,21 @@ class justification_itinerary
 
 
     
+    
+        
     #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
     #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
     private user|null $created_by = null;
 
-    public function getCreatedby()
+    public function getCreatedBy()
     {
         return $this->created_by;
     }
-
-    public function setCreatedby( $data): void
+    public function setCreatedBy( $data): void
     {
-      $this->created_by=$data;
+        $this->created_by=$data;
     }
-
+    
     
 
 

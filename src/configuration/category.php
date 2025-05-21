@@ -14,7 +14,6 @@ class category
     private int|null $id = null;
 
 
-  
     public function getId(): int
     {
         return $this->id;
@@ -34,7 +33,7 @@ class category
         $this->description= $data;
     }
 
-    #[ORM\ManyToOne(targetEntity: category_type::class, inversedBy:"group_type")]
+    #[ORM\ManyToOne(targetEntity: category_type::class, inversedBy:"category_type")]
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
     private category_type|null $type_id = null;
 
@@ -63,41 +62,11 @@ class category
         $this->category_user->add($data);
     }
  
-    #[ORM\JoinTable(name: 'category_store')]
-    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'store_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: store::class)]
-    private Collection $category_store;
 
-    public function getCategorystore()
-    {
-        return $this->category_store;
-    }
-    public function setCategorystore($data): void
-    {
-        $this->category_store->add($data);
-    }
-    
-    #[ORM\JoinTable(name: 'category_category')]
-    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'category_related_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: category::class)]
-    private Collection $category_link;
-
-    public function getCategorylink()
-    {
-        return $this->category_link;
-    }
-    public function setCategorylink($data): void
-    {
-        $this->category_link->add($data);
-    }
 
     public function __construct()
     {
         $this->category_user = new ArrayCollection();
-        $this->category_store = new ArrayCollection();
-        $this->category_link = new ArrayCollection();
     }
 
 

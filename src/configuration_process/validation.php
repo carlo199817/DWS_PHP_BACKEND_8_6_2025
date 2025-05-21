@@ -15,13 +15,11 @@ class validation
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
-
-  
+ 
     public function getId()
     {
         return $this->id;
     }
-    
     
     #[ORM\Column(type: 'boolean', nullable:true)]
     private $valid;
@@ -37,7 +35,7 @@ class validation
     }
 
   
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable:true)]
     private int|null $created_by = null;
 
     public function getCreatedby()
@@ -51,7 +49,7 @@ class validation
     }
 
  
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable:true)]
     private int|null $user_type_id = null;
     
     public function getUsertype()

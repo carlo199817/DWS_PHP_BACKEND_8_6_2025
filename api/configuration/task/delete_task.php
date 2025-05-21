@@ -16,13 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
         $remove_field = new remove_field();
         $form = $entityManager->find(configuration_process\form::class,$input['form_id']);
         $task = $entityManager->find(configuration_process\task::class,$input['task_id']);
-            foreach($task->getTaskfield() as $field){
-                $remove = $remove_field->setRemovefield($entityManager,$field->getId(),$field->getId(),$task->getId());
-            }
         $form->removeFormtask($form->getFormtask(),$task);
         $entityManager->flush();
            echo header("HTTP/1.1 200 OK");
-        echo json_encode(['Message' => "Task Deleted"]);
+        echo json_encode(['Message' => "Task Removed"]);
         }
     }
     else{ 

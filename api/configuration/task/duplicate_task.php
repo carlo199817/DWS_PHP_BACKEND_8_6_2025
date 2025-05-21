@@ -9,6 +9,9 @@ require_once __DIR__ . '/../../../database.php';
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager(); 
+$databaseName2 = "dws_db_2025";
+$dbConnection = new DatabaseConnection($databaseName2);
+$processDb = $dbConnection->getEntityManager(); 
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){ 
@@ -22,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $new_task->setTitle($task->getTitle());
         $new_task->setDescription($task->getDescription());
         $new_task->setStatus($task->getStatus());
+        $new_task->setStyle($task->getStyle());
+        $new_task->setRowset($task->getRowset());
+        $new_task->setColset($task->getColset());
         $new_task->setSeries(count($form->getFormtask()));
         $entityManager->persist($new_task);
         $entityManager->flush();
@@ -38,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $form->setFormtask($new_task);
         $entityManager->flush();
         foreach($task->getTaskfield() as $field){
-            $setFieldLoop = $field_loop->setLoopfield($entityManager,$field,$new_task);
+            $setFieldLoop = $field_loop->setLoopfield($entityManager,$processDb,$field,$new_task,true);
         }
         echo header("HTTP/1.1 200 OK");
-        echo json_encode(["Task Duplicate Complete!"]);
+        echo json_encode([ "Message"=>"Task Duplicate Complete!"]);
         }
     }
     else{ 

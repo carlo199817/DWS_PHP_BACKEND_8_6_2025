@@ -13,11 +13,12 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
         if(getBearerToken()){ 
-        $remove_field = new remove_field();
         $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
-        $remove = $remove_field->setRemovefield($entityManager,$field,$field,$input['task_id']);
+        $task_id = $entityManager->find(configuration_process\task::class,$input['task_id']);
+        $task_id->removeTaskfield($task_id->getTaskfield(),$field);
+        $entityManager->flush();
           echo header("HTTP/1.1 200 OK");
-        echo json_encode(['Message' => "Field Deleted"]);
+        echo json_encode(['Message' => "Field Removed"]);
         }
     }
     else{ 

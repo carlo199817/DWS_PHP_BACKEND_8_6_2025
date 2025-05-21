@@ -3,7 +3,7 @@ $current_script = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
 if ($current_script !== 'login'&&
     $current_script !== 'create_super_admin'&&
     $current_script !== 'get_icon'&&
-    $current_script !== 'get_meta'&&  $current_script !== 'upload_store'
+    $current_script !== 'get_meta'&&  $current_script !== 'upload_store' && $current_script !== 'automation_form'&& $current_script !== 'automation_itinerary'
     
 ){
 function getBearerToken() {

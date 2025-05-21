@@ -15,9 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){    
         $task = $entityManager->find(configuration_process\task::class,$input['task_id']);
         $field = new configuration_process\field;
-	$field->setSeries(0);
         $type = $entityManager->find(configuration_process\field_type::class,$input['type_id']);
         $field->setFieldtype($type->getId());
+ 	$field->setFormula($input['formula']);
+        $field->setRowoccupied($input['row_occupied']);
+        $field->setColoccupied($input['col_occupied']);
+        $field->setRowno($input['row_no']);
+        $field->setColno($input['col_no']);
+	$field->setActivatestyle($input['activate_style']);
+	$field->setStyle($input['style']);
         $entityManager->persist($field);
         $entityManager->flush();
         $task->setTaskfield($field);

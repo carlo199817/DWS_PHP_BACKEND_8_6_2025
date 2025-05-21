@@ -1,6 +1,6 @@
 <?php
 namespace configuration_process;
-use configuration\user;
+use process\user;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;

@@ -13,11 +13,18 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         if(getBearerToken()){  
-                $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
-                $field->setQuestion($input['question']);
+            $repository = $entityManager->getRepository(configuration_process\itinerary_type::class);
+            $existing = $repository->findOneBy(['description' => $input['description']]);
+            if(!$existing){
+                $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class,$input['itinerary_type_id']);
+                $itinerary_type->setDescription($input['description']);
                 $entityManager->flush();
                 echo header("HTTP/1.1 200 OK");
-                echo json_encode(['Message' => "Field update"]);
+                echo json_encode(['Message' => $input['description']. " updated"]);
+            }else{
+                header('HTTP/1.1 409 Conflict'); 
+                echo json_encode(["Message"=> $input['description']." already exist"]);
+            }
         }
     }
     else{ 

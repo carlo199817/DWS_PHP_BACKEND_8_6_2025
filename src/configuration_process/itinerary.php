@@ -1,7 +1,7 @@
 <?php
 namespace configuration_process;
-use configuration\store;
-use configuration\user;
+use process\store;
+use process\user;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,10 +22,23 @@ class itinerary
         return $this->id;
     }
     
-    #[ORM\ManyToOne(targetEntity: itinerary_type::class, inversedBy:"store")]
-    #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
-    private itinerary_type|null $type_id = null;
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $validation;
 
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
+    public function setValidation( $data): void
+    {      
+        $this->validation=$data;
+    }
+
+ 
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $type_id = null;
 
     public function getType()
     {
@@ -37,12 +50,13 @@ class itinerary
       $this->type_id = $data;
     }
 
-
     
-    #[ORM\ManyToOne(targetEntity: store::class, inversedBy:"store")]
-    #[ORM\JoinColumn(name: 'store_id', referencedColumnName: 'id')]
-    private store|null $store_id = null;
 
+
+
+     
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $store_id = null;
 
     public function getStore()
     {
@@ -50,9 +64,11 @@ class itinerary
     }
 
     public function setStore( $data): void
-    {
-      $this->store_id=$data;
+    {      
+        $this->store_id= $data;
     }
+
+
 
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
@@ -142,12 +158,6 @@ class itinerary
 
     public function setCheckinremark( $data): void
     {$this->check_in_remark = $data;}
-
-
-
-
-
-
 
 
     #[ORM\Column(type: 'boolean', nullable:true)]
@@ -240,22 +250,17 @@ class itinerary
         return $this->date_created;
     }
 
-
-    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
-    #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
-    private user|null $created_by = null;
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $created_by = null;
 
     public function getCreatedBy()
     {
         return $this->created_by;
     }
-
     public function setCreatedBy( $data): void
     {
-      $this->created_by=$data;
+        $this->created_by=$data;
     }
-
-
     
     #[ORM\JoinTable(name: 'itinerary_connection_itinerary')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
@@ -286,17 +291,42 @@ class itinerary
     {
         $this->itinerary_justification->add($data);
     }   
+    #[ORM\JoinTable(name: 'itinerary_reform')]
+    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'reform_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: reform::class)]
+    private Collection $itinerary_reform;
 
+    public function getItineraryreform()
+    {
+        return $this->itinerary_reform;
+    }
+    public function setItineraryreform( $data): void
+    {
+        $this->itinerary_reform->add($data);
+    }    
 
+    #[ORM\JoinTable(name: 'itinerary_form')]
+    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'form_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: form::class)]
+    private Collection $itinerary_form;
+
+    public function getItineraryform()
+    {
+        return $this->itinerary_form;
+    }
+    public function setItineraryform( $data): void
+    {
+        $this->itinerary_form->add($data);
+    }    
 
     public function __construct()
     {
     
         $this->connection_itinerary = new ArrayCollection();
+        $this->itinerary_reform = new ArrayCollection();
         $this->itinerary_justification = new ArrayCollection();
+        $this->itinerary_form = new ArrayCollection();
     }
-
-        
-
-
 }
