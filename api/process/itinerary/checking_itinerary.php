@@ -5,24 +5,24 @@ header("Access-Control-Allow-Headers:Content-Type, Authorization");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PATCH");
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../../../database.php'; 
 
-$databaseName = "dws_db_2025"; 
-$dbConnection = new DatabaseConnection($databaseName);
-$entityManager = $dbConnection->getEntityManager();
+require_once __DIR__ . '/../../../database.php'; 
 
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
-$mainDb = $dbConnection->getEntityManager();
-
+$entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         if(getBearerToken()){  
-            $itinerary = $entityManager->find(configuration_process\itinerary::class , $input['itinerary_id']);
-            $store = $mainDb->find(configuration\store::class , $itinerary->getStore());
+            $database = json_decode(getBearerToken(),true)['database'];
+            $dbConnection = new DatabaseConnection($database);
+            $proccessDb = $dbConnection->getEntityManager();
+            $itinerary = $proccessDb->find(configuration_process\itinerary::class , $input['itinerary_id']);
+            $store = $entityManager->find(configuration\store::class , $itinerary->getStore());
             $user_coordinates = parseCoordinates( $input['coordinates']);
-            $user_latitude = $user_coordinates[0];
-            $user_longitude = $user_coordinates[1];
+            $user_latitude = $user_coordinates[0];            
+            $user_longitude = $user_coordinates[1];            
             $distance = DistanceCalculator::calculateDistance($store->getLatitude(),$store->getLongitude(),$user_latitude,$user_longitude);
             $status = ($distance <= $store->getDistance()) ? "INSIDE" : "OUTSIDE";
             if($input['identifier'] == "checkin"){
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                     $date = new DateTime('now', $timezone);
                     $itinerary->setCheckintime($date);
                     $itinerary->setCheckinimage($input['image']);
-                    $entityManager->flush();
+                    $proccessDb->flush();
                     echo header("HTTP/1.1 200 OK");
                     echo json_encode(['Message' => "{$status}"]);
                 }
@@ -50,23 +50,21 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                     }
                     $itinerary->setCheckinlatitude($user_latitude);
                     $itinerary->setCheckinlongitude($user_longitude); 
-                    $entityManager->flush();
+                    $proccessDb->flush();
                     echo header("HTTP/1.1 200 OK");
                     echo json_encode(['Message' => "{$status}"]);
                 }else if($itinerary->getCheckin() === true){
                         echo header("HTTP/1.1 200 OK");
-                        echo json_encode(['Message' => "COMPLETED"]);
+                        echo json_encode(['Message' => "Completed"]);
                 }
             }else if ($input['identifier'] == "checkout"){
                 if($itinerary->getCheckin()!== null){
-
                     if($itinerary->getCheckout()===null){
-                          if($status === "INSIDE"){
+                        if($status === "INSIDE"){
                         $itinerary->setCheckout(true);
                     }else if ($status ==="OUTSIDE"){
                         $itinerary->setCheckout(false);
                     }
-
                     $validation = null;
                     if($itinerary->getCheckout() === false){
                         $validation = false;
@@ -79,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                     else if ($itinerary->getCheckout()===true && $itinerary->getCheckin()===true){
                         $validation = true;
                     }
-
                     $itinerary->setCheckoutlatitude($user_latitude);
                     $itinerary->setCheckoutlongitude($user_longitude);
                     $itinerary->setCheckoutremark($input['remark']);
@@ -88,15 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                     $date = new DateTime('now', $timezone);
                     $itinerary->setCheckouttime($date);
                     $itinerary->setCheckoutimage($input['image']);
-                    $entityManager->flush();
+                    $proccessDb->flush();
                     echo header("HTTP/1.1 200 OK");
                     echo json_encode(['Message' => "{$status}"]);
-
                     }else if($itinerary->getCheckout()===false){
-                           if($status == "INSIDE"){
+                        if($status == "INSIDE"){
                         $itinerary->setCheckout(true);
                     }
-                 
                         $validation = null;
                     if($itinerary->getCheckout() === false){
                         $validation = false;
@@ -106,30 +101,23 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                     else if ($itinerary->getCheckout()===false && $itinerary->getCheckin()===true){
                         $validation = false;
                     }
-                     else if ($itinerary->getCheckout()===true && $itinerary->getCheckin()===true){
+                    else if ($itinerary->getCheckout()===true && $itinerary->getCheckin()===true){
                         $validation = true;
-                    
                     }
-                     $itinerary->setValidation($validation);
+                        $itinerary->setValidation($validation);
                         $itinerary->setCheckoutlatitude($user_latitude);
-                    $itinerary->setCheckoutlongitude($user_longitude); 
-                    $entityManager->flush();
-
-                      echo header("HTTP/1.1 200 OK");
+                        $itinerary->setCheckoutlongitude($user_longitude); 
+                        $proccessDb->flush();
+                    echo header("HTTP/1.1 200 OK");
                     echo json_encode(['Message' => "{$status}"]);
                         
                     }else if($itinerary->getCheckout() === true){
                         echo header("HTTP/1.1 200 OK");
-                        echo json_encode(['Message' => "COMPLETED"]);
+                        echo json_encode(['Message' => "Completed"]);
                 }
-
-
-
-                  
                 }else{
-                     echo header("HTTP/1.1 200 OK");
+                        echo header("HTTP/1.1 200 OK");
                         echo json_encode(['Message' => "Check In First"]);
-
                 }
             }
         }
@@ -138,37 +126,28 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }
-    
-
     function parseCoordinates(string $coordinates): ?array {
     $parts = explode(',', $coordinates);
-
     if (count($parts) === 2) {
         $lat = floatval(trim($parts[0]));
         $lon = floatval(trim($parts[1]));
-
         if (is_numeric($lat) && is_numeric($lon)) {
             return [$lat, $lon];
         }
     }
-
     return null;
 }
 
 class DistanceCalculator {
-    private const RADIUS_OF_EARTH_KM = 6371; // Earth's radius in kilometers
-
+    private const RADIUS_OF_EARTH_KM = 6371; 
     public static function calculateDistance(float $lat1, float $lon1, float $lat2, float $lon2): float {
         $latDistance = deg2rad($lat2 - $lat1);
         $lonDistance = deg2rad($lon2 - $lon1);
-
         $a = sin($latDistance / 2) * sin($latDistance / 2) +
              cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
              sin($lonDistance / 2) * sin($lonDistance / 2);
-
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-        $distance = self::RADIUS_OF_EARTH_KM * $c * 1000; // Convert to meters
-
+        $distance = self::RADIUS_OF_EARTH_KM * $c * 1000; 
         return $distance;
     }
 }

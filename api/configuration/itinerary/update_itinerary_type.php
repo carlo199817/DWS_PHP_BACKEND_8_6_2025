@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                 $itinerary_type->setDescription($input['description']);
                 $entityManager->flush();
                 echo header("HTTP/1.1 200 OK");
-                echo json_encode(['Message' => $input['description']. " updated"]);
+                echo json_encode(['Message' => "Itinerary type updated"]);
             }else{
                 header('HTTP/1.1 409 Conflict'); 
-                echo json_encode(["Message"=> $input['description']." already exist"]);
+                echo json_encode(["Message"=> "Itinerary type already exist"]);
             }
         }
     }

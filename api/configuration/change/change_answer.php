@@ -37,9 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                             }
                         }
                     }
-                    
+
                     $entityManager->flush();
-                    
+
                 }else{
                     $select_formula = json_decode($input['formula'], true);
                     $input_field->setFormula($input['formula']);
@@ -54,9 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                 echo header("HTTP/1.1 200 OK");
                 echo json_encode(['Message' => "Changed Successfully"]);
         }
-    }
-    else{ 
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }
-    
+

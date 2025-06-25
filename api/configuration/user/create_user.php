@@ -33,19 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $user_type = $entityManager->find(configuration_process\user_type::class,$input['user_type']);
                 $new_user->setUsertype($user_type);
                 $new_user->setActivate($input['activate']);
+		$timezone = new DateTimeZone('Asia/Manila');
+                $date = new DateTime('now', $timezone);
+                $new_user->setDatecreated($date);
                 $entityManager->persist($new_user);
                 $entityManager->flush();
                 header('HTTP/1.1 201 OK');
                 echo json_encode(["Message"=>"Successfully Created!"]);
-                
             }else{
-                header('HTTP/1.1 409 Conflict'); 
+                header('HTTP/1.1 409 Conflict');
                 echo json_encode(["Message"=>"Username already exist"]);
             }
-            
-        }       
+        }
 }
-else{ 
+else{
     header('HTTP/1.1 405 Method Not Allowed');
     echo json_encode(["Message" => "Method Not Allowed"]);
 }

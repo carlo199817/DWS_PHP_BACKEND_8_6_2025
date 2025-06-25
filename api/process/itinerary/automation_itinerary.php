@@ -7,16 +7,14 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
-
 $parent_directory = dirname(dirname(dirname(__DIR__)));
 require $parent_directory . '/vendor/autoload.php';
 require $parent_directory . '/database.php';
 
-$databaseName = "dws_db_2025";
+$databaseName = "dws_db_" . $currentDateTime->format('Y');
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-
 while(true)
 {
     $flag = "on";
@@ -59,7 +57,7 @@ while(true)
             }
         }
         $flag = "on";
-         echo "Itinerary Created!\n";
+        echo "Itinerary Created!\n";
     }
     sleep(2);
 }

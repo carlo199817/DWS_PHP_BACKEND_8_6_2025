@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $entityManager->persist($itinerary_type);
             $entityManager->flush();
             echo header("HTTP/1.1 201 Created");
-            echo json_encode(['Message' => $input['description']. " created"]);
+            echo json_encode(['Message' => "Itinerary type created"]);
         }
         else{
             header('HTTP/1.1 409 Conflict'); 
-            echo json_encode(["Message"=> $input['description']." already exist"]);
+            echo json_encode(["Message"=>"Itinerary type already exist"]);
         }
         }
     }

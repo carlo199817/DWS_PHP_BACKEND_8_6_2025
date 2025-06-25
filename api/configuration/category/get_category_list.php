@@ -16,38 +16,44 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (getBearerToken()) { 
         
         $searchTerm = isset($input['search']) ? trim($input['search']) : '';
+     
+
+
         try {
-        $sql = "
-        SELECT 
-        c.id AS id, 
-        c.description AS description, 
-        ct.description AS category_type
-        FROM 
-            category c
-        LEFT JOIN 
-            category_type ct ON c.type_id = ct.id
-        WHERE 
-            c.description LIKE CONCAT('%', :search, '%')
-            OR ct.description LIKE CONCAT('%', :search, '%');
-        ";
-            $query = $entityManager->getConnection()->prepare($sql);
-            $query->bindValue(':search', '%' . strtolower($searchTerm) . '%'); 
-            $categories = $query->executeQuery()->fetchAllAssociative();
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->select('c')  
+                ->from(configuration\category::class, 'c')  
+                ->where($queryBuilder->expr()->orX(
+                    $queryBuilder->expr()->like('LOWER(c.description)', ':search'),
+                ))
+                ->setParameter('search', '%' . strtolower($searchTerm) . '%');
+            $categories = $queryBuilder->getQuery()->getResult(); 
             $category_list = [];
             foreach ($categories as $category) {
-                $category_list[] = [
-                    'id' => $category['id'],
-                    'description' => $category['description'],
-                    'type' => $category['category_type'],
-                ];
+                $user_list = [];
+                foreach($category->getCategoryuser() as $user){
+                    array_push($user_list,[
+                         'value' => $user->getId(),
+                    'label' => $user->getStore() ? '( '.$user->getUsertype()->getDescription().' ) '.$user->getStore()->getOutletname() : '( '. $user->getUsertype()->getDescription(). ' ) '.($user->getFirstname(). ' '. $user->getLastname() ?: ''), 
+
+                    ]);
+
+                }
+                array_push($category_list,[
+                       'value' => $category->getId(),
+                       'label' => $category->getDescription(),
+                       'category_user' => $user_list,
+                ]);
             }
+            
             header('HTTP/1.1 200 OK');
             echo json_encode($category_list);
-
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode(['error' => 'An error occurred: ' . $e->getMessage()]);
         }
+
+
     } else {
         http_response_code(401);
         echo json_encode(["error" => "Authorization token not found."]);

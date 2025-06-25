@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                 $field->setRowoccupied($input['row_occupied']);
                 $field->setColoccupied($input['col_occupied']);
                 $field->setStyle($input['style']);
+		$field->setQuestion($input['question']);
                 $field->setFormula($input['formula']);
 		$field->setRadio($input['radio']);
 		$select_formula = json_decode($input['formula'], true);

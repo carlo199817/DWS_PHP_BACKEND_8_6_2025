@@ -9,13 +9,16 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../../../database.php'; 
 
-$databaseName = "dws_db_2025"; 
+$databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){
         $token = json_decode(getBearerToken(),true);
+        $database = json_decode(getBearerToken(),true)['database'];
+        $dbConnection = new DatabaseConnection($database);
+        $entityManager = $dbConnection->getEntityManager();
         $itinerary = $entityManager->find(configuration_process\itinerary::class, $input['itinerary_id']);
      
         $repository = $entityManager->getRepository(process\user::class);

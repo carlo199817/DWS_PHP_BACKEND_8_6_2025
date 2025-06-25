@@ -33,6 +33,7 @@ try {
         "col_no"=>$field->getColno(),
 	"radio"=>$field->getRadio(),
         "formula"=>$field->getFormula(),
+	"question"=>$field->getQuestion(),
         "picture"=>$origin->getOrigin($path->getDescription(),$type->getIcon()),
         "label"=>$type->getLabel(),
 	"field_type"=>$type->getDescription(),

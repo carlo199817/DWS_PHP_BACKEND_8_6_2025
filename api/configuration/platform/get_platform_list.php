@@ -15,19 +15,7 @@ $input = (array)json_decode(file_get_contents('php://input'), true);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (getBearerToken()) { 
         $origin = new configuration\origin;
-        $table_platforms = $entityManager->getRepository(configuration_process\table_platform::class)->findAll();
-        $platform_ids = [];
-
-    foreach ($table_platforms as $table_platform) {
-        $platform_ids[] = $table_platform->getPlatform()->getId(); 
-    }
         $searchTerm = isset($input['search']) ? trim($input['search']) : '';
-
-        // if (empty($searchTerm)) {
-        //     header('HTTP/1.1 200 OK');
-        //     echo json_encode([]);
-        //     exit;
-        // }
         try {
             $queryBuilder = $entityManager->createQueryBuilder();
             $queryBuilder->select('p')  
@@ -36,8 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     $queryBuilder->expr()->like('LOWER(p.description)', ':search'),
                 
                 ))
-                ->andWhere($queryBuilder->expr()->in('p.id', ':platform_ids')) 
-                ->setParameter('platform_ids', $platform_ids)  
                 ->setParameter('search', '%' . strtolower($searchTerm) . '%');
             $platforms = $queryBuilder->getQuery()->getResult(); 
             $platform_list = [];
@@ -50,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 ]);
             }
             
-        
             header('HTTP/1.1 200 OK');
             echo json_encode($platform_list);
         } catch (Exception $e) {

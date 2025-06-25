@@ -30,7 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $field_type_list = [];
             foreach ($field_types as $field_type) {
                 $path = $entityManager->find(configuration\path::class,$field_type->getPath());
-                if ($field_type->getId() !== 2 && $field_type->getId() !== 14) {
+                if (
+                     $field_type->getId() !== 6 &&
+                     $field_type->getId() !== 7 &&
+                     $field_type->getId() !== 8 &&
+                     $field_type->getId() !== 11 &&
+                     $field_type->getId() !== 12 &&
+                     $field_type->getId() !== 14 &&
+                     $field_type->getId() !== 15 &&
+                     $field_type->getId() !== 16
+                    ) {
                     $field_type_list[] = [
                         'id' => $field_type->getId(),
                         'description' => $field_type->getDescription(),
@@ -38,8 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                         'label' => $field_type->getLabel()
                     ];
                 }
-                 
-             
             }
             header('HTTP/1.1 200 OK');
             echo json_encode($field_type_list);

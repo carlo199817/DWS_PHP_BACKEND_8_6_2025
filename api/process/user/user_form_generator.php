@@ -9,13 +9,14 @@ require_once __DIR__ . '/../../../database.php';
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager(); 
-$databaseName2 = "dws_db_2025";
-$dbConnection = new DatabaseConnection($databaseName2);
-$processDb = $dbConnection->getEntityManager(); 
+
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){ 
             $token = json_decode(getBearerToken(),true);
+            $database = json_decode(getBearerToken(),true)['database'];
+            $dbConnection = new DatabaseConnection($database);
+            $processDb = $dbConnection->getEntityManager();
             $set_form = new form_loop();
             $table_form = new configuration_process\table_form;
             $form = $entityManager->find(configuration_process\form::class, $input['form_id']);
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             }
         echo header("HTTP/1.1 200 OK");
         echo json_encode(["Message"=>"Form Generated Completed!"]);
-        }
+        } 
     }
     else{ 
         header('HTTP/1.1 405 Method Not Allowed');

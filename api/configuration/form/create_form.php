@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $token = json_decode(getBearerToken(),true);
         $new_form = new configuration_process\form;
         $table_form = new configuration_process\table_form;
-        $new_form->setPriority($input["priority"]);
  	$new_form->setVersion('0.0.0');
         $new_form->setTitle($title);
         $new_form->setRemark($input['remarks']);

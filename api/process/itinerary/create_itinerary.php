@@ -1,5 +1,4 @@
 <?php
-// Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header("Access-Control-Allow-Headers:Content-Type, Authorization");
@@ -7,29 +6,29 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../../../database.php'; 
-$databaseName = "dws_db_2025"; 
+
+$databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-
 function validateRequest($request)
 {
     $requiredFields = ["itinerary_type", "store_id", "justification", "schedule"];
-
     foreach ($requiredFields as $field) {
         if (!isset($request[$field])) {
             return false; 
         }
     }
-
     return true; 
 }
-
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){    
             $token = json_decode(getBearerToken(), true);
+            $database = json_decode(getBearerToken(),true)['database'];
+            $dbConnection = new DatabaseConnection($database);
+            $entityManager = $dbConnection->getEntityManager();
             if (isset($input) && is_array($input)) {
                 foreach ($input as $index => $request) {
                     if (validateRequest($request)) {
@@ -53,15 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     }
                 }
                 $entityManager->flush();
-    
                 echo header("HTTP/1.1 200 OK");
                 echo json_encode(['Message' => "Successfully Created"]);
             } else {
-    
                 echo header("HTTP/1.1 400 Bad Request");
                 echo json_encode(['Message' => "Invalid Input"]);
-
-
             }
         }
         

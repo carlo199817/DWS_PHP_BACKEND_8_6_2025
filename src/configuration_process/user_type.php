@@ -34,7 +34,6 @@ class user_type
         $this->description= $data;
     }
 
-    
     #[ORM\OneToMany(mappedBy: 'type_id', targetEntity: user::class)]
     private Collection $users; 
 
@@ -79,12 +78,48 @@ class user_type
         $this->user_type_form->add($data);
     }
 
+       public function removeUsertypeform($forms,$data)
+    {
+        foreach ($forms as $form) {
+            if ($this->user_type_form->contains($data)) {
+                    $this->user_type_form->removeElement($data);
+            }
+        }
+       return $forms;
+    }
+
+    #[ORM\JoinTable(name: 'user_type_itinerary_type')]
+    #[ORM\JoinColumn(name: 'user_type_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'itinerary_type_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: itinerary_type::class)]
+    private Collection $user_type_itinerary_type;
+
+    public function getUsertypeitinerarytype()
+    {
+        return $this->user_type_itinerary_type;
+    }
+    public function setUsertypeitinerarytype( $data): void
+    {
+        $this->user_type_itinerary_type->add($data);
+    }
+
+
+   public function removeUsertypeitinerarytype($itinerarys,$data)
+    {
+        foreach ($itinerarys as $itinerary) {
+            if ($this->user_type_itinerary_type->contains($data)) {
+                    $this->user_type_itinerary_type->removeElement($data);
+            }
+        }
+        return $itinerarys;
+    }  
 
 
     public function __construct()
     {
         $this->user_type_platform = new ArrayCollection();
         $this->user_type_form = new ArrayCollection();
+        $this->user_type_itinerary_type = new ArrayCollection();
     }
 
 

@@ -321,6 +321,24 @@ class itinerary
         $this->itinerary_form->add($data);
     }    
 
+    
+    #[ORM\JoinTable(name: 'itinerary_tracker_itinerary')]
+    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'tracker', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: track_itinerary::class)]
+    private Collection $itinerary_tracker_itinerary;
+
+    public function getItinerarytracker()
+    {
+        return $this->itinerary_tracker_itinerary;
+    }
+    public function setItinerarytracker( $data): void
+    {
+        $this->itinerary_tracker_itinerary->add($data);
+    }    
+
+
+
     public function __construct()
     {
     
@@ -328,5 +346,6 @@ class itinerary
         $this->itinerary_reform = new ArrayCollection();
         $this->itinerary_justification = new ArrayCollection();
         $this->itinerary_form = new ArrayCollection();
+	 $this->itinerary_tracker = new ArrayCollection();
     }
 }

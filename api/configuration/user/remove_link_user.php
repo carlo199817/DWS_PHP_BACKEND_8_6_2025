@@ -13,10 +13,11 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
         if(getBearerToken()){ 
-        $user_id = $entityManager->find(configuration\user::class,$input['user_id']);
-        $link_user_id = $entityManager->find(configuration\user::class,$input['remove_user_id']);
-        $user_id->removeUserlink($user_id->getUserlink(),$link_user_id);
-        $entityManager->flush();
+        $remove_user = $entityManager->find(configuration\user::class,$input['remove_user_id']);
+        foreach($remove_user->getBidirectional() as $link_user){
+            $link_user->removeUserlink($link_user->getUserlink(),$remove_user);
+            $entityManager->flush();
+        }
         echo header("HTTP/1.1 200 OK");
         echo json_encode(['Message' => "Successfully unlinked" ]);
         }

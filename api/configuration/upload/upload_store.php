@@ -124,10 +124,8 @@ while(true)
                                         if (!$business_center) {
                                             $new_business_center = new configuration\category;
                                             $new_business_center->setDescription($combinedRow['BRANCH/ BUSINESS CENTER']);
-                                            $type = $entityManager->find(configuration\category_type::class, 2);
-                                            $new_business_center->setCategorytype($type);
-                                            $entityManager->persist($new_business_center);
-                                            $entityManager->flush();
+                                            // $entityManager->persist($new_business_center);
+                                            // $entityManager->flush();
                                             $user_region->setUserlink($new_user_business_center);
                                             $user_business_center = $new_user_business_center;
                                         }
@@ -142,30 +140,16 @@ while(true)
                                     $new_region = new configuration\category;
                                     $region_user = createUserRegion($entityManager,$combinedRow['REGION'], 4, 5);   
                                     $category = $categoryRepository->findOneBy(['description' => $combinedRow['REGION']]);                 
-                                    $tableCategoryRepository = $entityManager->getRepository(configuration\table_category::class);
-                                    $tableCategory = $tableCategoryRepository->findOneBy(['category_id' => $category]);
-                                    if(!$tableCategory){
-                                        $table_category = new configuration\table_category;
-                                        $new_region->setDescription($combinedRow['REGION']);
-                                        $type = $entityManager->find(configuration\category_type::class, 1);
-                                        $new_region->setCategorytype($type);
-                                        $entityManager->persist($new_region);
-                                        $table_category->setCategory($new_region);
-                                        $entityManager->persist($table_category);
-                                    }
                                     if (!$user_business_center) {
                                         $new_user_business_center = createUserRegion($entityManager,$combinedRow['BRANCH/ BUSINESS CENTER'], 3, 5);
                                         $new_business_center = new configuration\category;
                                         $new_business_center->setDescription($combinedRow['BRANCH/ BUSINESS CENTER']);
-                                        $type = $entityManager->find(configuration\category_type::class, 2);
-                                        $new_business_center->setCategorytype($type);
-                                        $entityManager->persist($new_business_center);
-                                        $entityManager->flush();
+                                        // $entityManager->persist($new_business_center);
+                                        // $entityManager->flush();
                                         $region_user->setUserlink($new_user_business_center);
                                         $user_business_center = $new_user_business_center;
                                     }
                                 }
-                            
                                 $storeRepository = $entityManager->getRepository(configuration\store::class);
                                 $store = $storeRepository->findOneBy(['outlet_code' => $combinedRow['OUTLET CODE(BAVI)']]);
                                     if (!$store) {
@@ -182,7 +166,6 @@ while(true)
                                         $store->setDistance($combinedRow['distance']);
                                         $entityManager->persist($store);
                                     }else{
-                                        
                                         if ($store->getOutletname() !== $combinedRow['OUTLET NAME']) {
                                             $store->setOutletname($combinedRow['OUTLET NAME']);
                                         }
@@ -205,22 +188,18 @@ while(true)
                                             $store->setDistance($combinedRow['distance']);
                                         }
                                     }
-
-
                                     if (!$user_store) {
                                         $new_user_store = createUser($entityManager,$combinedRow['OUTLET CODE(BAVI)'], 2, 5);
                                         $new_user_store->setStore($store);
                                         $user_business_center->setUserlink($new_user_store);
-                                        $entityManager->persist($new_user_store);
                                     }else{
-    
-                                         $existingLinks = $user_business_center->getUserlink(); 
+                                            $existingLinks = $user_business_center->getUserlink(); 
                                         if (!$existingLinks->contains($user_store)) {
                                             $user_business_center->setUserlink($user_store); 
                                         }
                                     }
-                         
-
+                                    
+                                    $user_business_center->setUserstore($store);
                                 $entityManager->flush();
                             }
                         }

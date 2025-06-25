@@ -18,11 +18,29 @@ $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         if(getBearerToken()){     
         $token = json_decode(getBearerToken(),true);
-        $platform = $entityManager->find(configuration_process\platform::class,$input['platform_id']);
-        $platform->setDescription($input['description']);
-        $entityManager->flush();
-        echo header("HTTP/1.1 200 OK");
-        echo json_encode(['Message' => "Platform update"]);
+        $repository = $entityManager->getRepository(configuration_process\platform::class);
+            $existing = $repository->findOneBy(['description' => $input['description']]);
+            if($existing){
+              if ((int)$existing->getId() === (int)$input['platform_id']) {
+                    $platform = $entityManager->find(configuration_process\platform::class,$input['platform_id']);
+                    $platform->setDescription($input['description']);
+                    $platform->setIcon($input['icon']);
+                    $platform->setPath($input['path']);
+                    $entityManager->flush();
+                    echo header("HTTP/1.1 200 OK");
+                    echo json_encode(['Message' => "Platform updated"]);
+                }else{
+                    echo header("HTTP/1.1 409 Conflict");
+                    echo json_encode(['Message' => 'Platform Already Exists']);
+                }
+            }else{
+                    $platform = $entityManager->find(configuration_process\platform::class,$input['platform_id']);
+                    $platform->setDescription($input['description']);
+                    $entityManager->flush();
+                    echo header("HTTP/1.1 200 OK");
+                    echo json_encode(['Message' => "Platform updated"]);
+            }
+
         }
     }
     else{ 

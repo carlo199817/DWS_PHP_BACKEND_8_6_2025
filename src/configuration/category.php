@@ -33,20 +33,6 @@ class category
         $this->description= $data;
     }
 
-    #[ORM\ManyToOne(targetEntity: category_type::class, inversedBy:"category_type")]
-    #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
-    private category_type|null $type_id = null;
-
-    public function getCategorytype()
-    {
-        return $this->type_id;
-    }
-
-    public function setCategorytype($data): void
-    {
-      $this->type_id=$data;
-    }
-
     #[ORM\JoinTable(name: 'category_user')]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'user_id', referencedColumnName: 'id')]

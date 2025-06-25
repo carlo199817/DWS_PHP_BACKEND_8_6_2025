@@ -18,13 +18,11 @@ class form
     private int|null $id = null;
 
 
- 
-
     public function getId()
     {
         return $this->id;
     }
- 
+
     #[ORM\Column(type: 'string',nullable:true)]
     private $title;
 
@@ -34,7 +32,7 @@ class form
     }
 
     public function setTitle( $data): void
-    {      
+    {
         $this->title= $data;
     }
 
@@ -45,8 +43,22 @@ class form
     {   if($this->series!=null){
         return $this->series;
         }else{
-        return 0;           
+        return 0;
         }
+    }
+
+
+
+	    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
+    private $date_effective;
+
+    public function setDateeffective( $data): void
+    {
+        $this->date_effective=$data;
+    }
+    public function getDateeffective()
+    {
+        return $this->date_effective;
     }
 
 
@@ -54,8 +66,6 @@ class form
     {
         $this->series = $data;
     }
-    
-
 
     #[ORM\Column(type: 'text',options:["default" => "0.0.0"], nullable:true)]
     private  $version;
@@ -66,18 +76,6 @@ class form
     public function setVersion( $data): void
     {$this->version = $data;}
 
-
-    #[ORM\Column(type: 'text',options:["default" => "1.1.1"], nullable:true)]
-    private  $chance;
-
-    public function getChance()
-    {return $this->chance;}
-
-    public function setChance( $data): void
-    {$this->chance = $data;}
-
-
- 
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $store_id = null;
 
@@ -87,10 +85,9 @@ class form
     }
 
     public function setStore( $data): void
-    {      
+    {
         $this->store_id= $data;
     }
- 
 
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $type_id = null;
@@ -101,11 +98,11 @@ class form
     }
 
     public function setFormtype( $data): void
-    {      
+    {
         $this->type_id= $data;
     }
 
-    
+
     #[ORM\Column(type: 'text',nullable:true)]
     private $remark;
 
@@ -148,11 +145,9 @@ class form
     }
 
     public function setParentform($data): void
-    {      
+    {
         $this->parentform_id= $data;
     }
-
-
 
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
@@ -167,19 +162,6 @@ class form
         return $this->date_created;
     }
 
-    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
-    private $date_effective;
-
-    public function setDateeffective( $data): void
-    {
-        $this->date_effective=$data;
-    }
-    public function getDateeffective()
-    {
-        return $this->date_effective;
-    }
-
-    
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $created_by = null;
 
@@ -189,13 +171,11 @@ class form
     }
 
     public function setCreatedby( $data): void
-    {      
+    {
         $this->created_by= $data;
     }
 
 
-
-        
     #[ORM\JoinTable(name: 'form_task')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'task_id', referencedColumnName: 'id')]
@@ -209,9 +189,8 @@ class form
     public function setFormtask( $data): void
     {
         $this->form_task->add($data);
-    }  
+    }
 
-        
     public function removeFormtask($tasks,$data)
     {
         foreach ($tasks as $task) {
@@ -220,10 +199,9 @@ class form
              }
         }
        return $tasks;
-    }  
+    }
 
 
-    
     #[ORM\JoinTable(name: 'form_form')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'form_related_id', referencedColumnName: 'id')]
@@ -237,7 +215,7 @@ class form
     public function setFormlink($data): void
     {
         $this->form_link->add($data);
-    }    
+    }
 
 
 
@@ -254,7 +232,7 @@ class form
     public function setConnectionform( $data): void
     {
         $this->connection_form->add($data);
-    }   
+    }
 
     #[ORM\JoinTable(name: 'form_justification_form')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
@@ -269,10 +247,9 @@ class form
     public function setJustificationform( $data): void
     {
         $this->justification_form->add($data);
-    }   
+    }
 
 
-     
     #[ORM\JoinTable(name: 'form_attach_form')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'attach_form_id', referencedColumnName: 'id')]
@@ -286,10 +263,9 @@ class form
     public function setFormattach( $data): void
     {
         $this->form_attach_form->add($data);
-    }    
-    
+    }
 
-        
+
     #[ORM\JoinTable(name: 'form_reform')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'reform_id', referencedColumnName: 'id')]
@@ -303,7 +279,7 @@ class form
     public function setFormreform( $data): void
     {
         $this->form_reform->add($data);
-    }    
+    }
 
 
     public function __construct()
@@ -315,7 +291,6 @@ class form
         $this->form_reform = new ArrayCollection();
         $this->justification_form = new ArrayCollection();
     }
-
 
 
 

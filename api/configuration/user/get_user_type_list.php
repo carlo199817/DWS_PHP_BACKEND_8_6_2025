@@ -3,29 +3,41 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header("Access-Control-Allow-Headers:Content-Type, Authorization");
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../../../database.php'; 
-$databaseName = "main_db"; 
+require_once __DIR__ . '/../../../database.php';
+$databaseName = "main_db";
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-if ($_SERVER['REQUEST_METHOD'] === "GET") {
-        if(getBearerToken()){ 
-        
-        $user_type = $entityManager->getRepository(configuration_process\user_type::class)->findAll();
-        $user_list = [];
-        foreach($user_type as $type){
-            array_push($user_list,['value'=>$type->getId(),
-            'label'=>$type->getDescription(),
-		        'valid'=>false
-        ]);
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+        if(getBearerToken()){
+            $searchTerm = isset($input['search']) ? trim($input['search']) : '';
+        try {
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->select('ut')
+                ->from(configuration_process\user_type::class, 'ut')
+                ->where($queryBuilder->expr()->orX(
+                    $queryBuilder->expr()->like('LOWER(ut.description)', ':search'),
+                ))
+                ->setParameter('search', '%' . strtolower($searchTerm) . '%');
+            $users = $queryBuilder->getQuery()->getResult();
+            $userList = [];
+            foreach ($users as $user) {
+                $userList[] = [
+                    'value'=>$user->getId(),
+                    'label'=>$user->getDescription(),
+                    'valid'=>false
+                ];
+            }
+            header('HTTP/1.1 200 OK');
+            echo json_encode($userList);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'An error occurred: ' . $e->getMessage()]);
         }
-        echo header("HTTP/1.1 200 OK");
-        echo json_encode($user_list);
-        } 
-    }
-    else{ 
+        }
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }

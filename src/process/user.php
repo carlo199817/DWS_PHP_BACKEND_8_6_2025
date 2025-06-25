@@ -165,8 +165,9 @@ class user
         $this->user_itinerary_validation = new ArrayCollection();
         $this->user_notification = new ArrayCollection();
   $this->user_form_connection = new ArrayCollection();
-    }
+  }
 
 
 }
 
+  

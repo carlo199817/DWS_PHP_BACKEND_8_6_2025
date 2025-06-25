@@ -34,8 +34,17 @@ class table_form
     }
 
 
+  #[ORM\Column(type: 'boolean', nullable:true)]
+    private $hide;
 
+    public function getHide()
+    {
+        return $this->hide;
+    }
 
-
+    public function setHide($data): void
+    {
+        $this->hide=$data;
+    }
 
 }

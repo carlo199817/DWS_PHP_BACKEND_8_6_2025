@@ -211,6 +211,20 @@ class user
         $this->time_location = $data;
     }
 
+
+    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
+    private $date_created;
+
+    public function setDatecreated( $data): void
+    {
+        $this->date_created=$data;
+    }
+    public function getDatecreated()
+    {
+        return $this->date_created;
+    }
+
+
     #[ORM\ManyToOne(targetEntity: store::class, inversedBy:"users")]
     #[ORM\JoinColumn(name: 'store_id', referencedColumnName: 'id')]
     private store|null $store_id=  null;
@@ -342,12 +356,93 @@ class user
         $this->user_user->add($data);
     }
 
+    public function removeUserlink($users,$data)
+    {
+        foreach ($users as $user) {
+             if ($this->user_user->contains($data)) {
+                 $this->user_user->removeElement($data);
+             }
+        }
+       return $users;
+    }  
+
+
+
+ 
+    #[ORM\JoinTable(name: 'user_category')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: category::class)]
+    private Collection $user_category;
+
+    public function getUsercategory()
+    {
+        return $this->user_category;
+    }
+    public function setUsercategory($data): void
+    {
+        $this->user_category->add($data);
+    }
+
+    public function removeUsercategory($users,$data)
+    {
+        foreach ($users as $user) {
+             if ($this->user_category->contains($data)) {
+                 $this->user_category->removeElement($data);
+             }
+        }
+       return $users;
+    }  
+
+
+	
+    #[ORM\ManyToMany(targetEntity: user::class, mappedBy: 'user_user')]
+    private Collection $bidirectional;
+
+        
+    public function getBidirectional(): Collection
+    {
+        return $this->bidirectional;
+    }
+
+
+    #[ORM\JoinTable(name: 'user_assign_user')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'user_related_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: user::class)]
+    private Collection $user_assign_user;
+
+    public function getUserassign()
+    {
+        return $this->user_assign_user;
+    }
+    public function setUserassign($data): void
+    {
+        $this->user_assign_user->add($data);
+    }
+
+      public function removeUserassign($users,$data)
+    {
+        foreach ($users as $user) {
+             if ($this->user_assign_user->contains($data)) {
+                 $this->user_assign_user->removeElement($data);
+             }
+        }
+       return $users;
+    }  
+
+
+
 
     public function __construct()
     {
         $this->user_store = new ArrayCollection();
 	$this->user_user = new ArrayCollection();
-    }
+    	$this->bidirectional = new ArrayCollection();
+	$this->user_assign_user = new ArrayCollection(); 
+   $this->user_category = new ArrayCollection();
+	}
 
 
 }
+ 

@@ -171,7 +171,12 @@ class field
         $this->col_no= $data;
     }
     
-    
+     
+
+
+
+
+
     
     // #[ORM\JoinTable(name: 'field_field')]
     // #[ORM\JoinColumn(name: 'field_id', referencedColumnName: 'id')]
@@ -221,10 +226,29 @@ class field
         return $this->bidirectional;
     }
 
+
+ #[ORM\JoinTable(name: 'field_task')]
+    #[ORM\JoinColumn(name: 'field_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'task_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: task::class)]
+    private Collection $field_task;
+
+    public function getFieldtask()
+    {
+        return $this->field_task;
+    }
+    public function setFieldtask($data): void
+    {
+        $this->field_task->add($data);
+    }
+    
+
+
     public function __construct()
     {
         // $this->field_link = new ArrayCollection();
         $this->task_field = new ArrayCollection();
         $this->bidirectional = new ArrayCollection();
+	$this->field_task = new ArrayCollection();
     }
 }

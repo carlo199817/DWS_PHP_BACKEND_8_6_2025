@@ -13,18 +13,27 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){    
+      
+      
+    
         $platform = new configuration_process\platform;
-        $table_platform = new configuration_process\table_platform;
-        $platform->setDescription($input['description']);
+        $repository = $entityManager->getRepository(configuration_process\platform::class);
+        $existing = $repository->findOneBy(['description' => $input['description']]);
+        if(!$existing){
+             $platform->setDescription($input['description']);
         $platform->setIcon($input['icon']);
         $platform->setPath($input['path']);
         $entityManager->persist($platform);
         $entityManager->flush();
-        $table_platform->setPlatform($platform);
-        $entityManager->persist($table_platform);
-        $entityManager->flush();
         echo header("HTTP/1.1 201 Created");
         echo json_encode(['Message' => "Platform created"]);
+
+        }
+        else{
+            header('HTTP/1.1 409 Conflict'); 
+            echo json_encode(["Message"=> "Platform already exist"]);
+        }
+
         }
     }
     else{ 

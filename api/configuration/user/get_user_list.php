@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 ->leftJoin('u.type_id', 'ut') 
                 ->leftJoin('u.store_id', 'us') 
                 ->where($queryBuilder->expr()->orX(
+     		    $queryBuilder->expr()->like('LOWER(u.username)', ':search'),
                     $queryBuilder->expr()->like('LOWER(u.first_name)', ':search'),
                     $queryBuilder->expr()->like('LOWER(u.last_name)', ':search'),
                     $queryBuilder->expr()->like('LOWER(ut.description)', ':search'),

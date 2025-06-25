@@ -7,21 +7,21 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../../../database.php'; 
-$databaseName = "dws_db_2025"; 
-$dbConnection = new DatabaseConnection($databaseName);
-$entityManager = $dbConnection->getEntityManager();
 
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
-$mainDb = $dbConnection->getEntityManager();
+$entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(getBearerToken()){
-            $token = json_decode(getBearerToken(),true);
-            $form = $entityManager->find(configuration_process\form::class, $input['form_id']);
+        $token = json_decode(getBearerToken(),true);
+        $database = json_decode(getBearerToken(),true)['database'];
+        $dbConnection = new DatabaseConnection($database);
+        $processDb = $dbConnection->getEntityManager();
+            $form = $processDb->find(configuration_process\form::class, $input['form_id']);
             $justification_list = [];
             foreach($form->getJustificationform() as $justification){
-                $user =$mainDb->find(configuration\user::class, $justification->getCreatedby()->getId());
+                $user =$entityManager->find(configuration\user::class, $justification->getCreatedby()->getId());
                 $justification_list[] = [
                     "id" =>$justification->getId(),
                     "description" =>$justification->getDescription(),

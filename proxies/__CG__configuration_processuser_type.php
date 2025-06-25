@@ -25,11 +25,13 @@ class user_type extends \configuration_process\user_type implements \Doctrine\OR
         "\0".parent::class."\0".'description' => [parent::class, 'description', null],
         "\0".parent::class."\0".'id' => [parent::class, 'id', null],
         "\0".parent::class."\0".'user_type_form' => [parent::class, 'user_type_form', null],
+        "\0".parent::class."\0".'user_type_itinerary_type' => [parent::class, 'user_type_itinerary_type', null],
         "\0".parent::class."\0".'user_type_platform' => [parent::class, 'user_type_platform', null],
         "\0".parent::class."\0".'users' => [parent::class, 'users', null],
         'description' => [parent::class, 'description', null],
         'id' => [parent::class, 'id', null],
         'user_type_form' => [parent::class, 'user_type_form', null],
+        'user_type_itinerary_type' => [parent::class, 'user_type_itinerary_type', null],
         'user_type_platform' => [parent::class, 'user_type_platform', null],
         'users' => [parent::class, 'users', null],
     ];

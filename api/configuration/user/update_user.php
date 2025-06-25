@@ -51,14 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
          } 
          }else{
             $user = $entityManager->find(configuration\user::class,$input['user_id']);
-                        if($input['picture']===""){
-                            $user->setPicture($user->getPicture());
-                        }else{
-                        $user->setPicture($input['picture']);
-                        }
-                        if($input['password']!=""){
+                          if($input['password']!=""){
                         $user->setPassword($input['password']);
                         }
+                        
     
                         if($input['user_type']!=""){
                             $user_type = $entityManager->find(configuration_process\user_type::class,$input['user_type']);

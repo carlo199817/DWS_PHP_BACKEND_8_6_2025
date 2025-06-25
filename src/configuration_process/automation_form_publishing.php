@@ -21,11 +21,10 @@ class automation_form_publishing
     {
         return $this->id;
     }
-    
-    #[ORM\ManyToOne(targetEntity: form::class, inversedBy:"form")]
-    #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
-    private form|null $form_id = null;
 
+
+       #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $form_id = null;
     public function getForm()
     {
         return $this->form_id;
@@ -36,6 +35,15 @@ class automation_form_publishing
       $this->form_id = $data;
     }
 
+    #[ORM\Column(type: 'text',options:["default" => "0.0.0"], nullable:true)]
+    private  $version;
+
+    public function getVersion()
+    {return $this->version;}
+
+    public function setVersion( $data): void
+    {$this->version = $data;}
+
     #[ORM\Column(type: 'string',nullable:true)]
     private $remark;
 
@@ -45,11 +53,25 @@ class automation_form_publishing
     }
 
     public function setRemark($data): void
-    {      
+    {
         $this->remark= $data;
     }
 
-    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
+        #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
+    private $date_created;
+
+    public function setDatecreated($data): void
+    {
+        $this->date_created=$data;
+    }
+    public function getDatecreated()    
+    {
+        return $this->date_created;
+    }
+
+
+
+     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_publish;
 
     public function setDatepublish($data): void
@@ -61,9 +83,9 @@ class automation_form_publishing
         return $this->date_publish;
     }
 
-    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
-    #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
-    private user|null $created_by = null;
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $created_by = null;
 
     public function getCreatedby()
     {
@@ -75,9 +97,10 @@ class automation_form_publishing
       $this->created_by=$data;
     }
 
-    #[ORM\ManyToOne(targetEntity: form_type::class, inversedBy:"form_type")]
-    #[ORM\JoinColumn(name: 'form_type_id', referencedColumnName: 'id')]
-    private form_type|null $form_type_id = null;
+
+
+      #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $form_type_id = null;
 
     public function getFormtype()
     {
@@ -86,19 +109,8 @@ class automation_form_publishing
 
     public function setFormtype($data): void
     {
-        $this->form_type_id = $data;
+        $this->form_type_id= $data;
     }
 
-    #[ORM\Column(type: 'integer',nullable:true)]
-    private int $priority;
 
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    public function setPriority($data): void
-    {      
-        $this->priority= $data;
-    }
 }

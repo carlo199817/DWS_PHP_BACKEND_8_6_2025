@@ -14,13 +14,21 @@ $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         if(getBearerToken()){    
         $token = json_decode(getBearerToken(),true);
-        $category = $entityManager->find(configuration\category::class,$input['category_id']);
-        $type = $entityManager->find(configuration\category_type::class,$input['type_id']);
-        $category->setDescription($input['description']);
-        $category->setCategorytype($type);
-        $entityManager->flush();
-        echo header("HTTP/1.1 200 OK");
-        echo json_encode(['Message' => "Category updated"]);
+        $repository = $entityManager->getRepository(configuration\category::class);
+            $existing = $repository->findOneBy(['description' => $input['description']]);
+            if(!$existing){
+                $category = $entityManager->find(configuration\category::class,$input['category_id']);
+                $category->setDescription($input['description']);
+                $entityManager->flush();
+                echo header("HTTP/1.1 200 OK");
+                echo json_encode(['Message' => "Category updated"]);
+
+            }else{
+                header('HTTP/1.1 409 Conflict'); 
+                    echo json_encode(["Message"=> "Category already exist"]);;
+            }
+
+
         }
     }
     else{ 
