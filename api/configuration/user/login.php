@@ -23,10 +23,19 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         $tokens = $tokens->getToken($user->getId());
         if($user->getActivate()){
 
-            header('HTTP/1.1 200 OK');
-            echo json_encode([
-                'token' => $tokens
-            ]);
+             if($user->getChangepassword()){
+                header('HTTP/1.1 200 OK');
+                echo json_encode([
+                    'token' => $tokens,
+                ]);
+            }else{
+                header('HTTP/1.1 200 OK');
+                echo json_encode([
+                    'token' => $tokens,
+                    'change_password' => false
+                ]);
+                exit;
+            }
 
         }else{
             header('HTTP/1.1 401 Unauthorized');

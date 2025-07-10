@@ -38,7 +38,7 @@ function getBearerToken() {
         echo json_encode(["Message" => "Unauthorized, Bearer token is missing."]);
         exit;
     }
-    if (strlen($bearer_token) < 20) { 
+    if (strlen($bearer_token) < 20) {
         echo json_encode(["Message" => "Invalid Token Format, Token too short."]);
         exit;
     }

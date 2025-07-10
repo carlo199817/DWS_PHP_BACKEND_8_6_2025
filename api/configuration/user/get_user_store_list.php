@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             }else{
              $user_id = $token['user_id'];
             }
-            
+
         $user = $entityManager->find(configuration\user::class, $user_id); 
 
 

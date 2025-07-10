@@ -14,55 +14,54 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
-    if (getBearerToken()) { 
+
+    if (getBearerToken()) {
+
+       function getReachedScheduleData(array $schedules)
+        {
+            if (empty($schedules)) {
+             return null;
+            }
+
+          $now = new DateTime('now', new DateTimeZone('Asia/Manila'));
+          $now->modify('+1 minute');
+
+          $latestReached = null;
+
+         foreach ($schedules as $schedule) {
+          $date = $schedule->getDateeffective();
+          $date->setTimezone(new DateTimeZone('Asia/Manila'));
+
+          if ($date <= $now && ($latestReached === null || $date > $latestReached->getDateeffective())) {
+            $latestReached = $schedule;
+          }
+        }
+
+         return $latestReached ?? null;
+       }
+
+
+
+
         try {
             $token = json_decode(getBearerToken(), true);
             $database = $token['database'];
             $dbConnection = new DatabaseConnection($database);
-            $processDb = $dbConnection->getEntityManager();   
+            $processDb = $dbConnection->getEntityManager();
 
             $schedules = $processDb->getRepository(process\schedule::class)->findBy([
                 'user_id' => $token['user_id']
             ]);
 
-            $timezone = new DateTimeZone('Asia/Manila');
-            $now = new DateTime('now', $timezone);
-            $today = $now->format('Y-m-d');
-            $nowTime = $now->format('H:i:s');
-
-            $todaySchedules = [];
-
-            foreach ($schedules as $schedule) {
-                if ($schedule->getDateeffective()->format('Y-m-d') === $today) {
-                    $todaySchedules[] = $schedule;
-                }
-            }
-
-            if (empty($todaySchedules)) {
+            $latestDate = getReachedScheduleData($schedules);
+            if (empty($latestDate)) {
                 http_response_code(200);
                 echo json_encode([]);
                 exit;
             }
 
-            usort($todaySchedules, function ($a, $b) {
-                return strcmp($a->getDateeffective()->format('H:i:s'), $b->getDateeffective()->format('H:i:s'));
-            });
-
-
-            $selectedSchedule = null;
-            foreach ($todaySchedules as $schedule) {
-                if ($nowTime <= $schedule->getDateeffective()->format('H:i:s')) {
-                    $selectedSchedule = $schedule;
-                    break;
-                }
-            }
-
-            if (!$selectedSchedule) {
-                $selectedSchedule = end($todaySchedules);
-            }
-
             $assign_list = [];
-            foreach ($selectedSchedule->getScheduleuserassign() as $user_assign) {
+            foreach ($latestDate->getScheduleuserassign() as $user_assign) {
                 $user = $entityManager->find(configuration\user::class, $user_assign->getUser());
                 if (!$user) continue;
 
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         echo json_encode(["Message" => "Unauthorized"]);
     }
 
-} else { 
+} else {
     http_response_code(405);
     echo json_encode(["Message" => "Method Not Allowed"]);
 }

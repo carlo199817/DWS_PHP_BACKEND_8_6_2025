@@ -1,7 +1,8 @@
 <?php
 
 class change_math{
- public function change_math($id,$entityManager){
+
+  public function change_math($id,$entityManager){
            $field = $entityManager->find(configuration_process\field::class,$id);
          if($field->getFieldtype()==13){
            if(json_decode($field->getFormula(),true)['memory']===true){

@@ -20,8 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
         $token = json_decode(getBearerToken(),true);
         $user = $entityManager->find(configuration\user::class, $token['user_id']);
-	
-
 
         $databaseName = $token['database'];
         $dbConnection = new DatabaseConnection($databaseName);

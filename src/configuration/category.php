@@ -47,7 +47,17 @@ class category
     {
         $this->category_user->add($data);
     }
- 
+
+
+ public function removeCategoryuser($users,$data)
+    {
+        foreach ($users as $user) {
+             if ($this->category_user->contains($data)) {
+                 $this->category_user->removeElement($data);
+             }
+        }
+       return $users;
+    }
 
 
     public function __construct()

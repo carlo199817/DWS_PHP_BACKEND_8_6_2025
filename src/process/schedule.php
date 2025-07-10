@@ -18,7 +18,6 @@ class schedule
     {
         return $this->id;
     }
-    
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_effective;
@@ -27,10 +26,20 @@ class schedule
     {
         $this->date_effective=$data;
     }
+
     public function getDateeffective()
     {
-        return $this->date_effective;
+      if ($this->date_effective instanceof \DateTimeInterface) {
+        return \DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $this->date_effective->format('Y-m-d H:i:s'),
+            new \DateTimeZone('Asia/Manila')
+        );
     }
+
+        return null;
+    }
+
 
        #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $user_id = null;
@@ -41,7 +50,7 @@ class schedule
     }
 
     public function setUser( $data): void
-    {      
+    {
         $this->user_id= $data;
     }
 

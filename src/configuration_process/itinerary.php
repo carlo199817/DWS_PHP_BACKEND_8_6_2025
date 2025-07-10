@@ -21,21 +21,7 @@ class itinerary
     {
         return $this->id;
     }
-    
-    #[ORM\Column(type: 'boolean', nullable:true)]
-    private $validation;
 
-    public function getValidation()
-    {
-        return $this->validation;
-    }
-
-    public function setValidation( $data): void
-    {      
-        $this->validation=$data;
-    }
-
- 
 
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $type_id = null;
@@ -50,11 +36,6 @@ class itinerary
       $this->type_id = $data;
     }
 
-    
-
-
-
-     
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $store_id = null;
 
@@ -64,12 +45,22 @@ class itinerary
     }
 
     public function setStore( $data): void
-    {      
+    {
         $this->store_id= $data;
     }
 
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $path_id = null;
 
+    public function getPath()
+    {
+        return $this->path_id;
+    }
 
+    public function setPath( $data): void
+    {
+        $this->path_id= $data;
+    }
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $schedule;
@@ -83,25 +74,11 @@ class itinerary
         return $this->schedule;
     }
 
-    #[ORM\Column(type: 'boolean', nullable:true)]
-    private $check_in;
 
-    public function getCheckin()
-    {
-        return $this->check_in;
-    }
-
-    public function setCheckin( $data): void
-    {      
-        $this->check_in=$data;
-    }
-
-
-    
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $check_in_time;
 
-    public function setCheckintime( $data): void
+    public function setCheckintime($data): void
     {
         $this->check_in_time = $data;
     }
@@ -119,7 +96,7 @@ class itinerary
     }
 
     public function setCheckinimage( $data): void
-    {      
+    {
         $this->check_in_image= $data;
     }
 
@@ -133,7 +110,7 @@ class itinerary
     }
 
     public function setCheckinlatitude( $data): void
-    {      
+    {
         $this->check_in_latitude= $data;
     }
 
@@ -146,35 +123,10 @@ class itinerary
     }
 
     public function setCheckinlongitude( $data): void
-    {      
+    {
         $this->check_in_longitude= $data;
     }
 
-    #[ORM\Column(type: 'text',nullable:true)]
-    private string $check_in_remark;
-
-    public function getCheckinremark()
-    {return $this->check_in_remark;}
-
-    public function setCheckinremark( $data): void
-    {$this->check_in_remark = $data;}
-
-
-    #[ORM\Column(type: 'boolean', nullable:true)]
-    private $check_out;
-
-    public function getCheckout()
-    {
-        return $this->check_out;
-    }
-
-    public function setCheckout( $data): void
-    {      
-        $this->check_out=$data;
-    }
-
-
-    
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $check_out_time;
 
@@ -196,7 +148,7 @@ class itinerary
     }
 
     public function setCheckoutimage( $data): void
-    {      
+    {
         $this->check_out_image= $data;
     }
 
@@ -210,7 +162,7 @@ class itinerary
     }
 
     public function setCheckoutlatitude( $data): void
-    {      
+    {
         $this->check_out_latitude= $data;
     }
 
@@ -223,21 +175,20 @@ class itinerary
     }
 
     public function setCheckoutlongitude( $data): void
-    {      
+    {
         $this->check_out_longitude= $data;
     }
 
     #[ORM\Column(type: 'text',nullable:true)]
-    private string $check_out_remark;
+    private string $itinerary_remark;
 
-    public function getCheckoutremark()
-    {return $this->check_out_remark;}
+    public function getItineraryremark()
+    {return $this->itinerary_remark;}
 
-    public function setCheckoutremark( $data): void
-    {$this->check_out_remark = $data;}
+    public function setItineraryremark( $data): void
+    {$this->itinerary_remark = $data;}
 
 
-    
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;
 
@@ -261,7 +212,33 @@ class itinerary
     {
         $this->created_by=$data;
     }
-    
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $assigned_to = null;
+
+    public function getAssignedto()
+    {
+        return $this->assigned_to;
+    }
+
+    public function setAssignedto($data): void
+    {
+        $this->assigned_to= $data;
+    }
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $approved_by = null;
+
+    public function getApprovedby()
+    {
+        return $this->approved_by;
+    }
+
+    public function setApprovedby($data): void
+    {
+        $this->approved_by= $data;
+    }
+
     #[ORM\JoinTable(name: 'itinerary_connection_itinerary')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'connection_itinerary_id', referencedColumnName: 'id')]
@@ -275,7 +252,7 @@ class itinerary
     public function setConnectionitinerary( $data): void
     {
         $this->connection_itinerary->add($data);
-    }   
+    }
 
     #[ORM\JoinTable(name: 'itinerary_justification_itinerary')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
@@ -290,7 +267,8 @@ class itinerary
     public function setItineraryjustification( $data): void
     {
         $this->itinerary_justification->add($data);
-    }   
+    }
+
     #[ORM\JoinTable(name: 'itinerary_reform')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'reform_id', referencedColumnName: 'id')]
@@ -304,7 +282,7 @@ class itinerary
     public function setItineraryreform( $data): void
     {
         $this->itinerary_reform->add($data);
-    }    
+    }
 
     #[ORM\JoinTable(name: 'itinerary_form')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
@@ -346,6 +324,6 @@ class itinerary
         $this->itinerary_reform = new ArrayCollection();
         $this->itinerary_justification = new ArrayCollection();
         $this->itinerary_form = new ArrayCollection();
-	 $this->itinerary_tracker = new ArrayCollection();
+        $this->itinerary_tracker_itinerary = new ArrayCollection();
     }
 }

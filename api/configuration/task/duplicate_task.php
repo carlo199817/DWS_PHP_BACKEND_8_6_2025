@@ -19,10 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     	$database = json_decode(getBearerToken(),true)['database'];
         $dbConnection = new DatabaseConnection($database);
         $processDb = $dbConnection->getEntityManager();
+
         $form = $entityManager->find(configuration_process\form::class,$input['form_id']);
         $task_loop = new task_loop();
-        $new_task_id = $task_loop->setLooptask($input['task_id'],$entityManager,$processDb);
-        $new_task = $entityManager->find(configuration_process\task::class,$new_task_id);
+        $new_task_id = $task_loop->setLooptask($input['task_id'],$entityManager,$processDb,[],true);
+        $new_task = $entityManager->find(configuration_process\task::class,$new_task_id['task_id']);
         $form->setFormtask($new_task);
         $entityManager->flush();
         echo header("HTTP/1.1 200 OK");

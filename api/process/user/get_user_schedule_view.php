@@ -12,21 +12,24 @@ $entityManager = $dbConnection->getEntityManager();
 
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-        if(getBearerToken()){ 
+        if(getBearerToken()){
+
             $token = json_decode(getBearerToken(),true);
             $database = json_decode(getBearerToken(),true)['database'];
             $dbConnection = new DatabaseConnection($database);
-            $processDb = $dbConnection->getEntityManager();   
-    $identifier = $input['identifier'];
-        $user_id = null;
-            if($identifier){
-                $user_id = $input['user_id'];
-            }else{
-             $user_id = $token['user_id'];
-            }
+            $processDb = $dbConnection->getEntityManager();
+
+            $identifier = $input['identifier'];
+            $user_id = null;
+
+              if($identifier){
+                 $user_id = $input['user_id'];
+               }else{
+                $user_id = $token['user_id'];
+              }
 
             $schedules = $processDb->getRepository(process\schedule::class)->findBy(['user_id' => $user_id]);
-       
+
 	         $schedule_list = [];
             foreach($schedules as $schedule){
 			$assign_list = [];
@@ -55,8 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
         }
-    }
-    else{ 
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }

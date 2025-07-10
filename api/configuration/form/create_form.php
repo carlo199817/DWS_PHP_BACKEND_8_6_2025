@@ -16,7 +16,7 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-        if(getBearerToken()){     
+        if(getBearerToken()){
         $title = $input['title'] ? $input['title'] : "Untitled Form";
         $token = json_decode(getBearerToken(),true);
         $new_form = new configuration_process\form;
@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $date = new DateTime('now', $timezone);
         $new_form->setDatecreated($date);
         $new_form->setFormtype($input['type_id']);
-        $new_form->setChance('1.1.1');
         $entityManager->persist($new_form);
         $entityManager->flush();
         $table_form->setForm($new_form);
@@ -38,9 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         echo header("HTTP/1.1 201 Created");
         echo json_encode(['Message' => $title." Created" ]);
         }
-    }
-    else{ 
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }
-    

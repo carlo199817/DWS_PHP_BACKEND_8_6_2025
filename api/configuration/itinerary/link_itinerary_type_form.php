@@ -14,9 +14,18 @@ $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         if(getBearerToken()){    
         $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class,$input['itinerary_type_id']);
-        $form = $entityManager->find(configuration_process\form::class,$input['form_id']);
-        $itinerary_type->setItinerarytypeform($form);
+        $formIds = $input['form_id'];
+        foreach($itinerary_type->getItinerarytypeform() as $form){
+            $itinerary_type->removeItinerarytypeform($itinerary_type->getItinerarytypeform(),$form);
+            $entityManager->flush();
+        }
+        foreach($formIds as $formId){
+        $form = $entityManager->find(configuration_process\form::class,$formId);
+         $itinerary_type->setItinerarytypeform($form);
+
+        }
         $entityManager->flush();
+
         echo header("HTTP/1.1 200 OK");
         echo json_encode(['Message' => "Linked Successfully"]);
         }

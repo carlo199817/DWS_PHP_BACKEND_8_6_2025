@@ -52,6 +52,21 @@ class itinerary_type
         $this->itinerary_type_form->add($data);
     }
 
+
+  public function removeItinerarytypeform($types,$data)
+    {
+        foreach ($types as $type) {
+            if ($this->itinerary_type_form->contains($data)) {
+                $this->itinerary_type_form->removeElement($data);
+            }
+        }
+        return $types;
+    }  
+    
+
+
+
+
     public function __construct()
     {
         $this->itinerary_type_form = new ArrayCollection();

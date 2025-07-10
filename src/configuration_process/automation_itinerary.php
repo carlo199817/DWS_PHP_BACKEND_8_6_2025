@@ -20,9 +20,19 @@ class automation_itinerary
     {
         return $this->id;
     }
-    
-    
 
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $preventive_id = null;
+
+    public function getPreventive()
+    {
+        return $this->preventive_id;
+    }
+
+    public function setPreventive( $data): void
+    {
+        $this->preventive_id= $data;
+    }
 
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $itinerary_type_id = null;
@@ -33,7 +43,7 @@ class automation_itinerary
     }
 
     public function setItinerarytype( $data): void
-    {      
+    {
         $this->itinerary_type_id= $data;
     }
 
@@ -47,7 +57,7 @@ class automation_itinerary
     }
 
     public function setStore( $data): void
-    {      
+    {
         $this->store_id= $data;
     }
 
@@ -65,9 +75,6 @@ class automation_itinerary
         $this->process=$data;
     }
 
-
-
-
     #[ORM\Column(type: 'text',nullable:true)]
     private string $justification;
 
@@ -77,7 +84,7 @@ class automation_itinerary
     }
 
     public function setJustification( $data): void
-    {      
+    {
         $this->justification= $data;
     }
 
@@ -89,6 +96,7 @@ class automation_itinerary
     {
         $this->schedule=$data;
     }
+
     public function getSchedule()
     {
         return $this->schedule;
@@ -108,7 +116,6 @@ class automation_itinerary
     }
 
 
-   
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $created_by = null;
 
@@ -122,9 +129,43 @@ class automation_itinerary
       $this->created_by=$data;
     }
 
+    #[ORM\Column(type: 'string',nullable:true)]
+    private $form_id;
 
+    public function getForm()
+    {
+        return $this->form_id;
+    }
 
-    
-  
+    public function setForm($data): void
+    {
+        $this->form_id = $data;
+    }
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $approved_by = null;
+
+    public function getApprovedby()
+    {
+        return $this->approved_by;
+    }
+
+    public function setApprovedby( $data): void
+    {
+        $this->approved_by= $data;
+    }
+
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $assigned_to = null;
+
+    public function getAssignedto()
+    {
+        return $this->assigned_to;
+    }
+
+    public function setAssignedto( $data): void
+    {
+        $this->assigned_to= $data;
+    }
 
 }

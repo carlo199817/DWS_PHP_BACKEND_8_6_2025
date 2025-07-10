@@ -15,7 +15,8 @@ class change_formula{
             $collect_data = $collect_data;
             $field = $entityManager->find(configuration_process\field::class,$field);
             $new_type = $entityManager->find(configuration_process\field_type::class, $field->getFieldtype());
-            if($new_type->getDescription()==="MATH"){
+            if($new_type){
+             if($new_type->getDescription()==="MATH"){
 
                 $selectanswer = json_decode($field->getFormula(), true);
                if($selectanswer){
@@ -173,6 +174,7 @@ class change_formula{
               $entityManager->flush();
            }
 
+      }
      }
    }
  }

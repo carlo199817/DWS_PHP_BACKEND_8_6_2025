@@ -52,12 +52,4 @@ foreach ($formLinks as $link) {
     }
 
 
-    function check_lapse_date($dateTimeString) {
-    $timezone = new DateTimeZone('Asia/Manila');
-    $providedDateTime = new DateTime($dateTimeString, $timezone);
-    $currentDateTime = new DateTime('now', $timezone);
-    return $providedDateTime < $currentDateTime;
-}
-
-
 ?>

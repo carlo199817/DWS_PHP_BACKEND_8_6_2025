@@ -175,6 +175,18 @@ class form
         $this->created_by= $data;
     }
 
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $done;
+
+    public function getDone()
+    {
+        return $this->done;
+    }
+
+    public function setDone( $data): void
+    {
+        $this->done=$data;
+    }
 
     #[ORM\JoinTable(name: 'form_task')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]

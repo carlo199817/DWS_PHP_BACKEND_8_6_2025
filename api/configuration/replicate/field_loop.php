@@ -17,6 +17,7 @@ class field_loop {
             $new_field->setActivatestyle($field->getActivatestyle());
             $new_field->setStyle($field->getStyle());
             $new_field->setFieldtype($type->getId());
+
             if($main_db){
 		$check_math = new change_math();
                 $entityManager->persist($new_field);
@@ -26,12 +27,16 @@ class field_loop {
                 $task->setTaskfield($new_field);
                 $entityManager->flush();
             }else{
+                $check_math = new change_math();
                 $task = $processDb->find(configuration_process\task::class,$task->getId());
                 $processDb->persist($new_field);
+                $processDb->flush();
+                $check_math->change_math($new_field->getId(),$processDb);
                 $processDb->flush();
                 $task->setTaskfield($new_field);
                 $processDb->flush();
             }
+
             $new_type = $entityManager->find(configuration_process\field_type::class, $new_field->getFieldtype());
             if($new_type->getDescription()==="CHOICE" ||$new_type->getDescription()==="MATH" ||
                 $new_type->getDescription() ==="INPUT"||$new_type->getDescription()==="CONDITION"||
