@@ -6,10 +6,11 @@ if (
     $current_script !== 'create_super_admin'            &&
     $current_script !== 'get_icon'                      &&
     $current_script !== 'get_meta'                      &&
-    $current_script !== 'upload_store'                  &&
+    $current_script !== 'upload_store_file'             &&
     $current_script !== 'automation_form_publishing'    &&
-    $current_script !== 'automation_itinerary'
-
+    $current_script !== 'automation_itinerary'          &&
+    $current_script !== 'automation_form'               &&
+    $current_script !== 'upload_store_asset'
 ){
 
 

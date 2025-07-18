@@ -81,11 +81,23 @@ while(true)
     $flag = "on";
     if($flag === "on") {
         $flag = "off";
+
+    
+
+
         $automation_store = $entityManager->getRepository(configuration\automation_store::class);
-        $firstRecord = $automation_store->findOneBy([], ['id' => 'ASC']);
-        if ($firstRecord) {
-            $targetDirectory = $file_directory . "/digital_workspace_file/file/" . $firstRecord->getPath()->getDescription() . '/' . $firstRecord->getFile();
-            if (file_exists($targetDirectory)) {
+        $queryBuilder = $automation_store->createQueryBuilder('p');
+        $queryBuilder->Where('p.process IS NULL');
+        $results = $queryBuilder->getQuery()->getResult();
+
+
+          if(count($results)){
+               $internal_flag = "on";
+                $internal_flag = "on";
+             if($internal_flag === "on"){
+                 $internal_flag = "off";
+                $targetDirectory = $file_directory . "/digital_workspace_file/file/" . $results[0]->getPath()->getDescription() . '/' . $results[0]->getFile();
+                if (file_exists($targetDirectory)) {
                 try {
                     $spreadsheet = IOFactory::load($targetDirectory);
                     $sheet = $spreadsheet->getActiveSheet();
@@ -144,8 +156,7 @@ while(true)
                                         $new_user_business_center = createUserRegion($entityManager,$combinedRow['BRANCH/ BUSINESS CENTER'], 3, 5);
                                         $new_business_center = new configuration\category;
                                         $new_business_center->setDescription($combinedRow['BRANCH/ BUSINESS CENTER']);
-                                        // $entityManager->persist($new_business_center);
-                                        // $entityManager->flush();
+                                     
                                         $region_user->setUserlink($new_user_business_center);
                                         $user_business_center = $new_user_business_center;
                                     }
@@ -155,7 +166,7 @@ while(true)
                                     if (!$store) {
                                         $store = new configuration\store();
                                         $store->setOutletcode($combinedRow['OUTLET CODE(BAVI)']);
-                                        $created_by = $entityManager->find(configuration\user::class, $firstRecord->getCreatedby()->getId());
+                                        $created_by = $entityManager->find(configuration\user::class, $results[0]->getCreatedby()->getId());
                                         $store->setCreatedby($created_by);
                                         $store->setOutletname($combinedRow['OUTLET NAME']);
                                         $store->setTown($combinedRow['TOWN GROUP']);
@@ -199,31 +210,32 @@ while(true)
                                         }
                                     }
                                     
-                                    $user_business_center->setUserstore($store);
+          
                                 $entityManager->flush();
                             }
                         }
                     }
-                    $entityManager->clear();
-                    $entityManager->flush();    
+                   $entityManager->flush();
+                    $entityManager->clear();  
                 } catch (Exception $e) {
                     echo json_encode(["Message" => $e->getMessage()]);
                 }
             } else {
                 echo json_encode(["Message" => "File not found.", "path" => htmlspecialchars($targetDirectory)]);
             }
-            try {
-                $entityManager->remove($firstRecord);
-            } catch (Doctrine\ORM\ORMInvalidArgumentException $e) {
-                $managedEntity = $entityManager->getRepository(configuration\automation_store::class)->find($firstRecord->getId());
-                if ($managedEntity) {
-                    $entityManager->remove($managedEntity);
-                } else {
-                    echo "Entity not found, cannot remove.";
-                }
-            }
-            $entityManager->flush();
+
+             }
+                $automation_store = $entityManager->find(configuration\automation_store::class,$results[0]->getId());
+                 $automation_store->setProcess(true);
+                 $entityManager->flush();
+                 $internal_flag = "on";
+                 $flag = "on";
+                 echo "Upload Successfully!";
         }
+        else{
+          $flag = "on";
+        }
+
         $flag = "on";
         echo "Uploaded Successfully!\n";
     }

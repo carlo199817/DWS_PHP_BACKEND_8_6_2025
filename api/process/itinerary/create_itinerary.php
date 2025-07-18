@@ -7,7 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../../../database.php'; 
 
-$databaseName = "main_db"; 
+$databaseName = "main_db";
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
@@ -17,14 +17,14 @@ function validateRequest($request)
     $requiredFields = ["itinerary_type", "store_id", "justification", "schedule"];
     foreach ($requiredFields as $field) {
         if (!isset($request[$field])) {
-            return false; 
+            return false;
         }
     }
-    return true; 
+    return true;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-        if(getBearerToken()){    
+        if(getBearerToken()){
             $token = json_decode(getBearerToken(), true);
             $database = json_decode(getBearerToken(),true)['database'];
             $dbConnection = new DatabaseConnection($database);
@@ -59,9 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 echo json_encode(['Message' => "Invalid Input"]);
             }
         }
-        
-    }
-    else{ 
+
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }

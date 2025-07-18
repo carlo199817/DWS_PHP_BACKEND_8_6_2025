@@ -18,13 +18,14 @@ require __DIR__ . '/api/configuration/change/change_math.php';
 require __DIR__ . '/api/configuration/replicate/field_loop.php';
 require __DIR__ . '/api/configuration/replicate/form_loop.php';
 require __DIR__ . '/api/configuration/replicate/task_loop.php';
+require __DIR__ . '/api/configuration/replicate/asset_loop.php';
 require __DIR__ . '/api/remove/remove_field.php';
 require __DIR__ . '/api/remove/remove_platform.php';
+require __DIR__ . '/src/configuration/tag.php';
 /*CONFIGURATION_PROCESS*/
 require __DIR__ . '/src/configuration_process/user_type.php';
 require __DIR__ . '/src/configuration_process/platform.php';
 require __DIR__ . '/src/configuration_process/form.php';
-require __DIR__ . '/src/configuration_process/connection_form.php';
 require __DIR__ . '/src/configuration_process/justification_form.php';
 require __DIR__ . '/src/configuration_process/table_form.php';
 require __DIR__ . '/src/configuration_process/itinerary_type.php';
@@ -47,6 +48,9 @@ require __DIR__ . '/src/configuration_process/table_platform.php';
 require __DIR__ . '/src/configuration_process/reform.php';
 require __DIR__ . '/src/configuration_process/track_itinerary.php';
 require __DIR__ . '/src/configuration_process/preventive.php';
+require __DIR__ . '/src/configuration_process/asset.php';
+require __DIR__ . '/src/configuration_process/equipment.php';
+require __DIR__ . '/src/configuration_process/part.php';
 /*PROCESS*/
 require __DIR__ . '/src/process/user.php';
 require __DIR__ . '/src/process/store.php';

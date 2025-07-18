@@ -28,11 +28,9 @@ try {
     $queryBuilder = $entityManager->createQueryBuilder();
     $queryBuilder->select('t')
         ->from(configuration_process\task::class, 't')
-        ->join(configuration_process\status::class, 's', 'WITH', 't.status_id = s.id') 
         ->where($queryBuilder->expr()->orX(
             $queryBuilder->expr()->like('LOWER(t.title)', ':search'),
-            $queryBuilder->expr()->like('LOWER(t.description)', ':search'),
-            $queryBuilder->expr()->like('LOWER(s.description)', ':search') 
+            $queryBuilder->expr()->like('LOWER(t.description)', ':search')
         ))
         ->andWhere($queryBuilder->expr()->in('t.id', ':formTaskIds'))
         ->setParameter('formTaskIds', $formTaskIds)
@@ -52,12 +50,12 @@ try {
             $user_profile = $entityManager->find(configuration_process\user_type::class, $validation->getUsertype());
             array_push($validation_list,['id'=>$validation->getId(),"validator"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>$validation->getValid()]);
         }
-        $status = $entityManager->find(configuration_process\status::class,$task->getStatus());
+
         array_push($task_list, [
             'id' => $task->getId(),
             'title' => $task->getTitle(),
             'description' => $task->getDescription(),
-	        'assigned' => $assign_list,
+            'assigned' => $assign_list,
             'series' => $task->getSeries(),
             'validation' => $validation_list,
         ]);

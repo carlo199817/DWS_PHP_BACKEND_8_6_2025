@@ -10,16 +10,17 @@ require_once __DIR__ . '/../../../database.php';
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
-
+$processDb = $dbConnection->getEntityManager();
 $input = (array)json_decode(file_get_contents('php://input'), true);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    if (getBearerToken()) { 
+    if (getBearerToken()) {
+
 try {
     $field = $entityManager->find(configuration_process\field::class, $input['field_id']);
     $origin = new configuration\origin;
     $type = $entityManager->find(configuration_process\field_type::class, $field->getFieldtype());
     $path = $entityManager->find(configuration\path::class, $type->getPath());
-    
+
     header('HTTP/1.1 200 OK');
     echo json_encode(
     [

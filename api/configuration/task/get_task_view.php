@@ -10,27 +10,35 @@ require_once __DIR__ . '/../../../database.php';
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
+$processDb = $dbConnection->getEntityManager();
 
 $input = (array)json_decode(file_get_contents('php://input'), true);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    if (getBearerToken()) { 
+
+
+    if (getBearerToken()) {
+
+       if($input['identifier']){
+          $database = json_decode(getBearerToken(), true)['database'];
+          $dbConnection = new DatabaseConnection($database);
+          $processDb = $dbConnection->getEntityManager();
+       }
 
 try {
     $task_list= [];
-
-    $task = $entityManager->find(configuration_process\task::class, $input['task_id']);
+        $task = $processDb->find(configuration_process\task::class, $input['task_id']);
         $validation_list = [];
-$assign_list = [];
-        foreach($task->getTaskvalidation() as $validation){
-            $user_profile = $entityManager->find(configuration_process\user_type::class, $validation->getUsertype());
-            array_push($validation_list,['id'=>$user_profile->getId(),"validator"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>$validation->getValid()]);
-        }
-   foreach($task->getTaskassign() as $assign){
+        $assign_list = [];
+         foreach($task->getTaskvalidation() as $validation){
+             $user_profile = $entityManager->find(configuration_process\user_type::class, $validation->getUsertype());
+             array_push($validation_list,['id'=>$user_profile->getId(),"validator"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>true]);
+         }
+         foreach($task->getTaskassign() as $assign){
             $user_profile = $entityManager->find(configuration_process\user_type::class, $assign->getUsertype());
-            array_push($assign_list,['id'=>$user_profile->getId(),"assignee"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>$assign->getValid()]);
+            array_push($assign_list,['id'=>$user_profile->getId(),"assignee"=>$user_profile->getDescription() ? $user_profile->getDescription(): "","valid"=>true]);
         }
 
-        $status = $entityManager->find(configuration_process\status::class,$task->getStatus());
+
     header('HTTP/1.1 200 OK');
     echo json_encode(
     ['id' => $task->getId(),
@@ -39,10 +47,10 @@ $assign_list = [];
     'series' => $task->getSeries(),
     "field"=>count($task->getTaskfield()),
     'validation' => $validation_list,
- 'assigned' => $assign_list,
-      'style'=>$task->getStyle(),
-        'row_set'=>$task->getRowset(),
-        'col_set'=>$task->getColset(),
+    'assigned' => $assign_list,
+    'style'=>$task->getStyle(),
+    'row_set'=>$task->getRowset(),
+    'col_set'=>$task->getColset(),
     ]
     );
 } catch (Exception $e) {

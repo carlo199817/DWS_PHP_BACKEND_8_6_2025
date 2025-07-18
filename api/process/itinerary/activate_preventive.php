@@ -17,33 +17,45 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     if (getBearerToken()) {
 
+function forceTimezoneLabel(DateTime $date, string $targetTimezone): DateTime {
+    return DateTime::createFromFormat(
+        'Y-m-d H:i:s.u',
+        $date->format('Y-m-d H:i:s.u'),
+        new DateTimeZone($targetTimezone)
+    );
+}
+
+
              function getReachedFormlinkData($formlinks)
-             {
-              if ($formlinks === null || $formlinks->isEmpty()) {
-                 return null;
-              }
+{
+    if ($formlinks === null || $formlinks->isEmpty()) {
+        return null;
+    }
 
-              $now = new DateTime('now', new DateTimeZone('Asia/Manila'));
-              $now->modify('+1 minute');
+    $now = new DateTime('now', new DateTimeZone('Asia/Manila'));
+    $now->modify('+1 minute');
+    $now = forceTimezoneLabel($now, 'UTC');
 
-              $latestReached = null;
+    $latestReached = null;
 
-              foreach ($formlinks as $link) {
-                $date = $link->getDateeffective();
+    foreach ($formlinks as $link) {
+        $date = $link->getDateeffective();
 
-                 if ($date === null) {
-                  continue;
-                 }
+        if ($date === null) {
+            continue;
+        }
 
-                 $date->setTimezone(new DateTimeZone('Asia/Manila'));
+        $localDate = clone $date;
+        $localDate->setTimezone(new DateTimeZone('UTC'));
 
-                 if ($date <= $now && ($latestReached === null || $date > $latestReached->getDateeffective())) {
-                  $latestReached = $link;
-                 }
-                }
+        if ($localDate <= $now && ($latestReached === null || $localDate > $latestReached->getDateeffective())) {
+            $latestReached = $link;
+        }
+    }
 
-              return $latestReached;
-            }
+    return $latestReached;
+}
+
 
 
             $token = json_decode(getBearerToken(), true);

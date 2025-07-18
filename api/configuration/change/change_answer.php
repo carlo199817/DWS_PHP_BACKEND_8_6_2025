@@ -12,7 +12,14 @@ $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
-        if(getBearerToken()){  
+        if(getBearerToken()){
+
+         if($input['database'] === 'process'){
+            $databaseName = json_decode(getBearerToken(),true)['database'];
+            $dbConnection = new DatabaseConnection($databaseName);
+            $entityManager = $dbConnection->getEntityManager();
+         }
+
             $input_field = $entityManager->find(configuration_process\field::class,$input['field_id']);
             $formula = $input_field->getFormula();
             $compare_formula = json_decode($formula, true);

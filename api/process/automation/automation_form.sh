@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Get the current directory of this script
+DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT="$DIR/automation_form.php"
+
+while true
+do
+    if ! pgrep -f "$SCRIPT" > /dev/null
+    then
+        echo "$(date): automation_form.php is not running. Starting..."
+        nohup php "$SCRIPT" > /dev/null 2>&1 &
+    else
+        echo "$(date): automation_form.php is running."
+    fi
+
+    sleep 5
+done

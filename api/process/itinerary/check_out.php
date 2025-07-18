@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
               $database = $token['database'];
               $dbConnection = new DatabaseConnection($database);
               $processDb = $dbConnection->getEntityManager();
-
+              $user = $entityManager->find(configuration\user::class ,$token['user_id']);
                      $user_store = $entityManager->find(configuration\user::class ,$input['store_id']);
                      $user_coordinates = parseCoordinates($input['coordinates']);
                      $user_latitude = $user_coordinates[0];
@@ -66,15 +66,21 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                            }else{
                             $check_form = true;
                              foreach($itinerary->getItineraryform() as $form){
-                               if(!$form->getDone()){
-                                   $check_form = false;
-                                }
+                                      foreach($form->getFormtask() as $task){
+                                          foreach($task->getTaskassign() as $assign){
+                                             if($assign->getUsertype()==$user->getUsertype()->getId()){
+                                                if(!$assign->getValid()){
+                                                 $check_form = false;
+                                             }
+                                           }
+                                         }
+                                      }
                              }
                            if(!$check_form){
                                header('HTTP/1.1 409 Conflict');
-                               echo json_encode(['Message' => 'Please submit your form before checking out.']);
+                               echo json_encode(['Message' => 'Please submit your task before checking out.']);
                            }else{
-                             if(!$itinerary->getCheckouttime()){
+                              if(!$itinerary->getCheckouttime()){
                                 $timezone = new DateTimeZone('Asia/Manila');
                                 $date = new DateTime('now', $timezone);
                                 $itinerary->setCheckouttime($date);

@@ -23,14 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $task->setRowset($input['row_set']);
                 $task->setColset($input['col_set']);
                 $task->setDescription($input['description']);
-                $task->setStatus(1);
                 $task->setSeries(0);
                 $user_validations =  $input['user_type_validation']; 
                 foreach($user_validations as $user_type){
                     $validation = new configuration_process\validation;            
                     $validation->setCreatedby($token['user_id']);
                     $validation->setUsertype( $user_type);
-                    $validation->setValid(true);
                     $entityManager->persist($validation);
                     $entityManager->flush();
                     $task->setTaskvalidation($validation);
@@ -40,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     $assign = new configuration_process\assign;            
                     $assign->setCreatedby($token['user_id']);
                     $assign->setUsertype( $user_assign);
-                    $assign->setValid(true);
                     $entityManager->persist($assign);
                     $entityManager->flush();
                     $task->setTaskassign($assign);

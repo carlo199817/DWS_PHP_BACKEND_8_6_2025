@@ -47,12 +47,25 @@ while(true)
                  $new_itinerary->setType($results[0]->getItinerarytype());
                  $new_itinerary->setSchedule($results[0]->getSchedule());
                  $new_itinerary->setDatecreated($results[0]->getDatecreated());
-                 foreach(json_decode($results[0]->getForm()) as $form_id){
-                   $create_form = new form_loop();
-                   $new_form_id = $create_form->setFormloop($entityManager,$processDb,$form_id,false);
-                   $new_form = $processDb->find(configuration_process\form::class,$new_form_id);
-                   $new_itinerary->setItineraryform($new_form);
+                if($results[0]->getItinerarytype()!=4){
+                  foreach(json_decode($results[0]->getForm()) as $form_id){
+                    $create_form = new form_loop();
+                    $new_form_id = $create_form->setFormloop($entityManager,$processDb,$form_id,false);
+                    $new_form = $processDb->find(configuration_process\form::class,$new_form_id);
+                    $new_form->setStore($results[0]->getStore());
+                    $processDb->flush();
+                    $new_itinerary->setItineraryform($new_form);
+                  }
+                 }else{
+                     $create_asset = new asset_loop();
+                     $asset_ids = $create_asset->setAssetloop($entityManager,$processDb);
+                     foreach($asset_ids as $asset_id){
+                       $asset = $processDb->find(configuration_process\asset::class,$asset_id);
+                       $new_itinerary->setItineraryasset($asset);
+                     }
+
                  }
+
                  if($results[0]->getAssignedto()){
                   $new_itinerary->setAssignedto($results[0]->getAssignedto());
                  }
@@ -74,9 +87,11 @@ while(true)
                  $automation_itinerary = $processDb->find(configuration_process\automation_itinerary::class,$results[0]->getId());
                  $automation_itinerary->setProcess(true);
                  $processDb->flush();
-                 $internal_flag = "on";
-                 $flag = "on";
+
+               //  $internal_flag = "on";
+                // $flag = "on";
                  echo "Itinerary created!";
+                 exit;
              }
         }else{
           $flag = "on";

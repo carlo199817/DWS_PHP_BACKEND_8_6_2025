@@ -69,7 +69,7 @@ class user
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int|null $id = null;
-    
+
     #[ORM\OneToMany(mappedBy: 'created_by', targetEntity: user::class)]
     private Collection $users; 
 
@@ -77,7 +77,7 @@ class user
     {
         return $this->id;
     }
-    
+
     #[ORM\Column(type: 'string',nullable:true)]
     private string $username;
 
@@ -440,8 +440,8 @@ class user
 	$this->user_user = new ArrayCollection();
     	$this->bidirectional = new ArrayCollection();
 	$this->user_assign_user = new ArrayCollection(); 
-   $this->user_category = new ArrayCollection();
-	}
+         $this->user_category = new ArrayCollection();
+    }
 
 
 }

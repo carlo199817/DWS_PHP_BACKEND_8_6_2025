@@ -63,19 +63,6 @@ class task
         $this->series = $data;
     }
 
-    
-    #[ORM\Column(type: 'integer',nullable:true)]
-    private int|null $status_id = null;
-    public function getStatus()
-    {
-        return $this->status_id;
-    }
-
-
-    public function setStatus( $data): void
-    {      
-        $this->status_id= $data;
-    }
 
     #[ORM\Column(type: 'text',nullable:true)]
     private  $style;
@@ -207,12 +194,24 @@ class task
     } 
 
 
+    #[ORM\ManyToMany(targetEntity: form::class, mappedBy: 'form_task')]
+    private Collection $form_task;
+
+    public function getForm(): Collection
+    {
+        return $this->form_task;
+    }
+
+
+
+
     public function __construct()
     {
         $this->task_field = new ArrayCollection();
         $this->task_link = new ArrayCollection();
         $this->task_validation = new ArrayCollection();
 	$this->task_assign = new ArrayCollection();
+	$this->form_task = new ArrayCollection();
     }
 
 

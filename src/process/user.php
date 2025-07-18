@@ -59,6 +59,17 @@ class user
     }
     
 
+    public function removeUserformconnection($links,$data)
+    {
+        foreach ($links as $link) {
+             if ($this->user_form_connection->contains($data)) {
+                 $this->user_form_connection->removeElement($data);
+             }
+        }
+       return $links;
+    }  
+
+
     #[ORM\JoinTable(name: 'user_form_generator')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'form_id', referencedColumnName: 'id')]
@@ -74,20 +85,7 @@ class user
         $this->user_form_generator->add($data);
     }
         
-    #[ORM\JoinTable(name: 'user_form_validation')]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'form_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: form::class)]
-    private Collection $user_form_validation;
 
-    public function getUserformvalidation()
-    {
-        return $this->user_form_validation;
-    }
-    public function setUserformvalidation( $data): void
-    {
-        $this->user_form_validation->add($data);
-    }
 
 
     #[ORM\JoinTable(name: 'user_itinerary_generator')]
@@ -159,7 +157,6 @@ class user
     {
         $this->user_form_editor = new ArrayCollection();
         $this->user_form_generator = new ArrayCollection();
-        $this->user_form_validation = new ArrayCollection();
         $this->user_itinerary_generator = new ArrayCollection();
         $this->user_itinerary_connection = new ArrayCollection();
         $this->user_itinerary_validation = new ArrayCollection();

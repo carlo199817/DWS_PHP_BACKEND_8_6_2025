@@ -9,11 +9,19 @@ require_once __DIR__ . '/../../../database.php';
 $databaseName = "main_db"; 
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
+$processDb = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $origin = new configuration\origin;
-        if(getBearerToken()){ 
-        $task = $entityManager->find(configuration_process\task::class,$input['task_id']);
+        if(getBearerToken()){
+
+       if($input['identifier']){
+          $database = json_decode(getBearerToken(), true)['database'];
+          $dbConnection = new DatabaseConnection($database);
+          $processDb = $dbConnection->getEntityManager();
+       }
+
+                $task = $processDb->find(configuration_process\task::class,$input['task_id']);
                 $field_list = [];
                 foreach ($task->getTaskfield() as $field) {
                     $type = $entityManager->find(configuration_process\field_type::class,$field->getFieldtype());

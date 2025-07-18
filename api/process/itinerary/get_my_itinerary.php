@@ -48,18 +48,30 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class,$result->getType());
                $user_store = $entityManager->find(configuration\user::class,$result->getStore());
                $path = $entityManager->find(configuration\path::class, $result->getPath());
-
+                $itinerary_asset_list = [];
+                $selected_asset = [];
+                 foreach($result->getItineraryasset() as $asset){
+                   if($asset->getSelected()){
+                     $selected_asset = ['value'=>$asset->getId(),'label'=>$asset->getDescription()];
+                   }
+                   array_push($itinerary_asset_list,['value'=>$asset->getId(),'label'=>$asset->getDescription()]);
+                 }
                  array_push($itinerary_list,[
                            'id'=>$result->getId(),
+                           'itinerary_type_id'=>$itinerary_type->getId(),
                            'itinerary_type'=>$itinerary_type->getDescription(),
-                           'store'=>$user_store->getStore()->getOutletname(),
                            'store_id'=>$result->getStore(),
+                           'store_address'=>$user_store->getStore()->getAddress(),
+                           'latitude'=>$user_store->getStore()->getLatitude(),
+                           'longitude'=>$user_store->getStore()->getLongitude(),
                            'check_in'=>$result->getCheckintime()?$result->getCheckintime()->format('Y-m-d\TH:i'):null,
                            'check_out'=>$result->getCheckouttime()?$result->getCheckouttime()->format('Y-m-d\TH:i'):null,
                            'check_in_image'=>$result->getCheckinimage()?$origin->getOrigin($path->getDescription(),$result->getCheckinimage())
                                              :$origin->getOrigin($path->getDescription(),"no_image.png"),
                            'check_out_image'=>$result->getCheckoutimage()?$origin->getOrigin($path->getDescription(),$result->getCheckoutimage())
                                              :$origin->getOrigin($path->getDescription(),"no_image.png"),
+                           'selected_asset'=>$selected_asset,
+                           'itinerary_asset'=>$itinerary_asset_list
                            ]);
               }
 

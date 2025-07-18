@@ -46,16 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $result = 0;
         $operator = "";
 
-            $selectanswer = json_decode($field->getFormula(), true);
-
-            $count = count($selectanswer['selectoperation']);
-
-
+            $select_answer = json_decode($field->getFormula(), true);
+            $count = count($select_answer['selectoperation']);
                           for ($i = 0; $i < $count; $i++) {
 
-                    if (isset($selectanswer['selectoperation'][$i]['value'])) {
+                    if (isset($select_answer['selectoperation'][$i]['value'])) {
 
-                             if($selectanswer['selectoperation'][$i]['value']==="OVEN"){
+                             if($select_answer['selectoperation'][$i]['value']==="OVEN"){
 
                                 $collect = 0;
                                 $get=[];
@@ -71,11 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     $result = $get[0];
                     }
 
-             }else if($selectanswer['selectoperation'][$i]['value']==="DISPLAY"){
+             }else if($select_answer['selectoperation'][$i]['value']==="DISPLAY"){
 
                                 $collect = 0;
                                 $get=[];
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 foreach ($indicesArray as $index) {
                                     $field = $entityManager->find(configuration_process\field::class,$index);
                                    if($field){
@@ -88,11 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if(count($get)>=1){
         $result = $get[0];
         }
-        }else if($selectanswer['selectoperation'][$i]['value']==="DURATION"){
+        }else if($select_answer['selectoperation'][$i]['value']==="DURATION"){
 
                                 $collect = 0;
                                 $time = [];
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 foreach ($indicesArray as $index) {
                                     $field = $entityManager->find(configuration_process\field::class,$index);
                                    if($field){
@@ -110,9 +107,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                  }else{
                 $result = "";
                 }
-                            }else if($selectanswer['selectoperation'][$i]['value']==="SUM"){
+                            }else if($select_answer['selectoperation'][$i]['value']==="SUM"){
+
                                 $collect = 0;
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 foreach ($indicesArray as $index) {
                                     $field = $entityManager->find(configuration_process\field::class,$index);
                                     if($field){
@@ -133,10 +131,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                             }else{
                                 $result+=$collect;
                             }
-                              }
-                                else if($selectanswer['selectoperation'][$i]['value']==="SUBTRACT"){
+
+                              }else if($select_answer['selectoperation'][$i]['value']==="SUBTRACT"){
                                 $collect = 0;
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 $counter = 0;
                                 foreach ($indicesArray as $index) {
                                     $field = $entityManager->find(configuration_process\field::class,$index);
@@ -162,11 +160,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                                 }else{
                                     $result+=$collect;
                                 }
-                            }
-
-                                 else if($selectanswer['selectoperation'][$i]['value']==="MULTIPLY"){
+                            }else if($select_answer['selectoperation'][$i]['value']==="MULTIPLY"){
                                   $collect = 1;
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 $counter = 0;
                                 foreach ($indicesArray as $index) {
                                    $field = $entityManager->find(configuration_process\field::class,$index);
@@ -191,23 +187,22 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                                 }else{
                                     $result+=$collect;
                                 }
-                            }
-                               else if($selectanswer['selectoperation'][$i]['value']==="DIVIDE"){
+                            }else if($select_answer['selectoperation'][$i]['value']==="DIVIDE"){
                                 try {
                                     $collect = 0;
-                                    $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                    $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                     $counter = 0;
                                     foreach ($indicesArray as $index) {
                                          $field = $entityManager->find(configuration_process\field::class,$index);
-                                              $selectanswer = json_decode($field->getFormula(), true);
-                                          if (isValidNumber(json_decode($selectanswer['answer'], true))) {
-                                           if ($counter == 0) {
-                                          $collect+=json_decode($selectanswer['answer'], true);
-                                           }else{
-                                          $collect/=json_decode($selectanswer['answer'], true);
-                                           }
+                                         $selectanswer = json_decode($field->getFormula(), true);
+                                        if (isValidNumber(json_decode($selectanswer['answer'], true))) {
+                                            if ($counter == 0) {
+                                             $collect+=json_decode($selectanswer['answer'], true);
+                                              }else{
+                                             $collect/=json_decode($selectanswer['answer'], true);
+                                            }
                                      $counter++;
-                                    }
+                                     }
                                     }
                                     if($operator==="/"){
                                         $result/=$collect;
@@ -224,24 +219,25 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                                 } catch (DivisionByZeroError $e) {
 
                                 }
-                            }else if($selectanswer['selectoperation'][$i]['value']==="NEUTRAL"){
+                            }else if($select_answer['selectoperation'][$i]['value']==="NEUTRAL"){
 
-                            if (!isValidOperator($selectanswer['choices'][$i]['value'])) {
+                            if (!isValidOperator($select_answer['choices'][$i]['value'])) {
 
-                                if (isValidExpression($selectanswer['choices'][$i]['value'])) {
+                                if (isValidExpression($select_answer['choices'][$i]['value'])) {
                                     try {
-                                        $result = evaluateExpression($result.$selectanswer['choices'][$i]['value']);
+                                        $result = evaluateExpression($result.$select_answer['choices'][$i]['value']);
                                     } catch (Throwable $e) {
                                     }
-                                             }
+                                 }
+
                             } else{
                                 $operator=$selectanswer['choices'][$i]['value'];
                               }
 
                             }
-                            else if($selectanswer['selectoperation'][$i]['value']==="COUNT"){
+                            else if($select_answer['selectoperation'][$i]['value']==="COUNT"){
                                 $collect = 0;
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 foreach ($indicesArray as $index) {
                                     $field = $entityManager->find(configuration_process\field::class,$index);
                                               $selectanswer = json_decode($field->getFormula(), true);
@@ -260,11 +256,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                                 }else{
                                     $result+=$collect;
                                 }
+
                             }
-                            else if($selectanswer['selectoperation'][$i]['value']==="HIGHEST"){
+                            else if($select_answer['selectoperation'][$i]['value']==="HIGHEST"){
                                 $collect = 0;
                                 $comp = [];
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 foreach ($indicesArray as $index) {
                                   $field = $entityManager->find(configuration_process\field::class,$index);
                                               $selectanswer = json_decode($field->getFormula(), true);
@@ -291,9 +288,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                                        }
 
                             }
-                            else if($selectanswer['selectoperation'][$i]['value']==="HIGHTOTAL"){
+                            else if($select_answer['selectoperation'][$i]['value']==="HIGHTOTAL"){
                                 $collect = 0;
-                                $indicesArray = explode(',', $selectanswer['choices'][$i]['value']);
+                                $indicesArray = explode(',', $select_answer['choices'][$i]['value']);
                                 foreach ($indicesArray as $index) {
                                     $comp = [];
                                     $field = $entityManager->find(configuration_process\field::class,$index);
@@ -334,6 +331,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
                        $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
+                       $select_answer = json_decode($field->getFormula(), true);
+                       $select_answer['answer'] = $result;
+                       $field->setFormula(json_encode($select_answer));
                        $field->setAnswer($result);
                        $entityManager->flush();
                        echo json_encode($result);

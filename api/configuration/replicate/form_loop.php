@@ -52,9 +52,9 @@ class form_loop {
           foreach ($new_form->getFormtask() as $new_task) {
                   foreach($new_task->getTaskfield() as $field){
                     if($main_db){
-                    $insert_new_formula->setChangeformula($entityManager,$field->getId(),$collect_data);
+                    $insert_new_formula->setChangeformula($entityManager,$entityManager,$field->getId(),$collect_data);
                     }else{
-                    $insert_new_formula->setChangeformula($processDb,$field->getId(),$collect_data);
+                    $insert_new_formula->setChangeformula($entityManager,$processDb,$field->getId(),$collect_data);
                     }
             }
          }

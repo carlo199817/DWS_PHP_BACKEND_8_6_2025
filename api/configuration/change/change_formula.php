@@ -10,10 +10,10 @@ class change_formula{
                 return $new_key . '<' . $new_val;
             }
 
-     public function setChangeformula($entityManager,$field,$collect_data) {
+     public function setChangeformula($entityManager,$processDb,$field,$collect_data) {
 
             $collect_data = $collect_data;
-            $field = $entityManager->find(configuration_process\field::class,$field);
+            $field = $processDb->find(configuration_process\field::class,$field);
             $new_type = $entityManager->find(configuration_process\field_type::class, $field->getFieldtype());
             if($new_type){
              if($new_type->getDescription()==="MATH"){
@@ -39,7 +39,7 @@ class change_formula{
             $new_string = implode(",", $new_values);
             $selectanswer['choices'][$index]['value']=$new_string;
             $field->setFormula(json_encode($selectanswer));
-            $entityManager->flush();
+            $processDb->flush();
             }
           }
         }else if($new_type->getDescription()==="GRADE"){
@@ -60,7 +60,7 @@ class change_formula{
 
             $selectanswer['choices']=$original_array;
             $field->setFormula(json_encode($selectanswer));
-            $entityManager->flush();
+            $processDb->flush();
 
         }else if($new_type->getDescription()==="CONDITION"){
                 $selectanswer = json_decode($field->getFormula(), true);
@@ -101,7 +101,7 @@ class change_formula{
               $answer_data['value'] = $new_string;
               $selectanswer['answer'] = json_encode($answer_data);
               $field->setFormula(json_encode($selectanswer));
-              $entityManager->flush();
+              $processDb->flush();
          }
        }
      }else if($new_type->getDescription()==="CONTAINER"){
@@ -130,7 +130,7 @@ class change_formula{
               $new_string = implode(",", $new_values);
               $selectanswer['choices'][$index]['value']=$new_string;
               $field->setFormula(json_encode($selectanswer));
-              $entityManager->flush();
+              $processDb->flush();
 
      }else if($new_type->getDescription()==="DUPLICATE"){
 
@@ -171,7 +171,7 @@ class change_formula{
               $selectanswer['choices'][$index]['container_id']=$new_string;
 
               $field->setFormula(json_encode($selectanswer));
-              $entityManager->flush();
+              $processDb->flush();
            }
 
       }

@@ -77,27 +77,26 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                      }
 
                      if ($checkinTime) {
-                       $checkinTime->setTimezone(new DateTimeZone('Asia/Manila'));
                        if ($checkinTime < $schedule) {
                            if ($checkoutTime) {
                              $status_color = 'purple';
                            }
                        }
                      }
-                     if($checkinTime &&  $checkoutTime){
+
+                  if ($checkinTime && $checkoutTime && $checkinTime->format('Y-m-d') > $schedule->format('Y-m-d')) {
+                     $status_color = 'teal';
+                    }
+
+                    if($checkinTime &&  $checkoutTime){
                        if ($checkinTime->format('Y-m-d') === $schedule->format('Y-m-d') && $checkoutTime->format('Y-m-d') === $schedule->format('Y-m-d')){
                         $status_color = 'green';
                        }
                      }
 
-                     if ($checkinTime && $checkoutTime && $checkinTime->format('Y-m-d') > $schedule->format('Y-m-d')) {
-                     $status_color = 'cyan';
-                    }
-
                     if ($checkinTime && !$checkoutTime && $schedule->format('Y-m-d') === $now->format('Y-m-d')) {
                       $status_color = 'orange';
                     }
-
                     if ($checkinTime && !$checkoutTime && $schedule < $now && $schedule->format('Y-m-d') < $now->format('Y-m-d')) {
                       $status_color = 'brown';
                     }

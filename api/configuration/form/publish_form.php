@@ -14,16 +14,17 @@ $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
 
-         function isVersionValid($inputVersion, $formLinks){
-           foreach ($formLinks as $formLink) {
-            $existingVersion = $formLink->getVersion();
+function isVersionValid($inputVersion, $formLinks) {
+    foreach ($formLinks as $formLink) {
+        $existingVersion = $formLink->getVersion();
+        if (version_compare($inputVersion, $existingVersion, '<=')) {
+            return false;
+        }
+    }
+    return true;
+}
 
-            if (version_compare($inputVersion, $existingVersion, '<=')) {
-             return false;
-            }
-           }
-           return true;
-         }
+
 
 
         if(getBearerToken()){

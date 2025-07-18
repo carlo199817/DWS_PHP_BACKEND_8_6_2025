@@ -12,16 +12,15 @@ $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
-        if(getBearerToken()){ 
-        $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
-        $task_id = $entityManager->find(configuration_process\task::class,$input['task_id']);
-        $task_id->removeTaskfield($task_id->getTaskfield(),$field);
-        $entityManager->flush();
+        if(getBearerToken()){
+          $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
+          $task_id = $entityManager->find(configuration_process\task::class,$input['task_id']);
+          $task_id->removeTaskfield($task_id->getTaskfield(),$field);
+          $entityManager->flush();
           echo header("HTTP/1.1 200 OK");
         echo json_encode(['Message' => "Field Removed"]);
         }
-    }
-    else{ 
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }

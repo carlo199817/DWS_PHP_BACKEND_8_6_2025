@@ -24,34 +24,38 @@ while(true)
 {
     $flag = "on";
     if($flag === "on") {
+
         $flag = "off";
-        $automation_form = $entityManager->getRepository(configuration_process\automation_form_publishing::class);
-        $firstRecord = $automation_form->findOneBy([], ['id' => 'ASC']);
-        if ($firstRecord) {
 
-                $form = $entityManager->find(configuration_process\form::class, $firstRecord->getForm());
+        $automation_form_publishing_repository = $entityManager->getRepository(configuration_process\automation_form_publishing::class);
+        $queryBuilder = $automation_form_publishing_repository->createQueryBuilder('p');
+        $queryBuilder->Where('p.process IS NULL');
+        $results = $queryBuilder->getQuery()->getResult();
+
+          if(count($results)){
+                $form = $entityManager->find(configuration_process\form::class, $results[0]->getForm());
                 $create_form = new form_loop();
-                $new_form_id = $create_form->setFormloop($entityManager,$entityManager,$firstRecord->getForm(),true);
+                $new_form_id = $create_form->setFormloop($entityManager,$entityManager,$results[0]->getForm(),true);
                 $new_form = $entityManager->find(configuration_process\form::class,$new_form_id);
-
-                $new_form->setVersion($firstRecord->getVersion());
-                $new_form->setParentform($firstRecord->getForm());
-                $new_form->setCreatedby($firstRecord->getCreatedby());
-                $new_form->setFormtype($firstRecord->getFormtype());
-                $new_form->setRemark($firstRecord->getRemark());
+                $new_form->setVersion($results[0]->getVersion());
+                $new_form->setParentform($form->getParentform());
+                $new_form->setCreatedby($results[0]->getCreatedby());
+                $new_form->setFormtype($results[0]->getFormtype());
+                $new_form->setRemark($results[0]->getRemark());
                 $new_form->setTitle($form->getTitle());
-                $new_form->setDateeffective($firstRecord->getDatepublish());
-                $new_form->setDatecreated($firstRecord->getDatecreated());
+                $new_form->setDateeffective($results[0]->getDatepublish());
+                $new_form->setDatecreated($results[0]->getDatecreated());
                 $entityManager->persist($new_form);
                 $entityManager->flush();
                 $form->setFormlink($new_form);
                 $entityManager->flush();
-                $entityManager->remove($firstRecord);
+                $results[0]->setProcess(true);
                 $entityManager->flush();
-        }
+                $flag = "on";
+                echo "Form Publish!\n";
+                exit;
+          }
 
-        $flag = "on";
-        echo "Form Publish!\n";
     }
     sleep(2);
 }

@@ -230,22 +230,6 @@ class form
     }
 
 
-
-    #[ORM\JoinTable(name: 'form_connection_form')]
-    #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'connection_form_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: connection_form::class)]
-    private Collection $connection_form;
-
-    public function getConnectionform()
-    {
-        return $this->connection_form;
-    }
-    public function setConnectionform( $data): void
-    {
-        $this->connection_form->add($data);
-    }
-
     #[ORM\JoinTable(name: 'form_justification_form')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'justification_form_id', referencedColumnName: 'id')]
@@ -299,7 +283,6 @@ class form
         $this->form_task = new ArrayCollection();
         $this->form_attach_form = new ArrayCollection();
         $this->form_link = new ArrayCollection();
-        $this->connection_form = new ArrayCollection();
         $this->form_reform = new ArrayCollection();
         $this->justification_form = new ArrayCollection();
     }

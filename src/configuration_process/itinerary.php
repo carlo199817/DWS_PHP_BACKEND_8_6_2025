@@ -316,6 +316,20 @@ class itinerary
     }    
 
 
+    #[ORM\JoinTable(name: 'itinerary_asset')]
+    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'asset_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: asset::class)]
+    private Collection $itinerary_asset;
+
+    public function getItineraryasset()
+    {
+        return $this->itinerary_asset;
+    }
+    public function setItineraryasset( $data): void
+    {
+        $this->itinerary_asset->add($data);
+    }
 
     public function __construct()
     {
@@ -325,5 +339,6 @@ class itinerary
         $this->itinerary_justification = new ArrayCollection();
         $this->itinerary_form = new ArrayCollection();
         $this->itinerary_tracker_itinerary = new ArrayCollection();
+        $this->itinerary_asset = new ArrayCollection();
     }
 }

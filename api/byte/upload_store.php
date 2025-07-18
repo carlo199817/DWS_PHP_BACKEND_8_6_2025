@@ -67,6 +67,18 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     echo json_encode(["Message" => "Sorry, we could not delete the existing file."]);
                 }
             } else {
+
+
+    $target_dir = "/var/www/html/digital_workspace_file/file/".$_POST['path']."/";
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
+
+if (!file_exists($target_dir)) {
+    mkdir($target_dir, 0775, true);
+}
+
+
+
+
                 if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
 
             

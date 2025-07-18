@@ -21,10 +21,9 @@ class automation_form
     {
         return $this->id;
     }
-  
-    #[ORM\ManyToOne(targetEntity: form::class, inversedBy:"form")]
-    #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
-    private form|null $form_id = null;
+
+    #[ORM\Column(type: 'string',nullable:true)]
+    private $form_id;
 
     public function getForm()
     {
@@ -36,9 +35,8 @@ class automation_form
       $this->form_id = $data;
     }
 
-    #[ORM\ManyToOne(targetEntity: user::class, inversedBy:"user")]
-    #[ORM\JoinColumn(name: 'created_by', referencedColumnName: 'id')]
-    private user|null $created_by = null;
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $created_by = null;
 
     public function getCreatedby()
     {
@@ -50,9 +48,8 @@ class automation_form
       $this->created_by=$data;
     }
 
-    #[ORM\ManyToOne(targetEntity: itinerary::class, inversedBy:"itinerary")]
-    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
-    private itinerary|null $itinerary_id = null;
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $itinerary_id = null;
 
     public function getItinerary()
     {
@@ -63,4 +60,19 @@ class automation_form
     {
       $this->itinerary_id = $data;
     }
+
+
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $process;
+
+    public function getProcess()
+    {
+        return $this->process;
+    }
+
+    public function setProcess($data): void
+    {
+        $this->process=$data;
+    }
+
 }

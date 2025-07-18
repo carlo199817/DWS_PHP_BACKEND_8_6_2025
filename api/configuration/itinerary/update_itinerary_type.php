@@ -12,7 +12,7 @@ $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
-        if(getBearerToken()){  
+        if(getBearerToken()){
             $repository = $entityManager->getRepository(configuration_process\itinerary_type::class);
             $existing = $repository->findOneBy(['description' => $input['description']]);
             if(!$existing){
@@ -22,13 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                 echo header("HTTP/1.1 200 OK");
                 echo json_encode(['Message' => "Itinerary type updated"]);
             }else{
-                header('HTTP/1.1 409 Conflict'); 
+                header('HTTP/1.1 409 Conflict');
                 echo json_encode(["Message"=> "Itinerary type already exist"]);
             }
         }
-    }
-    else{ 
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }
-    
+

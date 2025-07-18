@@ -112,5 +112,17 @@ class automation_form_publishing
         $this->form_type_id= $data;
     }
 
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $process;
+
+    public function getProcess()
+    {
+        return $this->process;
+    }
+
+    public function setProcess($data): void
+    {
+        $this->process=$data;
+    }
 
 }

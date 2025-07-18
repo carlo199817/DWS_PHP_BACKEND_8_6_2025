@@ -31,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
             foreach($user_type_validations as $user_type_validation){
             $validation = new configuration_process\validation;            
             $validation->setUsertype( $user_type_validation);
-            $validation->setValid(true);
             $entityManager->persist($validation);
             $entityManager->flush();
             $task->setTaskvalidation($validation);
@@ -46,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
             foreach($user_type_assigns as $user_type_assign){
             $assign = new configuration_process\assign;            
             $assign->setUsertype( $user_type_assign);
-            $assign->setValid(true);
             $entityManager->persist($assign);
             $entityManager->flush();
             $task->setTaskassign($assign);

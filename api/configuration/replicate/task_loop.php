@@ -7,7 +7,6 @@ class task_loop {
                   $new_task = new configuration_process\task;
                   $new_task->setTitle($task->getTitle());
                   $new_task->setDescription($task->getDescription());
-                  $new_task->setStatus($task->getStatus());
                   $new_task->setStyle($task->getStyle());
                   $new_task->setRowset($task->getRowset());
                   $new_task->setColset($task->getColset());
