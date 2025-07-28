@@ -239,21 +239,6 @@ class itinerary
         $this->approved_by= $data;
     }
 
-    #[ORM\JoinTable(name: 'itinerary_connection_itinerary')]
-    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'connection_itinerary_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: connection_itinerary::class)]
-    private Collection $connection_itinerary;
-
-    public function getConnectionitinerary()
-    {
-        return $this->connection_itinerary;
-    }
-    public function setConnectionitinerary( $data): void
-    {
-        $this->connection_itinerary->add($data);
-    }
-
     #[ORM\JoinTable(name: 'itinerary_justification_itinerary')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'justification_itinerary_id', referencedColumnName: 'id')]
@@ -297,24 +282,7 @@ class itinerary
     public function setItineraryform( $data): void
     {
         $this->itinerary_form->add($data);
-    }    
-
-    
-    #[ORM\JoinTable(name: 'itinerary_tracker_itinerary')]
-    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'tracker', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: track_itinerary::class)]
-    private Collection $itinerary_tracker_itinerary;
-
-    public function getItinerarytracker()
-    {
-        return $this->itinerary_tracker_itinerary;
     }
-    public function setItinerarytracker( $data): void
-    {
-        $this->itinerary_tracker_itinerary->add($data);
-    }    
-
 
     #[ORM\JoinTable(name: 'itinerary_asset')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
@@ -333,8 +301,6 @@ class itinerary
 
     public function __construct()
     {
-    
-        $this->connection_itinerary = new ArrayCollection();
         $this->itinerary_reform = new ArrayCollection();
         $this->itinerary_justification = new ArrayCollection();
         $this->itinerary_form = new ArrayCollection();

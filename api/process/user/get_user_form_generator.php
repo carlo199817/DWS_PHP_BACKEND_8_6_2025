@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $form_list[] = [
                     "id" => $form->getId(),
                     'title' => $form->getTitle(),
+                    'distributed'=>$form->getDistributed()
                 ];
             }
         }

@@ -188,6 +188,19 @@ class form
         $this->done=$data;
     }
 
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $distributed;
+
+    public function getDistributed()
+    {
+        return $this->distributed;
+    }
+
+    public function setDistributed($data): void
+    {
+        $this->distributed=$data;
+    }
+
     #[ORM\JoinTable(name: 'form_task')]
     #[ORM\JoinColumn(name: 'form_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'task_id', referencedColumnName: 'id')]

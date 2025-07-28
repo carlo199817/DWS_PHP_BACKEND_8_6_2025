@@ -22,6 +22,8 @@ require __DIR__ . '/api/configuration/replicate/asset_loop.php';
 require __DIR__ . '/api/remove/remove_field.php';
 require __DIR__ . '/api/remove/remove_platform.php';
 require __DIR__ . '/src/configuration/tag.php';
+require __DIR__ . '/src/configuration/node_mcu.php';
+
 /*CONFIGURATION_PROCESS*/
 require __DIR__ . '/src/configuration_process/user_type.php';
 require __DIR__ . '/src/configuration_process/platform.php';
@@ -46,13 +48,14 @@ require __DIR__ . '/src/configuration_process/task.php';
 require __DIR__ . '/src/configuration_process/validation.php';
 require __DIR__ . '/src/configuration_process/table_platform.php';
 require __DIR__ . '/src/configuration_process/reform.php';
-require __DIR__ . '/src/configuration_process/track_itinerary.php';
 require __DIR__ . '/src/configuration_process/preventive.php';
 require __DIR__ . '/src/configuration_process/asset.php';
 require __DIR__ . '/src/configuration_process/equipment.php';
 require __DIR__ . '/src/configuration_process/part.php';
 /*PROCESS*/
 require __DIR__ . '/src/process/user.php';
+require __DIR__ . '/src/process/user_tracker.php';
+require __DIR__ . '/src/process/node_mcu_record.php';
 require __DIR__ . '/src/process/store.php';
 require __DIR__ . '/src/process/schedule.php';
 require __DIR__ . '/src/process/user_assign.php';
@@ -69,10 +72,6 @@ require __DIR__ . '/src/process/concern.php';
 require __DIR__ . '/src/process/comment_post.php';
 require __DIR__ . '/src/process/comment_content.php';
 require __DIR__ . '/src/process/chat.php';
-/*TEMPERATURE*/
-require __DIR__ . '/src/temperature/oven.php';
-require __DIR__ . '/src/temperature/type.php';
-require __DIR__ . '/src/temperature/detail.php';
 /*SECURITY*/
 require __DIR__ . '/api/security/token.php';
 class DatabaseConnection {

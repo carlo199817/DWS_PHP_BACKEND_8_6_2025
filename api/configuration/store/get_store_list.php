@@ -37,11 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     $queryBuilder->expr()->like('LOWER(s.latitude)', ':search'),
                     $queryBuilder->expr()->like('LOWER(s.longitude)', ':search'),
                     $queryBuilder->expr()->like('LOWER(s.distance)', ':search'),
-                    $queryBuilder->expr()->like('LOWER(s.start_time)', ':search'),
-                    $queryBuilder->expr()->like('LOWER(s.start_time)', ':search'),
-                    $queryBuilder->expr()->like('LOWER(s.end_time)', ':search'),
                     $queryBuilder->expr()->like('LOWER(s.date_created)', ':search'),
-                
                 ))
                 ->setParameter('search', '%' . strtolower($searchTerm) . '%');
             $stores = $queryBuilder->getQuery()->getResult(); 

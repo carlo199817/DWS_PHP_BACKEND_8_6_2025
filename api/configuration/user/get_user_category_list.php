@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     $queryBuilder->expr()->like('LOWER(u.last_name)', ':search'),
                     $queryBuilder->expr()->like('LOWER(ut.description)', ':search'),
                     $queryBuilder->expr()->like('LOWER(us.outlet_name)', ':search'),
-                
                 ))
                 ->setParameter('search', '%' . strtolower($searchTerm) . '%');
             $users = $queryBuilder->getQuery()->getResult(); 
@@ -41,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     "label"=>$category->getDescription()
                   ]);
                 }
-
                 $userList[] = [
                     'value' => $user->getId(),
-                    'label' => $user->getStore() ? '( '.$user->getUsertype()->getDescription().' ) '.$user->getStore()->getOutletname() : '( '. $user->getUsertype()->getDescription(). ' ) '.($user->getFirstname(). ' '. $user->getLastname() ?: ''), 
+                    'label'=>$user->getStore()?'( '.$user->getUsertype()->getDescription().' ) '.$user->getStore()->getOutletname()
+                     :'( '.($user->getUsertype()?$user->getUsertype()->getDescription():"No user type yet").' ) '.($user->getFirstname(). ' '. $user->getLastname() ?: ''),
                     "category_list"=>$categoryList
                 ];
             }
@@ -54,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             http_response_code(500);
             echo json_encode(['Message' => 'An Message occurred: ' . $e->getMessage()]);
         }
+
     } else {
         http_response_code(401);
         echo json_encode(["Message" => "Authorization token not found."]);

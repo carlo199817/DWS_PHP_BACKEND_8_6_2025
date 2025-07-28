@@ -34,11 +34,11 @@ function isVersionValid($inputVersion, $formLinks) {
             if($existingUser){
 
                 $form = $entityManager->find(configuration_process\form::class,$input['form_id']);
+                $form->setVersion($input['version']);
                 if(count($form->getFormlink())){
 
                   if (isVersionValid($input['version'], $form->getFormlink())) {
 
-                  $form->setVersion($input['version']);
                   $entityManager->flush();
                   $new_form = new configuration_process\automation_form_publishing;
                   $new_form->setVersion($input['version']);

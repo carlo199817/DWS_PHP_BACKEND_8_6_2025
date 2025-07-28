@@ -124,13 +124,12 @@ class store
     }
 
     public function setLongitude($data): void
-    {      
+    {
         $this->longitude=$data;
     }
 
-//   #[ORM\Column(type: 'decimal', nullable:true)]
-#[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]    
-private $distance;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $distance;
 
     public function getDistance()
     {
@@ -138,34 +137,10 @@ private $distance;
     }
 
     public function setDistance($data): void
-    {      
+    {
         $this->distance=$data;
     }
 
-
-    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
-    private $start_time;
-
-    public function setStarttime($data): void
-    {
-        $this->start_time=$data;
-    }
-    public function getStarttime()
-    {
-        return $this->start_time;
-    }
-
-    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
-    private $end_time;
-
-    public function setEndtime($data): void
-    {
-        $this->end_time=$data;
-    }
-    public function getEndtime()
-    {
-        return $this->end_time;
-    }
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_created;

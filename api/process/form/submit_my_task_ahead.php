@@ -1,5 +1,4 @@
 <?php
-// Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header("Access-Control-Allow-Headers:Content-Type, Authorization");
@@ -40,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                 $processDb->persist($user_process);
             }
 
-	
             foreach ($user_process->getUserformconnection() as $form) {
                 $user_process->removeUserformconnection($user_process->getUserformconnection(), $form);
                 $processDb->flush();

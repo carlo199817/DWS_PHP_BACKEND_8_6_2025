@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 if (!in_array($linkedId, $visited)) {
                     $flatUsers[] = $linked;
                     collectLinkedUsers($linked, $visited, $flatUsers);
-                }
+                  }
                 }
             }
         }
@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $userList = array_map(function($user) {
             return [
                 'id' => $user->getId(),
-                'first_name' => $user->getStore() 
-                    ? $user->getStore()->getOutletname() 
-                    : ($user->getFirstname() ?: ''), 
+                'first_name' => $user->getStore()
+                    ? $user->getStore()->getOutletname()
+                    : ($user->getFirstname() ?: ''),
                 'last_name' => $user->getLastname(),
                 'user_type' => $user->getUsertype()?->getDescription()
             ];

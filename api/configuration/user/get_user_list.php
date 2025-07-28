@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     $queryBuilder->expr()->like('LOWER(u.last_name)', ':search'),
                     $queryBuilder->expr()->like('LOWER(ut.description)', ':search'),
                     $queryBuilder->expr()->like('LOWER(us.outlet_name)', ':search'),
-                
                 ))
                 ->setParameter('search', '%' . strtolower($searchTerm) . '%');
             $users = $queryBuilder->getQuery()->getResult(); 
@@ -41,12 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $userList[] = [
                     'id' => $user->getId(),
                     'first_name' => $user->getStore() ? $user->getStore()->getOutletname() : ($user->getFirstname() ?: ''), 
-                    'last_name' => $user->getLastname(),   
-                    'user_type' =>  $user->getUsertype()->getDescription()
+                    'last_name' => $user->getLastname(),
+                    'user_type' => $user->getUsertype()?$user->getUsertype()->getDescription():"No user type yet"
                 ];
             }
-            
-        
+
             header('HTTP/1.1 200 OK');
             echo json_encode($userList);
         } catch (Exception $e) {

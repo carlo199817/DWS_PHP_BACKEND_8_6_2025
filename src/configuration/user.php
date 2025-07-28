@@ -280,11 +280,21 @@ class user
         $this->change_password=$data;
     }
 
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $start;
 
+    public function getStart()
+    {
+        return $this->start;
+    }
 
-//    #[ORM\Column(type: 'decimal', nullable:true)]
-#[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]  
-  private $distance;
+    public function setStart($data): void
+    {
+        $this->start=$data;
+    }
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    private $distance;
 
     public function getDistance()
     {
@@ -351,6 +361,7 @@ class user
     {
         return $this->user_user;
     }
+
     public function setUserlink($data): void
     {
         $this->user_user->add($data);
@@ -364,11 +375,9 @@ class user
              }
         }
        return $users;
-    }  
+    }
 
 
-
- 
     #[ORM\JoinTable(name: 'user_category')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]

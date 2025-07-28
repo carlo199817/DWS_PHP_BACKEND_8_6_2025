@@ -50,14 +50,7 @@ $secondDbPaths = [
     __DIR__ . "/src/configuration_process"
 ];
 
-$thirdDbPaths = [
-    __DIR__ . "/src/temperature"
-];
-
-
 setupDbAndUpdateSchema('main_db', $mainDbPaths);
 setupDbAndUpdateSchema('dws_db_2025', $secondDbPaths);
-setupDbAndUpdateSchema('temperature_db_2025', $thirdDbPaths);
-
 
 ?>

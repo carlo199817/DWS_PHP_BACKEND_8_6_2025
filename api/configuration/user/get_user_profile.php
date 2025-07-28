@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         header('HTTP/1.1 200 OK'); 
         echo json_encode(
             [
+             "id"=>$user->getId(),
              "first_name"=>$user->getFirstname(),
              "last_name"=>$user->getLastname(),
-//             "picture"=> $origin->getOrigin($user->getPath()->getDescription(),$user->getPicture()),
              "user_type"=>$user->getUsertype()->getDescription()  
             ]
 
