@@ -12,23 +12,19 @@ $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
-        if(getBearerToken()){    
+        if(getBearerToken()){
         $user_type = $entityManager->find(configuration_process\user_type::class,$input['user_type_id']);
         $itinerary_type_id = $input['itinerary_type_id'];
-	         foreach($user_type->getUsertypeitinerarytype() as $itinerary_type){
-            $user_type->removeUsertypeform($user_type->getUsertypeitinerarytype(),$itinerary_type);
-            $entityManager->flush();
-        }        
-        foreach($itinerary_type_id as $type_id){
-        $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class,$type_id);
-        $user_type->setUsertypeitinerarytype($itinerary_type);
-        }
+           $user_type->clearUsertypeitinerarytype();
+          foreach($itinerary_type_id as $type_id){
+          $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class,$type_id);
+          $user_type->setUsertypeitinerarytype($itinerary_type);
+         }
         $entityManager->flush();
         echo header("HTTP/1.1 200 OK");
         echo json_encode(['Message' => "Linked Successfully"]);
         }
-    }
-    else{ 
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }

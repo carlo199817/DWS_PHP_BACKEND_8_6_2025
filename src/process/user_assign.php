@@ -18,7 +18,7 @@ class user_assign
     {
         return $this->id;
     }
-    
+
     #[ORM\Column(type: 'integer',nullable:true)]
     private int|null $user_id = null;
 
@@ -28,11 +28,21 @@ class user_assign
     }
 
     public function setUser( $data): void
-    {      
+    {
         $this->user_id= $data;
     }
 
+    #[ORM\ManyToMany(targetEntity: schedule::class, mappedBy: 'schedule_user_assign')]
+    private Collection $schedules;
 
+    public function getSchedules()
+    {
+        return $this->schedules;
+    }
 
+    public function __construct()
+    {
+        $this->schedules = new ArrayCollection();
+    }
 
 }

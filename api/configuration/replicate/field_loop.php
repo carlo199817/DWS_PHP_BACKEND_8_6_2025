@@ -17,6 +17,7 @@ class field_loop {
             $new_field->setActivatestyle($field->getActivatestyle());
             $new_field->setStyle($field->getStyle());
             $new_field->setFieldtype($type->getId());
+            $new_field->setUsertype($field->getUsertype());
 
             if($main_db){
 		$check_math = new change_math();

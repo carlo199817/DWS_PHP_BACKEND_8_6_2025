@@ -44,7 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 if (validateRequest($request)) {
 
                     $preventive = new configuration_process\preventive();
-                    $preventive->setStore($request["value"]);
+                    if($request["itinerary_type"]==2){
+                      $preventive->setStore(18010);
+                    }else if($request["itinerary_type"]==21){
+                      $preventive->setStore(18011);
+                    }else if($request["itinerary_type"]==22){
+                      $preventive->setStore(18012);
+                    }else{
+                      $preventive->setStore($request["value"]);
+                    }
                     $preventive->setUser($token['user_id']);
                     $preventive->setRemark($request["justification"]);
                     $date_planned = parseDate($request["date_planned"]);

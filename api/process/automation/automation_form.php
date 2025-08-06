@@ -49,17 +49,22 @@ while(true)
                    $processDb->flush();
 
                    $user = $processDb->find(process\user::class,$results[0]->getCreatedby());
-                   if($user){
-                         $user->setUserformconnection($new_form);
-                         $processDb->flush();
-                   }else{
-                         $user = new process\user();
-                         $user->setId($results[0]->getCreatedby());
-                         $user->setUserformconnection($new_form);
-                         $processDb->persist($user);
-                         $processDb->flush();
-                   }
 
+                  if($results[0]->getItinerary()){
+                    $itinerary = $processDb->find(configuration_process\itinerary::class,$results[0]->getItinerary());
+                    $itinerary->setItineraryform($new_form);
+                  }else{
+                     if($user){
+                           $user->setUserformconnection($new_form);
+                           $processDb->flush();
+                     }else{
+                           $user = new process\user();
+                           $user->setId($results[0]->getCreatedby());
+                           $user->setUserformconnection($new_form);
+                           $processDb->persist($user);
+                           $processDb->flush();
+                     }
+                   }
                  $automation_form = $processDb->find(configuration_process\automation_form::class,$results[0]->getId());
                  $automation_form->setProcess(true);
                  $processDb->flush();

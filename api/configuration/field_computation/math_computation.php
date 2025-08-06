@@ -13,7 +13,7 @@ $input = (array)json_decode(file_get_contents('php://input'), true);
 $databaseName = 'main_db';
 $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
-
+$configurationDb = $dbConnection->getEntityManager();
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (getBearerToken()) {
 
@@ -68,7 +68,57 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     $result = $get[0];
                     }
 
-             }else if($select_answer['selectoperation'][$i]['value']==="DISPLAY"){
+             }else if($select_answer['selectoperation'][$i]['value']==="SHELF"){
+
+
+$collect = 0;
+$get = [];
+$indicesArray = explode(',', $select_answer['choices'][$i]['value']);
+
+foreach ($indicesArray as $index) {
+    $field = $entityManager->find(configuration_process\field::class, $index);
+    if ($field) {
+        $selectanswer = json_decode($field->getFormula(), true);
+        array_push($get, $field->getAnswer());
+    }
+}
+
+if (count($get) >= 1) {
+    $originalTime = trim($get[0]);
+
+    try {
+
+        $dateTime = DateTime::createFromFormat('H:i', $originalTime);
+
+        if ($dateTime instanceof DateTime) {
+            $dateTime->modify('+3 hours');
+            $result = $dateTime->format('g:i A'); // Output: 12-hour format with AM/PM
+        } else {
+            $result = ' - ';
+        }
+    } catch (Exception $e) {
+        $result = 'Error: ' . $e->getMessage();
+    }
+}
+
+
+
+        }else if($select_answer['selectoperation'][$i]['value']==="STORE"){
+
+         if($field->getTaskfield()->first()->getForm()->first()->getStore()){
+           $user_store = $configurationDb->find(configuration\user::class,$field->getTaskfield()->first()->getForm()->first()->getStore());
+           $result = $user_store->getStore()->getOutletname();
+         }
+
+        }else if($select_answer['selectoperation'][$i]['value']==="DATE"){
+
+
+         if($field->getTaskfield()->first()->getForm()->first()->getStore()){
+            $result = $field->getTaskfield()->first()->getForm()->first()->getDatecreated()->format('Y-m-d');
+         }
+
+
+        }else if($select_answer['selectoperation'][$i]['value']==="DISPLAY"){
 
                                 $collect = 0;
                                 $get=[];

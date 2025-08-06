@@ -66,7 +66,17 @@ class assign
     }
 
 
+    #[ORM\Column(type:"datetime",nullable:true)]
+    private $date_created;
 
+    public function setDatecreated( $data): void
+    {
+        $this->date_created=$data;
+    }
+    public function getDatecreated()
+    {
+        return $this->date_created;
+    }
 
 
 }

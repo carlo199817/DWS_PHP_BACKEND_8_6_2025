@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $existing = $repository->findOneBy(['description' => $input['description']]);
         if(!$existing){
             $itinerary_type->setDescription($input['description']);
+            $itinerary_type->setTagstore($input['tag_store']);
             $entityManager->persist($itinerary_type);
             $entityManager->flush();
             echo header("HTTP/1.1 201 Created");

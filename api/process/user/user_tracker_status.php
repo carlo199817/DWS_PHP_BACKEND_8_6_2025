@@ -17,21 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
 
 function formatTotalDuration(array $results): string
 {
-    if (count($results) < 2) return "0h 0m 0s";
-
-    $totalSeconds = 0;
-
-    for ($i = 0; $i < count($results) - 1; $i++) {
-        $current = $results[$i]->getDatecreated();
-        $next = $results[$i + 1]->getDatecreated();
-
-        if ($current instanceof \DateTime && $next instanceof \DateTime) {
-            $diff = $next->getTimestamp() - $current->getTimestamp();
-            if ($diff === 1) {
-                $totalSeconds++;
-            }
-        }
-    }
+    $totalSeconds = count($results);
 
     $hours = floor($totalSeconds / 3600);
     $minutes = floor(($totalSeconds % 3600) / 60);
@@ -42,8 +28,6 @@ function formatTotalDuration(array $results): string
 
 
 
-
-
             $token = json_decode(getBearerToken(),true);
             $databaseName = $token['database'];
             $dbConnection = new DatabaseConnection($databaseName);
@@ -51,22 +35,25 @@ function formatTotalDuration(array $results): string
 
             $user = $entityManager->find(configuration\user::class,$token['user_id']);
 
+
             if($user->getStart()){
 
             $user_tracker_repository = $processDb->getRepository(process\user_tracker::class);
             $queryBuilder = $user_tracker_repository->createQueryBuilder('p');
 
-            $start = new \DateTime('now' . ' 00:00:00');
-            $end = new \DateTime('now' . ' 23:59:59');
+$timezone = new \DateTimeZone('Asia/Manila');
+$start = new \DateTime('today', $timezone);
+$end = new \DateTime('today', $timezone);
+$end->setTime(23, 59, 59);
 
-            $queryBuilder
-               ->where('p.date_created BETWEEN :start AND :end')
-               ->andWhere('p.created_by = :createdBy')
-               ->setParameter('start', $start)
-               ->setParameter('end', $end)
-               ->setParameter('createdBy', $token['user_id']);
+$queryBuilder
+    ->where('p.date_created BETWEEN :start AND :end')
+    ->andWhere('p.created_by = :createdBy')
+    ->setParameter('start', $start)
+    ->setParameter('end', $end)
+    ->setParameter('createdBy', $token['user_id']);
 
-             $results = $queryBuilder->getQuery()->getResult();
+$results = $queryBuilder->getQuery()->getResult();
 
                if($results){
                 echo header("HTTP/1.1 200 OK");

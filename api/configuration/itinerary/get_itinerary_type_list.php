@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $type_list[] = [
                     'value' => $list->getId(),
                     'label' => $list->getDescription(),
+                    'tag_store' =>$list->getTagstore()
                 ];
             }
             header('HTTP/1.1 200 OK');

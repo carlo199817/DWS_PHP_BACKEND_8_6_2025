@@ -102,7 +102,7 @@ class itinerary
 
 
     #[ORM\Column(type: 'float',nullable:true)]
-    private string $check_in_latitude;
+    private  $check_in_latitude;
 
     public function getCheckinlatitude()
     {
@@ -115,7 +115,7 @@ class itinerary
     }
 
     #[ORM\Column(type: 'float',nullable:true)]
-    private string $check_in_longitude;
+    private $check_in_longitude;
 
     public function getCheckinlongitude()
     {
@@ -154,7 +154,7 @@ class itinerary
 
 
     #[ORM\Column(type: 'float',nullable:true)]
-    private string $check_out_latitude;
+    private  $check_out_latitude;
 
     public function getCheckoutlatitude()
     {
@@ -167,7 +167,7 @@ class itinerary
     }
 
     #[ORM\Column(type: 'float',nullable:true)]
-    private string $check_out_longitude;
+    private $check_out_longitude;
 
     public function getCheckoutlongitude()
     {
@@ -239,6 +239,19 @@ class itinerary
         $this->approved_by= $data;
     }
 
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $done;
+
+    public function getDone()
+    {
+        return $this->done;
+    }
+
+    public function setDone( $data): void
+    {
+        $this->done=$data;
+    }
+
     #[ORM\JoinTable(name: 'itinerary_justification_itinerary')]
     #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'justification_itinerary_id', referencedColumnName: 'id')]
@@ -299,8 +312,23 @@ class itinerary
         $this->itinerary_asset->add($data);
     }
 
+    #[ORM\JoinTable(name: 'itinerary_validation')]
+    #[ORM\JoinColumn(name: 'itinerary_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'validation_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: validation::class)]
+    private Collection $itinerary_validation;
+    public function getItineraryvalidation()
+    {
+        return $this->itinerary_validation;
+    }
+    public function setItineraryvalidation($data): void
+    {
+    $this->itinerary_validation->add($data);
+    }
+
     public function __construct()
     {
+        $this->itinerary_validation = new ArrayCollection();
         $this->itinerary_reform = new ArrayCollection();
         $this->itinerary_justification = new ArrayCollection();
         $this->itinerary_form = new ArrayCollection();

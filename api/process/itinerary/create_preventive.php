@@ -18,14 +18,16 @@ function parseDate($dateStr) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-        if(getBearerToken()){    
+        if(getBearerToken()){
             $token = json_decode(getBearerToken(), true);
             $database = json_decode(getBearerToken(),true)['database'];
             $dbConnection = new DatabaseConnection($database);
             $entityManager = $dbConnection->getEntityManager();
                         $preventive = new configuration_process\preventive();
                         $preventive->setItinerarytype($input["itinerary_type_id"]);
-                        $preventive->setStore($input["store_id"]);
+                        if($input["tag_store"]){
+                         $preventive->setStore($input["store_id"]);
+                        }
                         $preventive->setUser($input["user_id"]);
                         $preventive->setRemark($input["remark"]);
                         $date_planned = parseDate($input["date_planned"]);

@@ -61,14 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
             $children = [];
             foreach ($user->getUserlink() as $child) {
-
-               if($child->getUsertype()->getId() !== 2){
                 $childData = buildUserTree($child, $visited,$entityManager,$processDb);
                 if ($childData !== null) {
                     $children[] = $childData;
                  }
-                }
-
             }
 
 
@@ -89,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                  ];
                }
             }
-
+        if($user->getUsertype()->getId() !== 2){
             return [
                 'id' => $user->getId(),
                 'first_name' => $user->getStore()
@@ -101,6 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     : null,
                 'children' => $children
             ];
+          }
+
         }
 
         $finalOutput = [];
@@ -112,8 +110,17 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         }
 
         http_response_code(200);
-        echo json_encode($finalOutput);
-
+        echo json_encode([[
+                         'id' => $user->getId(),
+                         'first_name' => $user->getStore()
+                         ? $user->getStore()->getOutletname()
+                         : ($user->getFirstname() ?: ''),
+                         'last_name' => $user->getLastname(),
+                         'user_type' => $user->getUsertype()
+                         ? $user->getUsertype()->getDescription()
+                         : null,
+                         'children'=>$finalOutput
+                         ]]);
     } else {
         http_response_code(401);
         echo json_encode(["error" => "Authorization token not found."]);

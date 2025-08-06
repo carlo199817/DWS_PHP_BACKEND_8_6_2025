@@ -18,7 +18,22 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $database = json_decode(getBearerToken(), true)['database'];
         $dbConnection = new DatabaseConnection($database);
         $processDb = $dbConnection->getEntityManager();
+
+        $user = $entityManager->find(configuration\user::class,$token['user_id']);
         $itinerary = $processDb->find(configuration_process\itinerary::class, $input['itinerary_id']);
+        $disable = true;
+
+if($user->getUsertype()->getId()==9){
+        foreach ($itinerary->getItineraryvalidation() as $validator) {
+            if ($user->getUsertype()->getId() == $validator->getUsertype()) {
+              if(!$validator->getValid()){
+                  $disable = false;
+  break;
+                }
+            }
+        }
+}
+
         foreach ($itinerary->getItineraryasset() as $asset) {
             $selected_asset = $processDb->find(configuration_process\asset::class, $input['asset_id']);
             if($asset->getId() === $selected_asset->getId()) {
@@ -39,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                      'id'=>$part->getId(),
                      'description'=>$part->getDescription(),
                      'question'=>$part->getQuestion(),
-                     'answer'=>$part->getAnswer()
+                     'answer'=>$part->getAnswer(),
+                     'disable'=>$disable
                      ]);
                 }
              $tag = null;
@@ -55,15 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                      'model'=>$tag?$tag->getModel():$tag,
                      'serial'=>$tag?$tag->getSerial():$tag,
 		     'series'=>$equipment->getSeries(),
-                     'parts'=>$part_list
+                     'parts'=>$part_list,
+                     'disable'=>$disable
                      ]);
          }
 
 	function sortById($a, $b) {
                 return $a['series'] - $b['series'];
             }
-         usort($equipment_list, 'sortById'); 
-        
+         usort($equipment_list, 'sortById');
 	echo header("HTTP/1.1 200 OK");
         echo json_encode($equipment_list);
     }

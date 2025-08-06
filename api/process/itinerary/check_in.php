@@ -52,8 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
               $itinerary_repository = $processDb->getRepository(configuration_process\itinerary::class);
               $queryBuilder = $itinerary_repository->createQueryBuilder('p');
 
-              $todayStart = new \DateTime('today 00:00:00');
-              $todayEnd = new \DateTime('today 23:59:59');
+              $timezone = new \DateTimeZone('Asia/Manila');
+              $todayStart = new \DateTime('today', $timezone);
+              $todayEnd = new \DateTime('today', $timezone);
+              $todayEnd->setTime(23, 59, 59);
+
 
               $queryBuilder
                 ->where('p.schedule BETWEEN :start AND :end')

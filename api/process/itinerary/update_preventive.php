@@ -26,7 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
             $entityManager = $dbConnection->getEntityManager();
                         $new_preventive = $entityManager->find(configuration_process\preventive::class,$input['preventive_id']);
                         $new_preventive->setItinerarytype($input["itinerary_type_id"]);
-                        $new_preventive->setStore($input["store_id"]);
+                        if($input["tag_store"]){
+                         $new_preventive->setStore($input["store_id"]);
+                        }else{
+                         $new_preventive->setStore(null);
+                        }
                         $new_preventive->setUser($input["user_id"]);
                         $new_preventive->setRemark($input["remark"]);
                         $date_planned = parseDate($input["date_planned"]);

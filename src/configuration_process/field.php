@@ -167,60 +167,22 @@ class field
         return $this->col_no;
     }
     public function setColno( $data): void
-    {      
+    {
         $this->col_no= $data;
     }
-    
-     
 
-
-
-
-
-    
-    // #[ORM\JoinTable(name: 'field_field')]
-    // #[ORM\JoinColumn(name: 'field_id', referencedColumnName: 'id')]
-    // #[ORM\InverseJoinColumn(name: 'field_related_id', referencedColumnName: 'id')]
-    // #[ORM\ManyToMany(targetEntity: field::class)]
-    // private Collection $field_link;
-
-    // public function getFieldlink()
-    // {
-    //     return $this->field_link;
-    // }
-    // public function setFieldlink($data): void
-    // {
-    //     $this->field_link->add($data);
-    // }
-
-   
-    // public function removeFieldlink($links,$data)
-    // {
-    //     foreach ($links as $link) {
-    //          if ($this->field_link->contains($data)) {
-    //              $this->field_link->removeElement($data);
-    //          }
-    //     }
-    //    return $links;
-    // }  
-
-    // public function setAllfieldlink(Collection $data): void
-    // {
-    //     $this->field_link = $data;
-    // } 
-        
     #[ORM\ManyToMany(targetEntity: task::class, mappedBy: 'task_field')]
     private Collection $task_field;
-    
+
     public function getTaskfield(): Collection
     {
         return $this->task_field;
     }
-        
+
     #[ORM\ManyToMany(targetEntity: field::class, mappedBy: 'field_link')]
     private Collection $bidirectional;
 
-        
+
     public function getBidirectional(): Collection
     {
         return $this->bidirectional;
@@ -241,12 +203,26 @@ class field
     {
         $this->field_task->add($data);
     }
-    
+
+
+
+    #[ORM\Column(type: 'bigint',nullable:true)]
+    private int|null $user_type_id = null;
+
+    public function getUsertype()
+    {
+        return $this->user_type_id;
+    }
+
+    public function setUsertype($data): void
+    {
+        $this->user_type_id= $data;
+    }
+
 
 
     public function __construct()
     {
-        // $this->field_link = new ArrayCollection();
         $this->task_field = new ArrayCollection();
         $this->bidirectional = new ArrayCollection();
 	$this->field_task = new ArrayCollection();

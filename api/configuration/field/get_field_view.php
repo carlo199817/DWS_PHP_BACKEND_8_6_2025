@@ -20,6 +20,10 @@ try {
     $origin = new configuration\origin;
     $type = $entityManager->find(configuration_process\field_type::class, $field->getFieldtype());
     $path = $entityManager->find(configuration\path::class, $type->getPath());
+    $user_type = null;
+    if($field->getUsertype()){
+      $user_type = $entityManager->find(configuration_process\user_type::class, $field->getUsertype());
+    }
 
     header('HTTP/1.1 200 OK');
     echo json_encode(
@@ -38,6 +42,8 @@ try {
         "picture"=>$origin->getOrigin($path->getDescription(),$type->getIcon()),
         "label"=>$type->getLabel(),
 	"field_type"=>$type->getDescription(),
+        "user_type"=>$user_type?$user_type->getDescription():null,
+        "user_type_id"=>$field->getUsertype()
     ]
     );
 } catch (Exception $e) {

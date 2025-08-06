@@ -12,7 +12,7 @@ $dbConnection = new DatabaseConnection($databaseName);
 $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
-        if(getBearerToken()){  
+        if(getBearerToken()){
                 $field = $entityManager->find(configuration_process\field::class,$input['field_id']);
                 $type = $entityManager->find(configuration_process\field_type::class,$input['type_id']);
                 $field->setFieldtype($type->getId());
@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
 		$field->setQuestion($input['question']);
                 $field->setFormula($input['formula']);
 		$field->setRadio($input['radio']);
+                $field->setUsertype($input['user_type_id']);
 		$select_formula = json_decode($input['formula'], true);
                 $field->setAnswer($select_formula['answer']);
                 $field->setActivatestyle($input['activate_style']);
@@ -29,9 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
                 echo header("HTTP/1.1 200 OK");
                 echo json_encode(['Message' => "Field updated"]);
         }
-    }
-    else{ 
+    }else{
         header('HTTP/1.1 405 Method Not Allowed');
         echo json_encode(["Message" => "Method Not Allowed"]);
     }
-    

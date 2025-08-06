@@ -35,7 +35,6 @@ try {
         ->andWhere($queryBuilder->expr()->in('t.id', ':formTaskIds'))
         ->setParameter('formTaskIds', $formTaskIds)
         ->setParameter('search', '%' . strtolower($searchTerm) . '%');
-    
     $tasks = $queryBuilder->getQuery()->getResult();
     $task_list = [];
     foreach ($tasks as $task) {

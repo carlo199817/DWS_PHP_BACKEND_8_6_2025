@@ -46,6 +46,10 @@ function setTask($task, $entityManager, $processDb, $token, $form)
             if ($user->getUsertype()->getId() === $assign->getUsertype()) {
                 $update_assign = $processDb->find(configuration_process\assign::class, $assign->getId());
                 $update_assign->setValid(true);
+                $update_assign->setCreatedby($token['user_id']);
+                $timezone = new DateTimeZone('Asia/Manila');
+                $date = new DateTime('now', $timezone);
+                $update_assign->setDateCreated($date);
                 $processDb->flush();
             }
         }
@@ -62,14 +66,25 @@ function setTask($task, $entityManager, $processDb, $token, $form)
         }
     }
 
-    if ($task->getTaskvalidation() && $all_valid) {
+    if (count($task->getTaskvalidation())) {
+
         foreach ($task->getTaskvalidation() as $validation) {
+
+	
             if (!$validation->getValid()) {
+
+
                 $all_valid = false;
                 break;
             }
         }
-    }
+
+    }else{
+	$all_valid = false;
+
+
+}
+
 
     if ($all_valid) {
         $form->setDone(true);

@@ -27,16 +27,67 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         } else {
             $date_input = new DateTime($date_input, new DateTimeZone('Asia/Manila'));
         }
-        
+
         foreach ($user?->getUserformconnection() ??[] as $form) {
 
-            if($date_input->format('Y-m-d') === $form->getDatecreated()->format('Y-m-d')) {        
-                 $form_list[] = [
+            if($date_input->format('Y-m-d') === $form->getDatecreated()->format('Y-m-d')) {
+             $store = null;
+              if($form->getStore()){
+                 $user_store = $entityManager->find(configuration\user::class,$form->getStore());
+                 $store = ['value' =>$user_store->getId(), 'label'=>$user_store->getStore()->getOutletname()];
+              }
+              $form_list[] = [
                 "id" => $form->getId(),
                 'title' => $form->getTitle(),
-            ];
+                'distributed' => $form->getDistributed(),
+                'form_type_id'=>$form->getFormtype(),
+                'store'=>$store,
+                'type'=>"form",
+                'owned'=>$token['user_id']===$form->getCreatedby()?true:false,
+                "description" => $token['user_id']===$form->getCreatedby()?"You generated this task":"Task assigned to you",
+             ];
+
             }
-           
+        }
+
+        foreach ($user?->getUserformtask() ??[] as $form) {
+
+            if($date_input->format('Y-m-d') === $form->getDatecreated()->format('Y-m-d')) {
+             $store = null;
+              if($form->getStore()){
+                 $user_store = $entityManager->find(configuration\user::class,$form->getStore());
+                 $store = ['value' =>$user_store->getId(), 'label'=>$user_store->getStore()->getOutletname()];
+              }
+              $form_list[] = [
+                "id" => $form->getId(),
+                'title' => $form->getTitle(),
+                'distributed' => $form->getDistributed(),
+                'form_type_id'=>$form->getFormtype(),
+                'store'=>$store,
+                'type'=>"task",
+                'owned'=>$token['user_id']===$form->getCreatedby()?true:false,
+                "description" => "Special task assigned to you",
+             ];
+
+            }
+        }
+
+        foreach ($user?->getUseritineraryconnection() ??[] as $itinerary) {
+
+            if($date_input->format('Y-m-d') === $itinerary->getDatecreated()->format('Y-m-d')) {
+              $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class,$itinerary->getType());
+              $form_list[] = [
+                "id" => $itinerary->getId(),
+                "title"=>$itinerary_type->getDescription(),
+                "description" => "Your signature is required for validation",
+                'type'=>"itinerary",
+                'owned'=>$token['user_id']===$itinerary->getCreatedby()?true:false,
+                'distributed' => null,
+                'form_type_id'=>null,
+                'store'=>null
+             ];
+
+            }
         }
 
         echo header("HTTP/1.1 200 OK");

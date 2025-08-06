@@ -17,7 +17,7 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array) json_decode(file_get_contents('php://input'), TRUE);
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
-    $bearerToken = getBearerToken(); 
+    $bearerToken = getBearerToken();
 
     $origin = new configuration\origin;
 
@@ -25,14 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         $token = json_decode(getBearerToken(),true);
 
         $user_id = $token['user_id'];
-        
         $user = $entityManager->find(configuration\user::class,$user_id);
-      
         header('HTTP/1.1 200 OK'); 
         echo json_encode(
             [
              "id"=>$user->getId(),
-             "first_name"=>$user->getFirstname(),
+             'first_name' => $user->getStore()
+                      ? $user->getStore()->getOutletname()
+                      : ($user->getFirstname() ?: ''),
              "last_name"=>$user->getLastname(),
              "user_type"=>$user->getUsertype()->getDescription()  
             ]

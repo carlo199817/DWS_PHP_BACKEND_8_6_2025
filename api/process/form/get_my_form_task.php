@@ -17,26 +17,46 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (getBearerToken()) {
         $token = json_decode(getBearerToken(), true);
 
-        if($input['identifier']){
+         if($input['database'] === 'process'){
           $database = json_decode(getBearerToken(), true)['database'];
           $dbConnection = new DatabaseConnection($database);
           $processDb = $dbConnection->getEntityManager();
          }
+
+         function unique(array $array, string $key): array {
+          $unique = [];
+          $seen = [];
+
+         foreach ($array as $item) {
+           if (!in_array($item[$key], $seen)) {
+            $seen[] = $item[$key];
+            $unique[] = $item;
+           }
+         }
+
+         return $unique;
+       }
+
+
         $form = $processDb->find(configuration_process\form::class, $input['form_id']);
         $task_list = [];
         foreach ($form->getFormtask() as $task) {
+
             foreach ($task->getTaskassign() as $assign) {
                 $user = $entityManager->find(configuration\user::class, $token['user_id']);
 
-               if($input['identifier']){
+               if($input['database']==="process"){
+
                 if ($user->getUsertype()->getId() === $assign->getUsertype()) {
                     $task = $processDb->find(configuration_process\task::class, $task);
                     $task_list[] = [
                         "id" => $task->getId(),
                         "title" => $task->getTitle(),
-			"valid"=>$assign->getValid()
+			"valid"=>$assign->getValid(),
+                        "task_type"=>"Task"
                     ];
                 }
+
               }else{
                     $task = $processDb->find(configuration_process\task::class, $task);
                     $task_list[] = [
@@ -45,9 +65,32 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                     ];
                }
             }
+
+            foreach ($task->getTaskvalidation() as $validator) {
+                $user = $entityManager->find(configuration\user::class, $token['user_id']);
+
+               if($input['database']==="process"){
+
+                if ($user->getUsertype()->getId() === $validator->getUsertype()) {
+                    $task = $processDb->find(configuration_process\task::class, $task);
+                    $task_list[] = [
+                        "id" => $task->getId(),
+                        "title" => $task->getTitle(),
+                        "valid"=>$validator->getValid(),
+                        "task_type"=>"Validation"
+                    ];
+                }
+
+              }
+
+            }
+
+
+
         }
+        $uniqueById = unique($task_list, 'id');
         echo header("HTTP/1.1 200 OK");
-        echo json_encode($task_list);
+        echo json_encode($uniqueById);
     }
 } else {
     header('HTTP/1.1 405 Method Not Allowed');

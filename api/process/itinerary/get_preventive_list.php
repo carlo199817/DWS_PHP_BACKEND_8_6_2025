@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                      if($itinerary){
                      $status_color = 'blue';
                      $timezone = new DateTimeZone('Asia/Manila');
-                     $now = new DateTime('now');
+                     $now = new DateTime('now', new DateTimeZone('Asia/Manila'));
                      $schedule = $itinerary->getSchedule();
                      $schedule->setTimezone($timezone);
 
@@ -107,12 +107,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
                 $user = $entityManager->find(configuration\user::class, $result->getUser());
                 $created_by = $entityManager->find(configuration\user::class, $result->getCreatedby());
-                $store = $entityManager->find(configuration\user::class, $result->getStore());
+                $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class, $result->getItinerarytype());
+                $store = null;
+                if($result->getStore()){
+                 $store = $entityManager->find(configuration\user::class, $result->getStore());
+                }
 
                 $preemptive_list[] = [
                     'id' => $result->getId(),
                     'user' => $user->getFirstname() . ' ' . $user->getLastname(),
-                    'store' => $store->getStore()->getOutletname(),
+                    'store' => $store ? $store->getStore()->getOutletname():$itinerary_type->getDescription(),
                     'itinerary_id' =>  $itinerary ? $result->getItinerary() :  $itinerary,
                     'date_created' => $result->getDatecreated()->format('Y-m-d'),
                     'date_planned' => $result->getDateplanned()->format('Y-m-d'),

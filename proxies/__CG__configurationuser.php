@@ -23,6 +23,7 @@ class user extends \configuration\user implements \Doctrine\ORM\Proxy\InternalPr
 
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
         "\0".parent::class."\0".'activate' => [parent::class, 'activate', null],
+        "\0".parent::class."\0".'active_login' => [parent::class, 'active_login', null],
         "\0".parent::class."\0".'bidirectional' => [parent::class, 'bidirectional', null],
         "\0".parent::class."\0".'change_password' => [parent::class, 'change_password', null],
         "\0".parent::class."\0".'database_name' => [parent::class, 'database_name', null],
@@ -49,6 +50,7 @@ class user extends \configuration\user implements \Doctrine\ORM\Proxy\InternalPr
         "\0".parent::class."\0".'username' => [parent::class, 'username', null],
         "\0".parent::class."\0".'users' => [parent::class, 'users', null],
         'activate' => [parent::class, 'activate', null],
+        'active_login' => [parent::class, 'active_login', null],
         'bidirectional' => [parent::class, 'bidirectional', null],
         'change_password' => [parent::class, 'change_password', null],
         'database_name' => [parent::class, 'database_name', null],

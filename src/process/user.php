@@ -40,7 +40,9 @@ class user
     }
     public function setUserformtask($data): void
     {
-        $this->user_form_task->add($data);
+        if (!$this->user_form_task->contains($data)) {
+         $this->user_form_task->add($data);
+        }
     }
 
     #[ORM\JoinTable(name: 'user_form_connection')]
@@ -53,9 +55,12 @@ class user
     {
         return $this->user_form_connection;
     }
-    public function setUserformconnection( $data): void
+
+    public function setUserformconnection($data): void
     {
-        $this->user_form_connection->add($data);
+        if (!$this->user_form_connection->contains($data)) {
+         $this->user_form_connection->add($data);
+        }
     }
 
 
@@ -95,13 +100,17 @@ class user
     {
         return $this->user_itinerary_connection;
     }
-    public function setUseritineraryconnection( $data): void
+
+    public function setUseritineraryconnection($data): void
     {
-        $this->user_itinerary_connection->add($data);
+        if (!$this->user_itinerary_connection->contains($data)) {
+         $this->user_itinerary_connection->add($data);
+        }
     }
 
     public function __construct()
     {
+        $this->user_itinerary_connection = new ArrayCollection();
         $this->user_form_task = new ArrayCollection();
         $this->user_form_generator = new ArrayCollection();
         $this->user_form_connection = new ArrayCollection();

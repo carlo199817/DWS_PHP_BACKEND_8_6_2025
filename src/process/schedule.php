@@ -54,7 +54,7 @@ class schedule
         $this->user_id= $data;
     }
 
- #[ORM\JoinTable(name: 'schedule_user_assign')]
+    #[ORM\JoinTable(name: 'schedule_user_assign')]
     #[ORM\JoinColumn(name: 'schedule_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'user_assign_id', referencedColumnName: 'id')]
     #[ORM\ManyToMany(targetEntity: user_assign::class)]
@@ -67,16 +67,12 @@ class schedule
     public function setScheduleuserassign( $data): void
     {
         $this->schedule_user_assign->add($data);
-    }   
-
-
+    }
 
     public function __construct()
     {
-        
         $this->schedule_user_assign = new ArrayCollection();
     }
-  
 
 
 }

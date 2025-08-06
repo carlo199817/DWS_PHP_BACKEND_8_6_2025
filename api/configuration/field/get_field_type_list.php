@@ -31,9 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             foreach ($field_types as $field_type) {
                 $path = $entityManager->find(configuration\path::class,$field_type->getPath());
                 if (
-                     $field_type->getId() !== 6 &&
-                     $field_type->getId() !== 7 &&
-                     $field_type->getId() !== 8 &&
                      $field_type->getId() !== 11 &&
                      $field_type->getId() !== 12 &&
                      $field_type->getId() !== 14 &&

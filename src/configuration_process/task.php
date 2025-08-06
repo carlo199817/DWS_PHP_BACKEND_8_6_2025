@@ -101,6 +101,32 @@ class task
         $this->col_set= $data;
     }
 
+    #[ORM\Column(type: 'integer',nullable:true)]
+    private int|null $user_id = null;
+
+    public function getUser()
+    {
+        return $this->user_id;
+    }
+
+    public function setUser($data): void
+    {
+        $this->user_id= $data;
+    }
+
+    #[ORM\Column(type: 'bigint',nullable:true)]
+    private int|null $task_id = null;
+
+    public function getParenttask()
+    {
+        return $this->task_id;
+    }
+
+    public function setParenttask($data): void
+    {
+        $this->task_id= $data;
+    }
+
     #[ORM\JoinTable(name: 'task_validation')]
     #[ORM\JoinColumn(name: 'task_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'validation_id', referencedColumnName: 'id')]

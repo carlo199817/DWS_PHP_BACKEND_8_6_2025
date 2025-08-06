@@ -14,7 +14,7 @@ $entityManager = $dbConnection->getEntityManager();
 $input = (array)json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
-    if (getBearerToken()) { 
+    if (getBearerToken()) {
 
         $token = json_decode(getBearerToken(),true);
         $user = $entityManager->find(configuration\user::class, $token['user_id']);
@@ -34,10 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
             $children = [];
             foreach ($user->getUserlink() as $child) {
                  if($child->getUsertype()->getId() !== 2){
-                $childData = buildUserTree($child, $visited);
-                if ($childData !== null) {
+                  $childData = buildUserTree($child, $visited);
+                  if ($childData !== null) {
                     $children[] = $childData;
-                }
+                  }
                 }
             }
 
@@ -56,10 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
 
         $finalOutput = [];
         foreach ($user->getUserlink() as $linkedUser) {
+          if($linkedUser->getUsertype()->getId() !== 2){
             $tree = buildUserTree($linkedUser, $visited);
             if ($tree !== null) {
                 $finalOutput[] = $tree;
             }
+          }
         }
 
         http_response_code(200);

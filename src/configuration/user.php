@@ -332,8 +332,19 @@ class user
     {
         $this->path_id = $data;
     }
-    
-    
+
+    #[ORM\Column(type: 'boolean', nullable:true)]
+    private $active_login;
+
+    public function getActivelogin()
+    {
+        return $this->active_login;
+    }
+
+    public function setActivelogin($data): void
+    {
+        $this->active_login=$data;
+    }
 
     #[ORM\JoinTable(name: 'user_store')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]

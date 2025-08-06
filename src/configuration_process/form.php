@@ -2,6 +2,7 @@
 namespace configuration_process;
 use configuration\store;
 use configuration\user;
+use process\user as process_user;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -48,8 +49,7 @@ class form
     }
 
 
-
-	    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
+    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
     private $date_effective;
 
     public function setDateeffective( $data): void
@@ -113,27 +113,15 @@ class form
     {$this->remark = $data;}
 
     #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
-    private $open;
+    private $submitted_date;
 
-    public function setOpendate( $data): void
+    public function setSubmitteddate( $data): void
     {
-        $this->open=$data;
+        $this->submitted_date=$data;
     }
-    public function getOpendate()
+    public function getSubmitteddate()
     {
-        return $this->open;
-    }
-
-    #[ORM\Column(type:"datetime", options:["default" => "CURRENT_TIMESTAMP"],nullable:true)]
-    private $close;
-
-    public function setClosedate( $data): void
-    {
-        $this->close=$data;
-    }
-    public function getClosedate()
-    {
-        return $this->close;
+        return $this->submitted_date;
     }
 
     #[ORM\Column(type: 'integer',nullable:true)]
@@ -290,9 +278,17 @@ class form
         $this->form_reform->add($data);
     }
 
+    #[ORM\ManyToMany(targetEntity: process_user::class, mappedBy: 'user_form_task')]
+    private Collection $users;
+
+    public function getFormusertask()
+    {
+        return $this->users;
+    }
 
     public function __construct()
     {
+        $this->users = new ArrayCollection();
         $this->form_task = new ArrayCollection();
         $this->form_attach_form = new ArrayCollection();
         $this->form_link = new ArrayCollection();

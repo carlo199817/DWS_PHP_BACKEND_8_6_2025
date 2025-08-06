@@ -31,11 +31,24 @@ class itinerary_type
     }
 
     public function setDescription( $data): void
-    {      
+    {
         $this->description= $data;
     }
 
-    
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $tag_store;
+
+    public function getTagstore()
+    {
+        return $this->tag_store;
+    }
+
+    public function setTagstore($data): void
+    {
+        $this->tag_store = $data;
+    }
+
     #[ORM\JoinTable(name: 'itinerary_type_form')]
     #[ORM\JoinColumn(name: 'itinerary_type_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'form_id', referencedColumnName: 'id')]
@@ -61,8 +74,7 @@ class itinerary_type
             }
         }
         return $types;
-    }  
-    
+    }
 
 
 

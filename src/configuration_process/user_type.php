@@ -35,7 +35,7 @@ class user_type
     }
 
     #[ORM\OneToMany(mappedBy: 'type_id', targetEntity: user::class)]
-    private Collection $users; 
+    private Collection $users;
 
 
     #[ORM\JoinTable(name: 'user_type_platform')]
@@ -98,21 +98,26 @@ class user_type
     {
         return $this->user_type_itinerary_type;
     }
-    public function setUsertypeitinerarytype( $data): void
+    public function setUsertypeitinerarytype($data): void
     {
         $this->user_type_itinerary_type->add($data);
     }
+
+public function clearUsertypeitinerarytype(): void
+{
+    $this->user_type_itinerary_type->clear();
+}
 
 
    public function removeUsertypeitinerarytype($itinerarys,$data)
     {
         foreach ($itinerarys as $itinerary) {
             if ($this->user_type_itinerary_type->contains($data)) {
-                    $this->user_type_itinerary_type->removeElement($data);
+               $this->user_type_itinerary_type->removeElement($data);
             }
         }
         return $itinerarys;
-    }  
+    }
 
 
     public function __construct()

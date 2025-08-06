@@ -15,12 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $origin = new configuration\origin;
         if(getBearerToken()){
 
-       if($input['identifier']){
+         if($input['database'] === 'process'){
           $database = json_decode(getBearerToken(), true)['database'];
           $dbConnection = new DatabaseConnection($database);
           $processDb = $dbConnection->getEntityManager();
        }
-
+                $user = $entityManager->find(configuration\user::class,json_decode(getBearerToken(), true)['user_id']);
                 $task = $processDb->find(configuration_process\task::class,$input['task_id']);
                 $field_list = [];
                 foreach ($task->getTaskfield() as $field) {
@@ -36,7 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 		    'radio'=>$field->getRadio(),
 		    'status'=>"R",
 		    "activate_style"=>$field->getActivatestyle(),
-			 'answer'=>$field->getAnswer(),
+	            'answer'=>$field->getAnswer(),
+'able' => $field->getUsertype() === null
+    ? true
+    : ($field->getUsertype() == $user->getUsertype()->getId())
+
                 ]);
                 }
                 header('HTTP/1.1 200 OK');

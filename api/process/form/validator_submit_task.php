@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === "PATCH") {
         }
 
         echo header("HTTP/1.1 200 OK");
-        echo json_encode(["Message" => "Submit Successfully"]);
+        echo json_encode(["Message" => "Validate Successfully"]);
     }
 } else {
     header('HTTP/1.1 405 Method Not Allowed');
@@ -49,6 +49,10 @@ function setTask($task, $entityManager, $processDb, $token, $form)
             if ($user->getUsertype()->getId() === $validation->getUsertype()) {
                 $update_validation = $processDb->find(configuration_process\validation::class, $validation->getId());
                 $update_validation->setValid(true);
+                $update_validation->setCreatedby($token['user_id']);
+                $timezone = new DateTimeZone('Asia/Manila');
+                $date = new DateTime('now', $timezone);
+                $update_validation->setDateCreated($date);
                 $processDb->flush();
             }
         }

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     if (getBearerToken()) {
 
-       if($input['identifier']){
+         if($input['database'] === 'process'){
           $database = json_decode(getBearerToken(), true)['database'];
           $dbConnection = new DatabaseConnection($database);
           $processDb = $dbConnection->getEntityManager();

@@ -27,7 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $preventive = $processDb->find(configuration_process\preventive::class, $input['preventive_id']);
         $user = $entityManager->find(configuration\user::class, $preventive->getUser());
         $created_by = $entityManager->find(configuration\user::class, $preventive->getCreatedby());
-        $store = $entityManager->find(configuration\user::class, $preventive->getStore());
+        $store = null;
+        if($preventive->getStore()){
+         $store = $entityManager->find(configuration\user::class, $preventive->getStore());
+        }
         $itinerary_type = $entityManager->find(configuration_process\itinerary_type::class, $preventive->getItinerarytype());
         header('HTTP/1.1 200 OK');
         echo json_encode([
@@ -36,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             'itinerary_type' => $itinerary_type->getDescription(),
             'itinerary_type_id' => $preventive->getItinerarytype(),
             'user' => "( ".$user->getUsertype()->getDescription()." ) ".$user->getFirstname() . ' ' . $user->getLastname(),
-            'store' => $store->getStore()->getOutletname(),
-            'store_id'=> $store->getId(),
+            'store' => $store?$store->getStore()->getOutletname():null,
+            'store_id'=> $store?$store->getId():null,
             'itinerary' => $preventive->getItinerary(),
             'date_planned' => $preventive->getDateplanned()->format('Y-m-d\TH:i'),
             'remark' => $preventive->getRemark(),

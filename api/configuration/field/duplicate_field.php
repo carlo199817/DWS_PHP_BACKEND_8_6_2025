@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
            $new_field = new configuration_process\field;
            $new_field->setFieldtype($field->getFieldtype());
            $new_field->setFormula($field->getFormula());
+           $new_field->setUsertype($field->getUsertype());
            $new_field->setRowoccupied($field->getRowoccupied());
            $new_field->setColoccupied($field->getColoccupied());
            $new_field->setRowno($input['row_no']);

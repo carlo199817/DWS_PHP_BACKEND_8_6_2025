@@ -47,6 +47,8 @@ while(true)
                  $new_itinerary->setType($results[0]->getItinerarytype());
                  $new_itinerary->setSchedule($results[0]->getSchedule());
                  $new_itinerary->setDatecreated($results[0]->getDatecreated());
+                 $new_itinerary->setItineraryremark($results[0]->getJustification());
+
                 if($results[0]->getItinerarytype()!=4){
                   foreach(json_decode($results[0]->getForm()) as $form_id){
                     $create_form = new form_loop();
@@ -63,6 +65,17 @@ while(true)
                        $asset = $processDb->find(configuration_process\asset::class,$asset_id);
                        $new_itinerary->setItineraryasset($asset);
                      }
+
+                    $userTypes = [2, 5, 9, null];
+
+                    foreach ($userTypes as $type) {
+                     $new_validation = new configuration_process\validation();
+                     $new_validation->setUsertype($type);
+                     $processDb->persist($new_validation);
+                     $processDb->flush();
+                     $new_itinerary->setItineraryvalidation($new_validation);
+                    }
+
 
                  }
 
@@ -88,8 +101,6 @@ while(true)
                  $automation_itinerary->setProcess(true);
                  $processDb->flush();
 
-               //  $internal_flag = "on";
-                // $flag = "on";
                  echo "Itinerary created!";
                  exit;
              }

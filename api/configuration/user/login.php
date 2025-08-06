@@ -19,14 +19,20 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     $user_repository = $entityManager->getRepository(configuration\user::class);
     $user = $user_repository->findOneBy(['username' => $input['user_name']]);
    if ($user && $user->authenticate_user($input['password'])) {
+
+//      if(!$user->getActivelogin()){
+
         $tokens = new configuration\tokens;
         $tokens = $tokens->getToken($user->getId());
         if($user->getActivate()){
 
              if($user->getChangepassword()){
+                $user->setActivelogin(true);
+                $entityManager->flush();
                 header('HTTP/1.1 200 OK');
                 echo json_encode([
                     'token' => $tokens,
+                    "Message" => "Login successful !"
                 ]);
             }else{
                 header('HTTP/1.1 200 OK');
@@ -37,10 +43,15 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
                 exit;
             }
 
-        }else{
-            header('HTTP/1.1 401 Unauthorized');
-            echo json_encode(["Message" => "Unauthorized, Invalid or Expired Token."]);
-        }
+           }else{
+               header('HTTP/1.1 401 Unauthorized');
+               echo json_encode(["Message" => "Unauthorized, Invalid or Expired Token."]);
+           }
+
+        /* }else{
+            header('HTTP/1.1 409 Conflict');
+            echo json_encode(["Message" => "You are already logged in on another device. Please log out first to continue."]);
+         }*/
 
     } else {
         header('HTTP/1.1 401 Unauthorized');
